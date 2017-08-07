@@ -41,6 +41,10 @@ def choose_word(wordlist):
 # end of helper code
 # -----------------------------------
 
+def word_display(guessed, guess, guessword):
+    eles = list(enumerate(guessword))
+    print eles
+
 # actually load the dictionary of words and point to it with
 # the wordlist variable so that it can be accessed from anywhere
 # in the program
@@ -66,9 +70,13 @@ while numguesses > 0:
     print "Number of guesses: " + str(numguesses)
     print "Available letters: " + avlets
     guess = str.lower(raw_input("Guess a letter: "))
+    word_display(guessed,guess, guessword)
     print "-----------------"
+
+
     numguesses -= 1 #TODO: change this depending on answer.
     letters.pop(letters.index(guess))
+
 
 if iscomplete == False:
     print "Sorry!"
