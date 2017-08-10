@@ -41,21 +41,26 @@ def choose_word(wordlist):
 # end of helper code
 # -----------------------------------
 
-def word_display(guessed, guess, guessword):
+def word_display(guessed, guess, lengthword):
     eles = list(enumerate(guessword))
+
+    for i in eles:
+
+
     print eles
+    return
 
 # actually load the dictionary of words and point to it with
 # the wordlist variable so that it can be accessed from anywhere
 # in the program
-wordlist   = load_words()
-guessword  = choose_word(wordlist)
-lengthword = len(guessword)
-numguesses = 10
-iscomplete = False
-letters =  []
-avlets = ""
-guessed = []
+wordlist     = load_words()
+guessword    = choose_word(wordlist)
+lengthword   = len(guessword)
+numguesses   = 10
+iscomplete   = False
+letters      = []
+guessed      = []
+current_word = ""
 
 for i in range(97, 123):
     letters += chr(i)
@@ -65,17 +70,25 @@ print "Welcome to the game, Hangman!"
 print "I am thinking of a word that is %d letters long." % lengthword
 
 while numguesses > 0:
+    avlets = ""
     for item in letters:
         avlets += item
+
     print "Number of guesses: " + str(numguesses)
     print "Available letters: " + avlets
     guess = str.lower(raw_input("Guess a letter: "))
     word_display(guessed,guess, guessword)
+
+    try:
+        letters.pop(letters.index(guess))
+    except ValueError:
+        print "Letter already guessed. Guess Again."
+        numguesses += 1
     print "-----------------"
 
 
     numguesses -= 1 #TODO: change this depending on answer.
-    letters.pop(letters.index(guess))
+
 
 
 if iscomplete == False:
