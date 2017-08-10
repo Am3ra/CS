@@ -41,29 +41,25 @@ def choose_word(wordlist):
 # end of helper code
 # -----------------------------------
 
-def word_display(guessed, guess, lengthword):
-    eles = list(enumerate(guessword))
 
-    for i in eles:
-
-
-    print eles
-    return
 
 # actually load the dictionary of words and point to it with
 # the wordlist variable so that it can be accessed from anywhere
 # in the program
-wordlist     = load_words()
-guessword    = choose_word(wordlist)
-lengthword   = len(guessword)
-numguesses   = 10
-iscomplete   = False
-letters      = []
-guessed      = []
-current_word = ""
+wordlist      = load_words()
+guessword     = choose_word(wordlist)
+lengthword    = len(guessword)
+numguesses    = 10
+iscomplete    = False
+letters       = []
+guessed       = []
+current_word  = ""
+correct_guess = 0
 
 for i in range(97, 123):
     letters += chr(i)
+for i in guessword:
+    current_word += "_"
 
 print "-----------------"
 print "Welcome to the game, Hangman!"
@@ -74,24 +70,46 @@ while numguesses > 0:
     for item in letters:
         avlets += item
 
-    print "Number of guesses: " + str(numguesses)
+    print "Number of guesses left: " + str(numguesses)
     print "Available letters: " + avlets
+    print "Word so far: " + current_word
     guess = str.lower(raw_input("Guess a letter: "))
-    word_display(guessed,guess, guessword)
-
-    try:
-        letters.pop(letters.index(guess))
-    except ValueError:
-        print "Letter already guessed. Guess Again."
-        numguesses += 1
-    print "-----------------"
-
-
-    numguesses -= 1 #TODO: change this depending on answer.
-
-
+    if len(guess) > 1:
+        print "Only type one letter."
+        print "-----------------"
+    else:
+        eles = list(enumerate(guessword))
+        guess_type = False
+        for i in eles:
+            for j in i:
+                try:
+                    i.index(guess)
+                except ValueError:
+                    assert True
+                else:
+                    current_word = current_word[:(eles[int(i[0])])[0]]+ guess + current_word[(eles[int(i[0])])[0]+1:]
+                    guess_type=True
+                    correct_guess += 1
+                    break
+        if guess_type == True:
+            print "Correct Guess!"
+        else:
+            numguesses -= 1
+            print "Wrong guess :("
+        try:
+            letters.pop(letters.index(guess))
+        except ValueError:
+            print "Letter already guessed. Guess Again."
+        if correct_guess==lengthword:
+            iscomplete = True
+            break
+        print "-----------------"
 
 if iscomplete == False:
     print "Sorry!"
     print "GAME OVER"
+    print "Correct word was: " + guessword
+else :
+    print "Good job!"
+    print "You Win!"
     print "Correct word was: " + guessword
