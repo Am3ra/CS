@@ -1,0 +1,3 @@
+InvocationInfo {"buildId":"9e2259eb-fa94-4821-a696-c9b76a2c38f2","superConsoleEnabled":false,"isDaemon":true,"subCommand":"querycommand","commandArgs":["query","--json","kind(\"apple_binary|apple_library|apple_test|cxx_binary|cxx_library|cxx_test\", owner(\"/Users/macbookpro/Documents/CS/CS101/ejercicios/7-2.c\"))","--config","client.id=nuclide"],"unexpandedCommandArgs":["query","--json","kind(\"apple_binary|apple_library|apple_test|cxx_binary|cxx_library|cxx_test\", owner(\"/Users/macbookpro/Documents/CS/CS101/ejercicios/7-2.c\"))","--config","client.id=nuclide"],"buckLogDir":"buck-out/log","timestampMillis":1503436565031}
+UploadToCacheStatistics {"successUploadCount":0,"failureUploadCount":0}
+ExitCode {"exitCode":0}

@@ -1,0 +1,4 @@
+InvocationInfo {"buildId":"c46bf4e2-f840-400c-925a-e2f812a93c45","superConsoleEnabled":false,"isDaemon":true,"subCommand":"querycommand","commandArgs":["query","--json","kind(\"apple_binary|apple_library|apple_test|cxx_binary|cxx_library|cxx_test\", owner(\"/Users/macbookpro/Documents/CS/CS101/ejercicios/Scanf_01.c\"))","--config","client.id=nuclide"],"unexpandedCommandArgs":["query","--json","kind(\"apple_binary|apple_library|apple_test|cxx_binary|cxx_library|cxx_test\", owner(\"/Users/macbookpro/Documents/CS/CS101/ejercicios/Scanf_01.c\"))","--config","client.id=nuclide"],"buckLogDir":"buck-out/log","timestampMillis":1503436559498}
+FileDelete {"timestamp":1503436564534,"filename":".git/index.lock"}
+UploadToCacheStatistics {"successUploadCount":0,"failureUploadCount":0}
+ExitCode {"exitCode":0}
