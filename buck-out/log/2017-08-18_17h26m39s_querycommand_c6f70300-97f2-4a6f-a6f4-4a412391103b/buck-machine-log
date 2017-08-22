@@ -1,0 +1,4 @@
+InvocationInfo {"buildId":"c6f70300-97f2-4a6f-a6f4-4a412391103b","superConsoleEnabled":false,"isDaemon":true,"subCommand":"querycommand","commandArgs":["query","--json","kind(\"apple_binary|apple_library|apple_test|cxx_binary|cxx_library|cxx_test\", owner(\"/Users/macbookpro/Documents/CS/CS101/ejercicios/2-1.c\"))","--config","client.id=nuclide"],"unexpandedCommandArgs":["query","--json","kind(\"apple_binary|apple_library|apple_test|cxx_binary|cxx_library|cxx_test\", owner(\"/Users/macbookpro/Documents/CS/CS101/ejercicios/2-1.c\"))","--config","client.id=nuclide"],"buckLogDir":"buck-out/log","timestampMillis":1503077199014}
+FileDelete {"timestamp":1503077204251,"filename":".git/index.lock"}
+UploadToCacheStatistics {"successUploadCount":0,"failureUploadCount":0}
+ExitCode {"exitCode":0}

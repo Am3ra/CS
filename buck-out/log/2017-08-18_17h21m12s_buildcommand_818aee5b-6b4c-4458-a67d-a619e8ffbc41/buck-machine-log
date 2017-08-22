@@ -1,0 +1,3 @@
+InvocationInfo {"buildId":"818aee5b-6b4c-4458-a67d-a619e8ffbc41","superConsoleEnabled":true,"isDaemon":true,"subCommand":"buildcommand","commandArgs":["build","CS101"],"unexpandedCommandArgs":["build","CS101"],"buckLogDir":"buck-out/log","timestampMillis":1503076872563}
+UploadToCacheStatistics {"successUploadCount":0,"failureUploadCount":0}
+ExitCode {"exitCode":1}

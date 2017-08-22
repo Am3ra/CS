@@ -1,0 +1,40 @@
+[2017-08-18 12:25:47.245][info ][command:null][tid:01][com.facebook.buck.cli.HangMonitor] HangMonitorAutoStart
+[2017-08-18 12:25:47.545][debug][command:null][tid:01][com.google.common.util.concurrent.ServiceManager] Starting HangMonitor [STARTING].
+[2017-08-18 12:25:47.554][debug][command:null][tid:12][com.google.common.util.concurrent.ServiceManager] Started HangMonitor [RUNNING] in 28.21 ms.
+[2017-08-18 12:25:47.693][info ][command:null][tid:01][com.facebook.buck.cli.Main] enabling background process killing for buckd
+[2017-08-18 12:25:47.702][info ][command:null][tid:01][com.facebook.buck.cli.Main] enabled background process killing for buckd
+[2017-08-18 12:25:47.705][info ][command:null][tid:01][com.facebook.buck.cli.Main] initialized bg session killer
+[2017-08-18 12:25:47.807][debug][command:null][tid:14][com.martiansoftware.nailgun.NGSession] Waiting for first client to connect
+[2017-08-18 12:25:47.814][debug][command:null][tid:14][com.martiansoftware.nailgun.NGSession] Client connected
+[2017-08-18 12:25:47.814][debug][command:null][tid:15][com.martiansoftware.nailgun.NGSession] Waiting for first client to connect
+[2017-08-18 12:25:47.825][debug][command:null][tid:14][com.martiansoftware.nailgun.NGSession] Tearing down client socket
+[2017-08-18 12:25:47.825][debug][command:null][tid:14][com.martiansoftware.nailgun.NGSession] Flushing client socket
+[2017-08-18 12:25:47.825][debug][command:null][tid:15][com.martiansoftware.nailgun.NGSession] Client connected
+[2017-08-18 12:25:47.826][debug][command:null][tid:18][com.martiansoftware.nailgun.NGSession] Waiting for first client to connect
+[2017-08-18 12:25:47.825][warn ][command:null][tid:16][com.martiansoftware.nailgun.NGInputStream] Nailgun client read future was interrupted
+java.lang.InterruptedException
+	at java.util.concurrent.FutureTask.awaitDone(FutureTask.java:404)
+	at java.util.concurrent.FutureTask.get(FutureTask.java:204)
+	at com.martiansoftware.nailgun.NGInputStream$1.run(NGInputStream.java:91)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+
+[2017-08-18 12:25:47.826][debug][command:null][tid:14][com.martiansoftware.nailgun.NGSession] Error shutting down socket I/O (this is expected if the client disconnected already)
+java.io.IOException: com.sun.jna.LastErrorException: [57] Socket is not connected
+	at com.martiansoftware.nailgun.NGUnixDomainSocket.doShutdown(NGUnixDomainSocket.java:74)
+	at com.martiansoftware.nailgun.NGUnixDomainSocket.shutdownInput(NGUnixDomainSocket.java:60)
+	at com.martiansoftware.nailgun.NGSession.run(NGSession.java:384)
+Caused by: com.sun.jna.LastErrorException: [57] Socket is not connected
+	at com.martiansoftware.nailgun.NGUnixDomainSocketLibrary.shutdown(Native Method)
+	at com.martiansoftware.nailgun.NGUnixDomainSocket.doShutdown(NGUnixDomainSocket.java:71)
+	... 2 more
+
+[2017-08-18 12:25:47.831][debug][command:null][tid:16][com.martiansoftware.nailgun.NGInputStream] Nailgun client read shutting down
+[2017-08-18 12:25:47.831][debug][command:null][tid:14][com.martiansoftware.nailgun.NGSession] Closing client socket
+[2017-08-18 12:25:47.832][debug][command:null][tid:14][com.martiansoftware.nailgun.NGSession] Finished tearing down client socket
+[2017-08-18 12:25:47.832][debug][command:null][tid:14][com.martiansoftware.nailgun.NGSession] Waiting for next client to connect
+[2017-08-18 12:25:47.832][info ][command:null][tid:14][com.martiansoftware.nailgun.NGSession] NGSession shutting down
+[2017-08-18 12:25:48.041][debug][command:null][tid:15][com.facebook.buck.cli.Main] Rotating log.
