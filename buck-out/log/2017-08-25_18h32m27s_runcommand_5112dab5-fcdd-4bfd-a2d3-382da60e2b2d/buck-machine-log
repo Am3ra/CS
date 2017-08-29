@@ -1,0 +1,4 @@
+InvocationInfo {"buildId":"5112dab5-fcdd-4bfd-a2d3-382da60e2b2d","superConsoleEnabled":true,"isDaemon":true,"subCommand":"runcommand","commandArgs":["run","//:helloWorld"],"unexpandedCommandArgs":["run","//:helloWorld"],"buckLogDir":"buck-out/log","timestampMillis":1503685947585}
+FileDelete {"timestamp":1503685952623,"filename":".git/index.lock"}
+UploadToCacheStatistics {"successUploadCount":0,"failureUploadCount":0}
+ExitCode {"exitCode":1}

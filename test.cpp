@@ -1,8 +1,6 @@
-#include <stdio.h>
-
-char col[12]= "Coooool ";
+#include <iostream>
 
 int main() {
-  printf("%s \n", col);
+  std::cout << "Hello, world. " << std::endl;
   return 0;
 }

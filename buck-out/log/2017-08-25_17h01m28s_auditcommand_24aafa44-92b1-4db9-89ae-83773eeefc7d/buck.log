@@ -1,0 +1,187 @@
+[2017-08-25 12:01:28.776][debug][command:24aafa44-92b1-4db9-89ae-83773eeefc7d][tid:668][com.google.common.util.concurrent.ServiceManager] Starting PerfStatsTracking [RUNNING].
+[2017-08-25 12:01:28.776][debug][command:24aafa44-92b1-4db9-89ae-83773eeefc7d][tid:668][com.google.common.util.concurrent.ServiceManager] Started PerfStatsTracking [RUNNING] in 899.8 μs.
+[2017-08-25 12:01:28.777][debug][command:24aafa44-92b1-4db9-89ae-83773eeefc7d][tid:668][com.google.common.util.concurrent.ServiceManager] Starting ProcessTracker [STARTING].
+[2017-08-25 12:01:28.777][debug][command:24aafa44-92b1-4db9-89ae-83773eeefc7d][tid:668][com.facebook.buck.cli.Main] InvocationInfo BuildId=[24aafa44-92b1-4db9-89ae-83773eeefc7d] Args=[audit, alias, --list, --config, client.id=nuclide]
+[2017-08-25 12:01:28.777][debug][command:null][tid:679][com.facebook.buck.util.perf.ProcessTracker] startUp
+[2017-08-25 12:01:28.777][debug][command:null][tid:679][com.facebook.buck.util.perf.ProcessTracker] startUp
+[2017-08-25 12:01:28.777][debug][command:24aafa44-92b1-4db9-89ae-83773eeefc7d][tid:668][com.facebook.buck.util.environment.MacWifiSsidFinder] Getting current SSID..
+[2017-08-25 12:01:28.778][debug][command:24aafa44-92b1-4db9-89ae-83773eeefc7d][tid:668][com.facebook.buck.util.environment.MacWifiSsidFinder] Getting SSID from Wi-Fi interface: <CWInterface: 0x7f888c0053f0> [interfaceName=en1]
+[2017-08-25 12:01:28.779][debug][command:null][tid:679][com.google.common.util.concurrent.ServiceManager] Started ProcessTracker [RUNNING] in 2.078 ms.
+[2017-08-25 12:01:28.779][debug][command:null][tid:679][com.google.common.util.concurrent.ServiceManager] Started ProcessTracker [RUNNING] in 2.078 ms.
+[2017-08-25 12:01:28.780][debug][command:24aafa44-92b1-4db9-89ae-83773eeefc7d][tid:668][com.facebook.buck.util.environment.MacWifiSsidFinder] Found SSID: ITESM
+[2017-08-25 12:01:28.787][warn ][command:null][tid:682][com.facebook.buck.event.listener.PublicAnnouncementManager] Failed to get public announcements. Reason: Failed to establish connection to server.
+[2017-08-25 12:01:28.787][warn ][command:null][tid:682][com.facebook.buck.event.listener.PublicAnnouncementManager] Failed to get public announcements. Reason: Failed to establish connection to server.
+[2017-08-25 12:01:33.793][debug][command:24aafa44-92b1-4db9-89ae-83773eeefc7d][tid:668][com.facebook.buck.parser.Parser] com.facebook.buck.event.DefaultBuckEventBus@5eba32c9
+[2017-08-25 12:01:33.793][debug][command:null][tid:675][com.facebook.buck.io.WatchmanTransportClient] Sending query: [query, /Users/macbookpro/Documents/CS, {since=c:1503576860:16574:4:218, expression=[not, [anyof, [type, d], [dirname, .idea], [dirname, .buckd], [dirname, buck-out/cache], [dirname, buck-out/.trash], [dirname, buck-out], [match, **/*.pbxproj, wholename, {includedotfiles=true}], [match, **/*.xcscheme, wholename, {includedotfiles=true}], [match, **/*.xcworkspacedata, wholename, {includedotfiles=true}], [match, **/*~, wholename, {includedotfiles=true}], [match, **/#*#, wholename, {includedotfiles=true}], [match, **/.#*, wholename, {includedotfiles=true}], [match, **/*.swo, wholename, {includedotfiles=true}], [match, **/*.swp, wholename, {includedotfiles=true}], [match, **/*.swpx, wholename, {includedotfiles=true}], [match, **/*.un~, wholename, {includedotfiles=true}], [match, **/.netrhwist, wholename, {includedotfiles=true}], [match, .idea, wholename, {includedotfiles=true}], [match, .iml, wholename, {includedotfiles=true}], [match, **/*.pydevproject, wholename, {includedotfiles=true}], [match, .project, wholename, {includedotfiles=true}], [match, .metadata, wholename, {includedotfiles=true}], [match, **/*.tmp, wholename, {includedotfiles=true}], [match, **/*.bak, wholename, {includedotfiles=true}], [match, **/*~.nib, wholename, {includedotfiles=true}], [match, .classpath, wholename, {includedotfiles=true}], [match, .settings, wholename, {includedotfiles=true}], [match, .loadpath, wholename, {includedotfiles=true}], [match, .externalToolBuilders, wholename, {includedotfiles=true}], [match, .cproject, wholename, {includedotfiles=true}], [match, .buildpath, wholename, {includedotfiles=true}], [match, .DS_Store, wholename, {includedotfiles=true}], [match, .AppleDouble, wholename, {includedotfiles=true}], [match, .LSOverride, wholename, {includedotfiles=true}], [match, .Spotlight-V100, wholename, {includedotfiles=true}], [match, .Trashes, wholename, {includedotfiles=true}], [match, $RECYCLE.BIN, wholename, {includedotfiles=true}], [match, .*.sublime-workspace, wholename, {includedotfiles=true}]]], empty_on_fresh_instance=true, fields=[name, exists, new]}]
+[2017-08-25 12:01:33.793][debug][command:null][tid:675][com.facebook.buck.io.WatchmanTransportClient] Sending query: [query, /Users/macbookpro/Documents/CS, {since=c:1503576860:16574:4:218, expression=[not, [anyof, [type, d], [dirname, .idea], [dirname, .buckd], [dirname, buck-out/cache], [dirname, buck-out/.trash], [dirname, buck-out], [match, **/*.pbxproj, wholename, {includedotfiles=true}], [match, **/*.xcscheme, wholename, {includedotfiles=true}], [match, **/*.xcworkspacedata, wholename, {includedotfiles=true}], [match, **/*~, wholename, {includedotfiles=true}], [match, **/#*#, wholename, {includedotfiles=true}], [match, **/.#*, wholename, {includedotfiles=true}], [match, **/*.swo, wholename, {includedotfiles=true}], [match, **/*.swp, wholename, {includedotfiles=true}], [match, **/*.swpx, wholename, {includedotfiles=true}], [match, **/*.un~, wholename, {includedotfiles=true}], [match, **/.netrhwist, wholename, {includedotfiles=true}], [match, .idea, wholename, {includedotfiles=true}], [match, .iml, wholename, {includedotfiles=true}], [match, **/*.pydevproject, wholename, {includedotfiles=true}], [match, .project, wholename, {includedotfiles=true}], [match, .metadata, wholename, {includedotfiles=true}], [match, **/*.tmp, wholename, {includedotfiles=true}], [match, **/*.bak, wholename, {includedotfiles=true}], [match, **/*~.nib, wholename, {includedotfiles=true}], [match, .classpath, wholename, {includedotfiles=true}], [match, .settings, wholename, {includedotfiles=true}], [match, .loadpath, wholename, {includedotfiles=true}], [match, .externalToolBuilders, wholename, {includedotfiles=true}], [match, .cproject, wholename, {includedotfiles=true}], [match, .buildpath, wholename, {includedotfiles=true}], [match, .DS_Store, wholename, {includedotfiles=true}], [match, .AppleDouble, wholename, {includedotfiles=true}], [match, .LSOverride, wholename, {includedotfiles=true}], [match, .Spotlight-V100, wholename, {includedotfiles=true}], [match, .Trashes, wholename, {includedotfiles=true}], [match, $RECYCLE.BIN, wholename, {includedotfiles=true}], [match, .*.sublime-workspace, wholename, {includedotfiles=true}]]], empty_on_fresh_instance=true, fields=[name, exists, new]}]
+[2017-08-25 12:01:33.811][debug][command:24aafa44-92b1-4db9-89ae-83773eeefc7d][tid:668][com.facebook.buck.io.WatchmanTransportClient] Query [query, /Users/macbookpro/Documents/CS, {since=c:1503576860:16574:4:218, expression=[not, [anyof, [type, d], [dirname, .idea], [dirname, .buckd], [dirname, buck-out/cache], [dirname, buck-out/.trash], [dirname, buck-out], [match, **/*.pbxproj, wholename, {includedotfiles=true}], [match, **/*.xcscheme, wholename, {includedotfiles=true}], [match, **/*.xcworkspacedata, wholename, {includedotfiles=true}], [match, **/*~, wholename, {includedotfiles=true}], [match, **/#*#, wholename, {includedotfiles=true}], [match, **/.#*, wholename, {includedotfiles=true}], [match, **/*.swo, wholename, {includedotfiles=true}], [match, **/*.swp, wholename, {includedotfiles=true}], [match, **/*.swpx, wholename, {includedotfiles=true}], [match, **/*.un~, wholename, {includedotfiles=true}], [match, **/.netrhwist, wholename, {includedotfiles=true}], [match, .idea, wholename, {includedotfiles=true}], [match, .iml, wholename, {includedotfiles=true}], [match, **/*.pydevproject, wholename, {includedotfiles=true}], [match, .project, wholename, {includedotfiles=true}], [match, .metadata, wholename, {includedotfiles=true}], [match, **/*.tmp, wholename, {includedotfiles=true}], [match, **/*.bak, wholename, {includedotfiles=true}], [match, **/*~.nib, wholename, {includedotfiles=true}], [match, .classpath, wholename, {includedotfiles=true}], [match, .settings, wholename, {includedotfiles=true}], [match, .loadpath, wholename, {includedotfiles=true}], [match, .externalToolBuilders, wholename, {includedotfiles=true}], [match, .cproject, wholename, {includedotfiles=true}], [match, .buildpath, wholename, {includedotfiles=true}], [match, .DS_Store, wholename, {includedotfiles=true}], [match, .AppleDouble, wholename, {includedotfiles=true}], [match, .LSOverride, wholename, {includedotfiles=true}], [match, .Spotlight-V100, wholename, {includedotfiles=true}], [match, .Trashes, wholename, {includedotfiles=true}], [match, $RECYCLE.BIN, wholename, {includedotfiles=true}], [match, .*.sublime-workspace, wholename, {includedotfiles=true}]]], empty_on_fresh_instance=true, fields=[name, exists, new]}] returned in 18 ms
+[2017-08-25 12:01:33.812][debug][command:24aafa44-92b1-4db9-89ae-83773eeefc7d][tid:668][com.facebook.buck.util.WatchmanWatcher] Updating Watchman Cursor from c:1503576860:16574:4:218 to c:1503576860:16574:4:252
+[2017-08-25 12:01:33.812][warn ][command:24aafa44-92b1-4db9-89ae-83773eeefc7d][tid:668][com.facebook.buck.util.WatchmanWatcher] Posting WatchEvent: WatchmanPathEvent{cellPath=/Users/macbookpro/Documents/CS, kind=MODIFY, path=.git/index}
+[2017-08-25 12:01:33.812][debug][command:24aafa44-92b1-4db9-89ae-83773eeefc7d][tid:668][com.facebook.buck.util.WatchmanWatcher] Posted 1 Watchman events.
+[2017-08-25 12:01:33.813][info ][command:24aafa44-92b1-4db9-89ae-83773eeefc7d][tid:668][com.facebook.buck.cli.Main] Awaiting termination of HTTP Write executor service. Waiting for all jobs to complete, or up to maximum of 1800 seconds...
+[2017-08-25 12:01:33.813][info ][command:24aafa44-92b1-4db9-89ae-83773eeefc7d][tid:668][com.facebook.buck.cli.Main] Awaiting termination of CounterAggregatorExecutor executor service. Waiting for all jobs to complete, or up to maximum of 20 seconds...
+[2017-08-25 12:01:33.813][debug][command:24aafa44-92b1-4db9-89ae-83773eeefc7d][tid:679][com.facebook.buck.util.perf.ProcessTracker] shutDown
+[2017-08-25 12:01:33.813][debug][command:24aafa44-92b1-4db9-89ae-83773eeefc7d][tid:678][com.google.common.util.concurrent.ServiceManager] Service PerfStatsTracking [TERMINATED] has terminated. Previous state was: STOPPING
+[2017-08-25 12:01:33.814][debug][command:null][tid:679][com.google.common.util.concurrent.ServiceManager] Service ProcessTracker [TERMINATED] has terminated. Previous state was: STOPPING
+[2017-08-25 12:01:33.818][info ][command:null][tid:668][com.facebook.buck.log.GlobalStateManager] It's possible another concurrent buck command removed the file.
+java.nio.file.NoSuchFileException: buck-out/log/last_no_sub_command
+	at sun.nio.fs.UnixException.translateToIOException(UnixException.java:86)
+	at sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:102)
+	at sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:107)
+	at sun.nio.fs.UnixFileAttributeViews$Basic.readAttributes(UnixFileAttributeViews.java:55)
+	at sun.nio.fs.UnixFileSystemProvider.readAttributes(UnixFileSystemProvider.java:144)
+	at java.nio.file.Files.readAttributes(Files.java:1737)
+	at com.facebook.buck.util.DirectoryCleaner.computePathStats(DirectoryCleaner.java:96)
+	at com.facebook.buck.util.DirectoryCleaner.clean(DirectoryCleaner.java:53)
+	at com.facebook.buck.log.GlobalStateManager$1.close(GlobalStateManager.java:143)
+	at com.facebook.buck.cli.Main.runMainWithExitCode(Main.java:956)
+	at com.facebook.buck.cli.Main.runMainThenExit(Main.java:329)
+	at com.facebook.buck.cli.Main.nailMain(Main.java:1674)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.martiansoftware.nailgun.NGSession.run(NGSession.java:338)
+
+[2017-08-25 12:01:33.818][info ][command:null][tid:668][com.facebook.buck.cli.Main] Awaiting termination of NETWORK executor service. Waiting for all jobs to complete, or up to maximum of 60 seconds...
+[2017-08-25 12:01:33.818][info ][command:null][tid:668][com.facebook.buck.cli.Main] Awaiting termination of PROJECT executor service. Waiting for all jobs to complete, or up to maximum of 60 seconds...
+[2017-08-25 12:01:33.822][info ][command:null][tid:668][com.facebook.buck.cli.Main] Awaiting termination of CPU executor service. Waiting for all jobs to complete, or up to maximum of 60 seconds...
+[2017-08-25 12:01:33.822][warn ][command:null][tid:672][com.martiansoftware.nailgun.NGInputStream] Nailgun client read future was interrupted
+java.lang.InterruptedException
+	at java.util.concurrent.FutureTask.awaitDone(FutureTask.java:404)
+	at java.util.concurrent.FutureTask.get(FutureTask.java:204)
+	at com.martiansoftware.nailgun.NGInputStream$1.run(NGInputStream.java:91)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+
+[2017-08-25 12:01:33.822][info ][command:null][tid:668][com.facebook.buck.cli.Main] Awaiting termination of Disk IO executor service. Waiting for all jobs to complete, or up to maximum of 10 seconds...
+[2017-08-25 12:01:33.822][debug][command:null][tid:672][com.martiansoftware.nailgun.NGInputStream] Nailgun client read shutting down
+[2017-08-25 12:01:33.823][debug][command:null][tid:668][com.facebook.buck.event.listener.ChromeTraceBuildListener] Writing Chrome trace to buck-out/log/2017-08-25_17h01m28s_auditcommand_24aafa44-92b1-4db9-89ae-83773eeefc7d/build.2017-08-25.12-01-28.24aafa44-92b1-4db9-89ae-83773eeefc7d.trace
+[2017-08-25 12:01:33.826][debug][command:null][tid:668][com.facebook.buck.io.WatchmanTransportClient] Closing Watchman transport.
+[2017-08-25 12:01:33.827][debug][command:null][tid:668][com.facebook.buck.cli.Main] Done.
+[2017-08-25 12:01:33.827][info ][command:null][tid:668][com.martiansoftware.nailgun.NGSession] Server cleanly exited with status 0
+com.martiansoftware.nailgun.NGExitException: ExitException: status 0
+	at com.martiansoftware.nailgun.NGSecurityManager.checkExit(NGSecurityManager.java:56)
+	at java.lang.Runtime.exit(Runtime.java:107)
+	at java.lang.System.exit(System.java:971)
+	at com.facebook.buck.cli.Main.runMainThenExit(Main.java:359)
+	at com.facebook.buck.cli.Main.nailMain(Main.java:1674)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.martiansoftware.nailgun.NGSession.run(NGSession.java:338)
+
+[2017-08-25 12:01:33.828][debug][command:null][tid:668][com.martiansoftware.nailgun.NGSession] Tearing down client socket
+[2017-08-25 12:01:33.828][debug][command:null][tid:668][com.martiansoftware.nailgun.NGSession] Flushing client socket
+[2017-08-25 12:01:33.828][debug][command:null][tid:668][com.martiansoftware.nailgun.NGSession] Error shutting down socket I/O (this is expected if the client disconnected already)
+java.io.IOException: com.sun.jna.LastErrorException: [57] Socket is not connected
+	at com.martiansoftware.nailgun.NGUnixDomainSocket.doShutdown(NGUnixDomainSocket.java:74)
+	at com.martiansoftware.nailgun.NGUnixDomainSocket.shutdownInput(NGUnixDomainSocket.java:60)
+	at com.martiansoftware.nailgun.NGSession.run(NGSession.java:384)
+Caused by: com.sun.jna.LastErrorException: [57] Socket is not connected
+	at com.martiansoftware.nailgun.NGUnixDomainSocketLibrary.shutdown(Native Method)
+	at com.martiansoftware.nailgun.NGUnixDomainSocket.doShutdown(NGUnixDomainSocket.java:71)
+	... 2 more
+
+[2017-08-25 12:01:33.828][debug][command:null][tid:668][com.martiansoftware.nailgun.NGSession] Closing client socket
+[2017-08-25 12:01:33.828][debug][command:null][tid:668][com.martiansoftware.nailgun.NGSession] Finished tearing down client socket
+[2017-08-25 12:01:33.828][debug][command:null][tid:668][com.martiansoftware.nailgun.NGSession] Waiting for next client to connect
+[2017-08-25 12:01:33.828][info ][command:null][tid:668][com.martiansoftware.nailgun.NGSession] NGSession shutting down
+[2017-08-25 12:03:17.253][debug][command:null][tid:671][com.martiansoftware.nailgun.NGSession] Client connected
+[2017-08-25 12:03:17.253][debug][command:null][tid:684][com.martiansoftware.nailgun.NGSession] Waiting for first client to connect
+[2017-08-25 12:03:17.255][debug][command:null][tid:671][com.martiansoftware.nailgun.NGSession] Tearing down client socket
+[2017-08-25 12:03:17.255][debug][command:null][tid:671][com.martiansoftware.nailgun.NGSession] Flushing client socket
+[2017-08-25 12:03:17.255][warn ][command:null][tid:685][com.martiansoftware.nailgun.NGInputStream] Nailgun client read future was interrupted
+java.lang.InterruptedException
+	at java.util.concurrent.FutureTask.awaitDone(FutureTask.java:404)
+	at java.util.concurrent.FutureTask.get(FutureTask.java:204)
+	at com.martiansoftware.nailgun.NGInputStream$1.run(NGInputStream.java:91)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+
+[2017-08-25 12:03:17.255][debug][command:null][tid:685][com.martiansoftware.nailgun.NGInputStream] Nailgun client read shutting down
+[2017-08-25 12:03:17.255][debug][command:null][tid:671][com.martiansoftware.nailgun.NGSession] Error shutting down socket I/O (this is expected if the client disconnected already)
+java.io.IOException: com.sun.jna.LastErrorException: [57] Socket is not connected
+	at com.martiansoftware.nailgun.NGUnixDomainSocket.doShutdown(NGUnixDomainSocket.java:74)
+	at com.martiansoftware.nailgun.NGUnixDomainSocket.shutdownInput(NGUnixDomainSocket.java:60)
+	at com.martiansoftware.nailgun.NGSession.run(NGSession.java:384)
+Caused by: com.sun.jna.LastErrorException: [57] Socket is not connected
+	at com.martiansoftware.nailgun.NGUnixDomainSocketLibrary.shutdown(Native Method)
+	at com.martiansoftware.nailgun.NGUnixDomainSocket.doShutdown(NGUnixDomainSocket.java:71)
+	... 2 more
+
+[2017-08-25 12:03:17.255][debug][command:null][tid:671][com.martiansoftware.nailgun.NGSession] Closing client socket
+[2017-08-25 12:03:17.255][debug][command:null][tid:671][com.martiansoftware.nailgun.NGSession] Finished tearing down client socket
+[2017-08-25 12:03:17.255][debug][command:null][tid:671][com.martiansoftware.nailgun.NGSession] Waiting for next client to connect
+[2017-08-25 12:03:17.255][info ][command:null][tid:671][com.martiansoftware.nailgun.NGSession] NGSession shutting down
+[2017-08-25 12:03:17.255][debug][command:null][tid:684][com.martiansoftware.nailgun.NGSession] Client connected
+[2017-08-25 12:03:17.256][debug][command:null][tid:687][com.martiansoftware.nailgun.NGSession] Waiting for first client to connect
+[2017-08-25 12:03:17.257][debug][command:null][tid:684][com.martiansoftware.nailgun.NGSession] Tearing down client socket
+[2017-08-25 12:03:17.257][debug][command:null][tid:684][com.martiansoftware.nailgun.NGSession] Flushing client socket
+[2017-08-25 12:03:17.257][warn ][command:null][tid:688][com.martiansoftware.nailgun.NGInputStream] Nailgun client read future was interrupted
+java.lang.InterruptedException
+	at java.util.concurrent.FutureTask.awaitDone(FutureTask.java:404)
+	at java.util.concurrent.FutureTask.get(FutureTask.java:204)
+	at com.martiansoftware.nailgun.NGInputStream$1.run(NGInputStream.java:91)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+
+[2017-08-25 12:03:17.257][debug][command:null][tid:687][com.martiansoftware.nailgun.NGSession] Client connected
+[2017-08-25 12:03:17.257][debug][command:null][tid:684][com.martiansoftware.nailgun.NGSession] Error shutting down socket I/O (this is expected if the client disconnected already)
+java.io.IOException: com.sun.jna.LastErrorException: [57] Socket is not connected
+	at com.martiansoftware.nailgun.NGUnixDomainSocket.doShutdown(NGUnixDomainSocket.java:74)
+	at com.martiansoftware.nailgun.NGUnixDomainSocket.shutdownInput(NGUnixDomainSocket.java:60)
+	at com.martiansoftware.nailgun.NGSession.run(NGSession.java:384)
+Caused by: com.sun.jna.LastErrorException: [57] Socket is not connected
+	at com.martiansoftware.nailgun.NGUnixDomainSocketLibrary.shutdown(Native Method)
+	at com.martiansoftware.nailgun.NGUnixDomainSocket.doShutdown(NGUnixDomainSocket.java:71)
+	... 2 more
+
+[2017-08-25 12:03:17.257][debug][command:null][tid:688][com.martiansoftware.nailgun.NGInputStream] Nailgun client read shutting down
+[2017-08-25 12:03:17.257][debug][command:null][tid:684][com.martiansoftware.nailgun.NGSession] Closing client socket
+[2017-08-25 12:03:17.257][debug][command:null][tid:690][com.martiansoftware.nailgun.NGSession] Waiting for first client to connect
+[2017-08-25 12:03:17.257][debug][command:null][tid:684][com.martiansoftware.nailgun.NGSession] Finished tearing down client socket
+[2017-08-25 12:03:17.257][debug][command:null][tid:684][com.martiansoftware.nailgun.NGSession] Waiting for next client to connect
+[2017-08-25 12:03:17.258][info ][command:null][tid:684][com.martiansoftware.nailgun.NGSession] NGSession shutting down
+[2017-08-25 12:03:17.262][debug][command:null][tid:687][com.facebook.buck.cli.Main] Rotating log.
+[2017-08-25 12:03:17.268][debug][command:null][tid:687][com.facebook.buck.cli.Main] Starting up (build date 2017-05-31 05:34:58 -0500, rev v2017.05.31.01), args: [query, --json, kind("apple_binary|apple_library|apple_test|cxx_binary|cxx_library|cxx_test", owner("/Users/macbookpro/Documents/CS/CS101/ejercicios/7-4.c")), --config, client.id=nuclide]
+[2017-08-25 12:03:17.273][debug][command:null][tid:687][com.facebook.buck.cli.Main] System properties: {java.vendor=Oracle Corporation, sun.java.launcher=SUN_STANDARD, sun.management.compiler=HotSpot 64-Bit Tiered Compilers, jnidispatch.path=/Users/macbookpro/Documents/CS/.buckd/tmp/buck_run.sPiixe/jna-1629665013/jna2198868941653089751.tmp, os.name=Mac OS X, buck.enable_objc=true, sun.boot.class.path=/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/classes, buck.resource_lock_path=/Users/macbookpro/Documents/CS/.buckd/resources/v2017.05.31.01/.buck_lock, java.vm.specification.vendor=Oracle Corporation, java.runtime.version=1.8.0_144-b01, jna.loaded=true, buck.testrunner_classes=/Users/macbookpro/Documents/CS/.buckd/resources/v2017.05.31.01/testrunner_classes, buck.logging_config_file=/Users/macbookpro/Documents/CS/.buckd/resources/v2017.05.31.01/logging_config_file, buck.path_to_sh_binary_template=/Users/macbookpro/Documents/CS/.buckd/resources/v2017.05.31.01/path_to_sh_binary_template, user.name=macbookpro, buck.path_to_pywatchman=/Users/macbookpro/Documents/CS/.buckd/resources/v2017.05.31.01/path_to_pywatchman, buck.report_generator_jar=/Users/macbookpro/Documents/CS/.buckd/resources/v2017.05.31.01/report_generator_jar, buck.git_commit=v2017.05.31.01, user.language=en, sun.boot.library.path=/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib, java.version=1.8.0_144, user.timezone=America/Mexico_City, buck.test_util_no_tests_dir=true, sun.arch.data.model=64, http.nonProxyHosts=local|*.local|169.254/16|*.169.254/16, java.endorsed.dirs=/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/endorsed, sun.cpu.isalist=, sun.jnu.encoding=UTF-8, file.encoding.pkg=sun.io, file.separator=/, java.specification.name=Java Platform API Specification, buck.jacoco_agent_jar=/Users/macbookpro/Documents/CS/.buckd/resources/v2017.05.31.01/jacoco_agent_jar, java.class.version=52.0, user.country=US, java.home=/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre, java.vm.info=mixed mode, os.version=10.12.5, buck.version_uid=v2017.05.31.01, org.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.JavaUtilLog, path.separator=:, java.vm.version=25.144-b01, java.awt.printerjob=sun.lwawt.macosx.CPrinterJob, sun.io.unicode.encoding=UnicodeBig, awt.toolkit=sun.lwawt.macosx.LWCToolkit, socksNonProxyHosts=local|*.local|169.254/16|*.169.254/16, buck.buck_build_type_info=/Users/macbookpro/Documents/CS/.buckd/resources/v2017.05.31.01/buck_build_type_info, ftp.nonProxyHosts=local|*.local|169.254/16|*.169.254/16, buck.dx=/Users/macbookpro/Documents/CS/.buckd/resources/v2017.05.31.01/dx, buck.git_commit_timestamp=1496226898, user.home=/Users/macbookpro, buck.path_to_asm_jar=/Users/macbookpro/Documents/CS/.buckd/resources/v2017.05.31.01/path_to_asm_jar, java.specification.vendor=Oracle Corporation, buck.git_dirty=0, java.library.path=/Users/macbookpro/Documents/CS/.buckd/resources/v2017.05.31.01, java.vendor.url=http://java.oracle.com/, java.vm.vendor=Oracle Corporation, gopherProxySet=false, java.runtime.name=Java(TM) SE Runtime Environment, sun.java.command=com.facebook.buck.cli.bootstrapper.ClassLoaderBootstrapper com.facebook.buck.cli.Main$DaemonBootstrap local:.buckd/sock 60000, java.class.path=/Users/macbookpro/Documents/CS/.buckd/resources/v2017.05.31.01/bootstrapper_jar, buck.buckd_dir=/Users/macbookpro/Documents/CS/.buckd, buck.path_to_pathlib_py=/Users/macbookpro/Documents/CS/.buckd/resources/v2017.05.31.01/pathlib.py, buck.buckd_launch_time_nanos=35893819861504, java.vm.specification.name=Java Virtual Machine Specification, com.martiansoftware.nailgun.NGServer.outputPath=/Users/macbookpro/Documents/CS/.buckd/tmp/buck_run.sPiixe/ngserver-out, java.vm.specification.version=1.8, sun.cpu.endian=little, buck.path_to_rawmanifest_py=/Users/macbookpro/Documents/CS/.buckd/resources/v2017.05.31.01/rawmanifest.py, sun.os.patch.level=unknown, java.awt.headless=true, java.io.tmpdir=/Users/macbookpro/Documents/CS/.buckd/tmp/buck_run.sPiixe, buck.android_agent_path=/Users/macbookpro/Documents/CS/.buckd/resources/v2017.05.31.01/android_agent_path, java.vendor.url.bug=http://bugreport.sun.com/bugreport/, jna.platform.library.path=/usr/lib:/usr/lib, os.arch=x86_64, java.awt.graphicsenv=sun.awt.CGraphicsEnvironment, buck.path_to_pex=/Users/macbookpro/Documents/CS/.buckd/resources/v2017.05.31.01/path_to_pex, java.ext.dirs=/Users/macbookpro/Library/Java/Extensions:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/ext:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java, java.util.logging.config.class=com.facebook.buck.cli.bootstrapper.LogConfig, user.dir=/Users/macbookpro/Documents/CS, line.separator=
+, java.vm.name=Java HotSpot(TM) 64-Bit Server VM, buck.path_to_typing=/Users/macbookpro/Documents/CS/.buckd/resources/v2017.05.31.01/path_to_typing, buck.native_exopackage_fake_path=/Users/macbookpro/Documents/CS/.buckd/resources/v2017.05.31.01/native_exopackage_fake_path, file.encoding=UTF-8, java.specification.version=1.8}
+[2017-08-25 12:03:17.274][debug][command:null][tid:687][com.facebook.buck.config.Configs] Loading configuration for /Users/macbookpro/Documents/CS
+[2017-08-25 12:03:17.274][debug][command:null][tid:687][com.facebook.buck.config.Configs] Loaded a configuration file /Users/macbookpro/Documents/CS/.buckconfig: {}
+[2017-08-25 12:03:17.274][debug][command:null][tid:687][com.facebook.buck.config.Configs] Adding configuration overrides RawConfig{values={client={id=nuclide}}}
+[2017-08-25 12:03:17.276][info ][command:null][tid:687][com.facebook.buck.io.Watchman] Creating for: [/Users/macbookpro/Documents/CS]
+[2017-08-25 12:03:17.277][debug][command:null][tid:687][com.facebook.buck.io.ExecutableFinder] Executable 'watchman' mapped to 'Optional[/usr/local/bin/watchman]'
+[2017-08-25 12:03:17.277][debug][command:null][tid:687][com.facebook.buck.util.ListeningProcessExecutor] Launching process with params ProcessExecutorParams{command=[/usr/local/bin/watchman, --output-encoding=bser, get-sockname]}
+[2017-08-25 12:03:17.278][debug][command:null][tid:687][com.facebook.buck.util.ListeningProcessExecutor] Successfully launched process com.zaxxer.nuprocess.osx.OsxProcess@664c4c2a
+[2017-08-25 12:03:17.278][debug][command:null][tid:687][com.facebook.buck.util.ListeningProcessExecutor] Waiting for process com.facebook.buck.util.ListeningProcessExecutor$LaunchedProcessImpl@22cf3ba2 timeout 1000000000 NANOSECONDS
+[2017-08-25 12:03:17.296][debug][command:null][tid:687][com.facebook.buck.util.ListeningProcessExecutor] Wait for process returned 0
+[2017-08-25 12:03:17.296][debug][command:null][tid:687][com.facebook.buck.io.Watchman] Waited 17 ms for Watchman command get-sockname, exit code 0
+[2017-08-25 12:03:17.297][debug][command:null][tid:687][com.facebook.buck.io.Watchman] stdout of command: {version=4.7.0, sockname=/usr/local/var/run/watchman/macbookpro-state/sock}
+[2017-08-25 12:03:17.297][info ][command:null][tid:687][com.facebook.buck.io.Watchman] Connecting to Watchman version 4.7.0 at /usr/local/var/run/watchman/macbookpro-state/sock
+[2017-08-25 12:03:17.297][debug][command:null][tid:687][com.facebook.buck.io.Watchman] Connected to Watchman
+[2017-08-25 12:03:17.297][debug][command:null][tid:694][com.facebook.buck.io.WatchmanTransportClient] Sending query: [version, {required=[cmd-watch-project], optional=[term-dirname, cmd-watch-project, wildmatch, wildmatch_multislash, glob_generator, clock-sync-timeout]}]
+[2017-08-25 12:03:17.298][debug][command:null][tid:687][com.facebook.buck.io.WatchmanTransportClient] Query [version, {required=[cmd-watch-project], optional=[term-dirname, cmd-watch-project, wildmatch, wildmatch_multislash, glob_generator, clock-sync-timeout]}] returned in 0 ms
+[2017-08-25 12:03:17.298][info ][command:null][tid:687][com.facebook.buck.io.Watchman] Took 1 ms to query capabilities {term-dirname=DIRNAME, cmd-watch-project=SUPPORTS_PROJECT_WATCH, wildmatch=WILDMATCH_GLOB, wildmatch_multislash=WILDMATCH_MULTISLASH, glob_generator=GLOB_GENERATOR, clock-sync-timeout=CLOCK_SYNC_TIMEOUT}
+[2017-08-25 12:03:17.298][debug][command:null][tid:687][com.facebook.buck.io.Watchman] Got capabilities response: {term-dirname=true, cmd-watch-project=true, wildmatch=true, wildmatch_multislash=false, glob_generator=true, clock-sync-timeout=true}
+[2017-08-25 12:03:17.298][debug][command:null][tid:687][com.facebook.buck.io.Watchman] Got Watchman capabilities: [DIRNAME, SUPPORTS_PROJECT_WATCH, WILDMATCH_GLOB, GLOB_GENERATOR, CLOCK_SYNC_TIMEOUT]
+[2017-08-25 12:03:17.298][info ][command:null][tid:687][com.facebook.buck.io.Watchman] Adding watchman root: /Users/macbookpro/Documents/CS
+[2017-08-25 12:03:17.298][debug][command:null][tid:694][com.facebook.buck.io.WatchmanTransportClient] Sending query: [watch-project, /Users/macbookpro/Documents/CS]
+[2017-08-25 12:03:17.302][debug][command:null][tid:687][com.facebook.buck.io.WatchmanTransportClient] Query [watch-project, /Users/macbookpro/Documents/CS] returned in 3 ms
+[2017-08-25 12:03:17.302][debug][command:null][tid:694][com.facebook.buck.io.WatchmanTransportClient] Sending query: [watch-project, /Users/macbookpro/Documents/CS]
+[2017-08-25 12:03:17.302][debug][command:null][tid:687][com.facebook.buck.io.WatchmanTransportClient] Query [watch-project, /Users/macbookpro/Documents/CS] returned in 0 ms
+[2017-08-25 12:03:17.302][info ][command:null][tid:687][com.facebook.buck.io.Watchman] Took 4 ms to add root /Users/macbookpro/Documents/CS
+[2017-08-25 12:03:17.303][debug][command:null][tid:694][com.facebook.buck.io.WatchmanTransportClient] Sending query: [clock, /Users/macbookpro/Documents/CS, {sync_timeout=100}]
+[2017-08-25 12:03:17.306][debug][command:null][tid:687][com.facebook.buck.io.WatchmanTransportClient] Query [clock, /Users/macbookpro/Documents/CS, {sync_timeout=100}] returned in 3 ms
+[2017-08-25 12:03:17.306][info ][command:null][tid:687][com.facebook.buck.io.Watchman] Took 3 ms to query for initial clock id Optional[c:1503576860:16574:4:309]
+[2017-08-25 12:03:17.306][debug][command:null][tid:687][com.facebook.buck.cli.Main] Watchman capabilities: [DIRNAME, SUPPORTS_PROJECT_WATCH, WILDMATCH_GLOB, GLOB_GENERATOR, CLOCK_SYNC_TIMEOUT] Project watches: {/Users/macbookpro/Documents/CS=ProjectWatch{watchRoot=/Users/macbookpro/Documents/CS}} Glob handler config: PYTHON Query timeout ms config: Optional.empty
