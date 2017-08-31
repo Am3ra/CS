@@ -1,4 +1,0 @@
-InvocationInfo {"buildId":"3d40a9f6-69ec-452d-a51f-41048fa62c6b","superConsoleEnabled":false,"isDaemon":true,"subCommand":"querycommand","commandArgs":["query","--json","kind(\"apple_binary|apple_library|apple_test|cxx_binary|cxx_library|cxx_test\", owner(\"/Users/macbookpro/Documents/CS/test.cpp\"))","--config","client.id=nuclide"],"unexpandedCommandArgs":["query","--json","kind(\"apple_binary|apple_library|apple_test|cxx_binary|cxx_library|cxx_test\", owner(\"/Users/macbookpro/Documents/CS/test.cpp\"))","--config","client.id=nuclide"],"buckLogDir":"buck-out/log","timestampMillis":1503077951865}
-FileDelete {"timestamp":1503077956904,"filename":".git/index.lock"}
-UploadToCacheStatistics {"successUploadCount":0,"failureUploadCount":0}
-ExitCode {"exitCode":0}

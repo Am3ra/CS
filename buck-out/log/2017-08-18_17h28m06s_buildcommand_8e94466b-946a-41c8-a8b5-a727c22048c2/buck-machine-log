@@ -1,3 +1,0 @@
-InvocationInfo {"buildId":"8e94466b-946a-41c8-a8b5-a727c22048c2","superConsoleEnabled":true,"isDaemon":true,"subCommand":"buildcommand","commandArgs":["build"],"unexpandedCommandArgs":["build"],"buckLogDir":"buck-out/log","timestampMillis":1503077286997}
-UploadToCacheStatistics {"successUploadCount":0,"failureUploadCount":0}
-ExitCode {"exitCode":1}

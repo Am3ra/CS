@@ -1,3 +1,0 @@
-InvocationInfo {"buildId":"88d45555-9a91-4ca4-96b5-bdb5c047d6cb","superConsoleEnabled":false,"isDaemon":true,"subCommand":"auditcommand","commandArgs":["audit","alias","--list","--config","client.id=nuclide"],"unexpandedCommandArgs":["audit","alias","--list","--config","client.id=nuclide"],"buckLogDir":"buck-out/log","timestampMillis":1503435961907}
-UploadToCacheStatistics {"successUploadCount":0,"failureUploadCount":0}
-ExitCode {"exitCode":0}

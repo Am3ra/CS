@@ -1,3 +1,0 @@
-InvocationInfo {"buildId":"80fbbecb-ab0d-4dc1-a505-beb11d1c1417","superConsoleEnabled":false,"isDaemon":true,"subCommand":"querycommand","commandArgs":["query","--json","owner(\"/Users/macbookpro/Documents/CS/CS101/ejercicios/7-2.c\")","--config","client.id=nuclide"],"unexpandedCommandArgs":["query","--json","owner(\"/Users/macbookpro/Documents/CS/CS101/ejercicios/7-2.c\")","--config","client.id=nuclide"],"buckLogDir":"buck-out/log","timestampMillis":1503430004369}
-UploadToCacheStatistics {"successUploadCount":0,"failureUploadCount":0}
-ExitCode {"exitCode":0}

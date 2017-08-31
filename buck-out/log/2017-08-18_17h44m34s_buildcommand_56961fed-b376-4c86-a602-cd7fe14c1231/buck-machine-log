@@ -1,4 +1,0 @@
-InvocationInfo {"buildId":"56961fed-b376-4c86-a602-cd7fe14c1231","superConsoleEnabled":true,"isDaemon":true,"subCommand":"buildcommand","commandArgs":["build","//CS101"],"unexpandedCommandArgs":["build","//CS101"],"buckLogDir":"buck-out/log","timestampMillis":1503078274010}
-FileDelete {"timestamp":1503078279042,"filename":".git/index.lock"}
-UploadToCacheStatistics {"successUploadCount":0,"failureUploadCount":0}
-ExitCode {"exitCode":1}

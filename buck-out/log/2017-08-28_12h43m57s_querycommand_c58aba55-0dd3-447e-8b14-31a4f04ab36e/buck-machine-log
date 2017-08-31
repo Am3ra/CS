@@ -1,3 +1,0 @@
-InvocationInfo {"buildId":"c58aba55-0dd3-447e-8b14-31a4f04ab36e","superConsoleEnabled":false,"isDaemon":false,"subCommand":"querycommand","commandArgs":["query","--json","kind(\"apple_binary|apple_library|apple_test|cxx_binary|cxx_library|cxx_test\", owner(\"/Users/macbookpro/Documents/CS/test.cpp\"))","--config","client.id=nuclide"],"unexpandedCommandArgs":["query","--json","kind(\"apple_binary|apple_library|apple_test|cxx_binary|cxx_library|cxx_test\", owner(\"/Users/macbookpro/Documents/CS/test.cpp\"))","--config","client.id=nuclide"],"buckLogDir":"buck-out/log","timestampMillis":1503924237203}
-UploadToCacheStatistics {"successUploadCount":0,"failureUploadCount":0}
-ExitCode {"exitCode":-1}

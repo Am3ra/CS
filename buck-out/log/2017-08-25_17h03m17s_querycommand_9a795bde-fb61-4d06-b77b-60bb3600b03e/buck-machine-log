@@ -1,7 +1,0 @@
-InvocationInfo {"buildId":"9a795bde-fb61-4d06-b77b-60bb3600b03e","superConsoleEnabled":false,"isDaemon":true,"subCommand":"querycommand","commandArgs":["query","--json","kind(\"apple_binary|apple_library|apple_test|cxx_binary|cxx_library|cxx_test\", owner(\"/Users/macbookpro/Documents/CS/CS101/ejercicios/7-4.c\"))","--config","client.id=nuclide"],"unexpandedCommandArgs":["query","--json","kind(\"apple_binary|apple_library|apple_test|cxx_binary|cxx_library|cxx_test\", owner(\"/Users/macbookpro/Documents/CS/CS101/ejercicios/7-4.c\"))","--config","client.id=nuclide"],"buckLogDir":"buck-out/log","timestampMillis":1503680597315}
-FileDelete {"timestamp":1503680602347,"filename":"CS101/ejercicios/7-4"}
-FileCreate {"timestamp":1503680602347,"filename":"CS101/ejercicios/7-4.c"}
-FileDelete {"timestamp":1503680602348,"filename":"CS101/ejercicios/compiling_error.txt"}
-FileDelete {"timestamp":1503680602348,"filename":".git/index.lock"}
-UploadToCacheStatistics {"successUploadCount":0,"failureUploadCount":0}
-ExitCode {"exitCode":0}

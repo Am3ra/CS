@@ -1,3 +1,0 @@
-InvocationInfo {"buildId":"7f86e485-9f0c-4cbd-b22b-6b11575c7781","superConsoleEnabled":true,"isDaemon":true,"subCommand":"projectcommand","commandArgs":["project","--without-tests"],"unexpandedCommandArgs":["project","--without-tests"],"buckLogDir":"buck-out/log","timestampMillis":1503077050791}
-UploadToCacheStatistics {"successUploadCount":0,"failureUploadCount":0}
-ExitCode {"exitCode":1}
