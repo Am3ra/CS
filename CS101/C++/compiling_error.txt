@@ -1,0 +1,11 @@
+/Users/macbookpro/Documents/CS/CS101/C++/exponencial.cpp:14:13: error: use of undeclared identifier 'data'
+  if(sscanf(data,"b=%ld&x=%ld",&b,&x)!=2)
+            ^
+/Users/macbookpro/Documents/CS/CS101/C++/exponencial.cpp:18:6: error: variable has incomplete type 'void'
+void exponencial(x,b) {
+     ^
+/Users/macbookpro/Documents/CS/CS101/C++/exponencial.cpp:18:22: error: expected ';' after top level declarator
+void exponencial(x,b) {
+                     ^
+                     ;
+3 errors generated.
