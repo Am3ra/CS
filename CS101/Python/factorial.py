@@ -1,9 +1,6 @@
 def factorial(x):
-    i=1
     j=1
-    while(i<x):
-        i=i+1
-        j=j*i
+    for i in range(x):
+        j*=(i+1)
     return j
-a = int(input("Please choose a number: "))
-print(factorial(a))
+print(factorial(int(input("Please choose a number: "))))
