@@ -1,4 +1,5 @@
 #Q = sqrt([100 * D ]/30)
+<<<<<<< HEAD
 #Write a program that calculates and prints the value according to the given formula:
 #Q = Square root of [(2 * C * D)/H]
 # Following are the fixed values of C and H:
@@ -14,9 +15,15 @@
 # In case of input data being supplied to the question, it should be assumed to be a console input.
 
 
+=======
+>>>>>>> ef878aced566d9e8cbccf0442ac02c2b59038de7
 import math
 d = input("Choose a number or numbers: ")
 d= d.split(',')
 for i in d:
+<<<<<<< HEAD
     i = round(math.sqrt((100*float(i))/30))
+=======
+    i = math.floor(math.sqrt((100*float(i))/30))
+>>>>>>> ef878aced566d9e8cbccf0442ac02c2b59038de7
     print(i)
