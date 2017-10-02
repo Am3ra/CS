@@ -1,3 +1,5 @@
+#Transate from different number systems
+
 t = int(input())  # read a line with a single integer
 def translate(input_string, source_language, target_language):
     input_string = input_string[::-1]
