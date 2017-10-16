@@ -28,6 +28,6 @@ int main(){
 	gotoxy(i,11);
 	printf(" ");
 	}
-	getche();
+	getch();
   return 0;
 }
