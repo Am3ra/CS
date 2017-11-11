@@ -1,10 +1,20 @@
 from zipfile import *
 
+num = 90052
+comments = []
+
+while True:
+    print(num)
+    filename = "Downloads/channel/"+str(num)+".txt"
+    archive = open(filename, "r")
+    data = archive.readline()
+    print(data)
+    num = int(data.split()[3])
+    comments.append(archive.getinfo())
+print(comments)
 
 
-zip_archive = ZipFile("Downloads/channel.zip", "r")
 
-x = zip_archive.comment()
 
 print(x)
 
