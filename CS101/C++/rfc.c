@@ -18,7 +18,7 @@ void upper_string(char s[]) {
 
 int main(void)
 {
-  char nombre[20] = "Jose", ap[] = "Escedo", mat[]="Esparza",rfc[11];
+  char nombre[20] = "Jose", ap[20] = "Escedo", mat[20]="Esparza",rfc[11];
   int nomnom = 0, ano= 1989, mes = 16, dia= 14, an2;
   char d;
   char c;
