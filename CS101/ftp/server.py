@@ -2,8 +2,10 @@
 
 import socket
 import threading
+import os
 
 FTP_PORT = 21
+LOCAL_IP = "localhost"
 
 
 class FTPserver():
@@ -12,10 +14,14 @@ class FTPserver():
     def __init__(self, backlog=3):
         '''initialization of class'''
         self.sock = socket.socket()
-        self.sock.bind(("localhost", FTP_PORT))
-        self.sock.listen(backlog)
+        self.sock.bind((LOCAL_IP, FTP_PORT))
+        self.backlog = backlog
 
-    def close_server(self):
+    def start(self):
+        '''Start server listening'''
+        self.sock.listen(self.backlog)
+
+    def stop(self):
         '''Close the server.'''
         self.sock.close()
 
@@ -26,5 +32,7 @@ class FTPthread():
 
 if __name__ == "__main__":
     FTP = FTPserver()
-    FTP.close_server()
-    print(FTP)
+    FTP.start()
+    print("FTP Server currently running")
+    input('Enter to end...\n')
+    FTP.stop()
