@@ -1,5 +1,7 @@
 import javax.swing.JOptionPane;
 
+import com.sun.xml.internal.org.jvnet.staxex.util.XMLStreamReaderToXMLStreamWriter.Breakpoint;
+
 public class Grados {
     private static void convCentigrados() {
         float centigrados, farenheit;
@@ -22,15 +24,16 @@ public class Grados {
 
         JOptionPane.showMessageDialog(null, farenheit + " G. Farenheit = " + centigrados + " G. Centigrados");
     }
-    private static void conversionGrados(String opicion){
-        if( opicion == "0"){
-            convCentigrados();
-        }
-        else {
-            convFareinheit();
-        }       
-    }
+    
     public static void main(String[] args) {
-        conversionGrados(JOptionPane.showInputDialog("Si Centigrados a farenheit, 1. Si no, 0."));
+        while(true){
+           String opicion = JOptionPane.showInputDialog("Si Centigrados a farenheit, 1. Si no, 0. 2 Para Cancelar.");
+            if (opicion == "0") {
+                convCentigrados();
+            } else if (opicion == "1") {
+                convFareinheit();
+            }else break;
+        }
+        
     }
 }
