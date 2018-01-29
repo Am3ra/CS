@@ -10,19 +10,20 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-public class factorial extends JFrame implements ActionListener{
-    private JTextField tffactorial;
-    private JButton bCalcular, bSalir;
+public class GradosGUI5 extends JFrame implements ActionListener{
+    private JTextField tfGrados;
+    private JButton bCalcular1, bCalcular2, bSalir;
     private JPanel panel1, panel2;
     private JTextArea taDatos;
     private CalculosDP calculos = new CalculosDP();
 
-    public factorial(){
+    public GradosGUI5(){
         super("Conversion de grados");
 
         // Crear objetos de atributos/variables de clase
-        tffactorial = new JTextField();
-        bCalcular = new JButton("Calcular factorial");
+        tfGrados = new JTextField();
+        bCalcular1 = new JButton("G. Centigrados a G. Fahrenheit");
+        bCalcular2 = new JButton("G. Fahrenheit a G. Celcius");
         bSalir = new JButton("Exit");
         panel1 = new JPanel();
         panel2 = new JPanel();
@@ -31,7 +32,8 @@ public class factorial extends JFrame implements ActionListener{
 
         //adicionar action listener a botones
         bSalir.addActionListener(this);
-        bCalcular.addActionListener(this);
+        bCalcular1.addActionListener(this);
+        bCalcular2.addActionListener(this);
 
         //definir layout de JPanels
         panel1.setLayout(new GridLayout(2,2));
@@ -39,28 +41,40 @@ public class factorial extends JFrame implements ActionListener{
 
         // Poner los objetos de atributos en el Jpanel
         panel1.add(new JLabel("Grados a convertir = "));
-        panel1.add(tffactorial);
-        panel1.add(bCalcular);
-        panel1.add(bSalir);
+        panel1.add(tfGrados);
+        panel1.add(bCalcular1);
+        panel1.add(bCalcular2);
+        
 
         panel2.add(panel1);
         panel2.add(new JScrollPane(taDatos));
+        panel1.add(bSalir);
         // Hacer visible el JFrame
         add(panel2);
         setSize(500,300);
         setVisible(true);
     }
     public void actionPerformed(ActionEvent event){
-        if (event.getSource() == bCalcular) {
+        if (event.getSource() == bCalcular1) {
             //Obtener Datos
-            String strfactorial = tffactorial.getText();
+            String strGrados = tfGrados.getText();
             //Hacer la conversion 
-            
-            Integer num = Integer.parseInt(strfactorial);
-            Integer cool =calculos.factorial(num);
-            
+            float gc = Float.parseFloat(strGrados);
+            float gf = calculos.gradosCF(gc);
             //Desplegar resultado
-            taDatos.setText(cool + " Es el resultado");
+            tfGrados.setText(""+gf);
+            taDatos.setText( gc+"Grados Centigrados = " + gf +" Grados Fahrenheit" );
+
+        }
+        if (event.getSource() == bCalcular2) {
+            //Obtener Datos
+            String strGrados = tfGrados.getText();
+            //Hacer la conversion 
+            float gf = Float.parseFloat(strGrados);
+            float gc = calculos.gradosFC(gf);
+            //Desplegar resultado
+            tfGrados.setText("" + gf);
+            taDatos.setText(gf + "Grados Fahrenheit = " + gc + " Grados Celcius");
 
         }
         if(event.getSource()==bSalir){
@@ -68,6 +82,6 @@ public class factorial extends JFrame implements ActionListener{
         }
     }
     public static void main(String[] args) {
-        factorial factorial = new factorial();
+        GradosGUI5 grados = new GradosGUI5();
     }
 }

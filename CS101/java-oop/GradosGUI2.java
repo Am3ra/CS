@@ -61,6 +61,7 @@ public class GradosGUI2 extends JFrame implements ActionListener{
             float gc = Float.parseFloat(strGrados);
             float gf = (float) 9/5 * gc +32; 
             //Desplegar resultado
+            tfGrados.setText(""+gf);
             taDatos.setText( gc+"Grados Centigrados = " + gf +" Grados Fahrenheit" );
 
         }
@@ -71,6 +72,7 @@ public class GradosGUI2 extends JFrame implements ActionListener{
             float gf = Float.parseFloat(strGrados);
             float gc = (float) 5/9 * (gf - 32);
             //Desplegar resultado
+            tfGrados.setText("" + gf);
             taDatos.setText(gf + "Grados Fahrenheit = " + gc + " Grados Celcius");
 
         }

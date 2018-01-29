@@ -10,19 +10,20 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-public class factorial extends JFrame implements ActionListener{
-    private JTextField tffactorial;
+public class exponencial extends JFrame implements ActionListener{
+    private JTextField tfexponencial, tfbase;
     private JButton bCalcular, bSalir;
     private JPanel panel1, panel2;
     private JTextArea taDatos;
     private CalculosDP calculos = new CalculosDP();
 
-    public factorial(){
+    public exponencial(){
         super("Conversion de grados");
 
         // Crear objetos de atributos/variables de clase
-        tffactorial = new JTextField();
-        bCalcular = new JButton("Calcular factorial");
+        tfexponencial = new JTextField();
+        tfbase = new JTextField();
+        bCalcular = new JButton("Calcular exponencial");
         bSalir = new JButton("Exit");
         panel1 = new JPanel();
         panel2 = new JPanel();
@@ -34,12 +35,14 @@ public class factorial extends JFrame implements ActionListener{
         bCalcular.addActionListener(this);
 
         //definir layout de JPanels
-        panel1.setLayout(new GridLayout(2,2));
+        panel1.setLayout(new GridLayout(3,2));
         panel2.setLayout(new FlowLayout());
 
         // Poner los objetos de atributos en el Jpanel
-        panel1.add(new JLabel("Grados a convertir = "));
-        panel1.add(tffactorial);
+        panel1.add(new JLabel("Base = "));
+        panel1.add(tfbase);
+        panel1.add(new JLabel("Exponencial=  "));
+        panel1.add(tfexponencial);
         panel1.add(bCalcular);
         panel1.add(bSalir);
 
@@ -53,21 +56,40 @@ public class factorial extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent event){
         if (event.getSource() == bCalcular) {
             //Obtener Datos
-            String strfactorial = tffactorial.getText();
+            String strexponencial = tfexponencial.getText();
+            String strbase = tfbase.getText();
             //Hacer la conversion 
             
-            Integer num = Integer.parseInt(strfactorial);
-            Integer cool =calculos.factorial(num);
-            
-            //Desplegar resultado
-            taDatos.setText(cool + " Es el resultado");
+            int exp = Integer.parseInt(strexponencial);
+            int base = Integer.parseInt(strbase);
+            if(exp < 0 ){
+                int cool = calculos.exponencial(base, exp*(-1));
 
+                //Desplegar resultado
+                taDatos.setText("1/"+cool + " Es el resultado");
+
+            }
+            if(exp == 0 ){
+
+                //Desplegar resultado
+                taDatos.setText(1 + " Es el resultado");
+
+            } 
+
+            if (exp >0){
+                int cool = calculos.exponencial(base, exp);
+
+                //Desplegar resultado
+                taDatos.setText(cool + " Es el resultado");
+
+            }
+            
         }
         if(event.getSource()==bSalir){
             System.exit(0);
         }
     }
     public static void main(String[] args) {
-        factorial factorial = new factorial();
+        exponencial exponencial = new exponencial();
     }
 }
