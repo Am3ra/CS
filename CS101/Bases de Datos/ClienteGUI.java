@@ -40,8 +40,8 @@ public class ClienteGUI extends JFrame implements ActionListener{
         bConsultar.addActionListener(this);
         bCapturar.addActionListener(this);
 
-        panel1.setLayout(new GridLayout(5,2));
-        panel1.setLayout(new FlowLayout());
+        panel1.setLayout(new GridLayout(6,2));
+        panel2.setLayout(new FlowLayout());
 
         panel1.add(new JLabel("No de cuenta"));
         panel1.add(tfCuenta);

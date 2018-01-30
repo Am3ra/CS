@@ -1,0 +1,2 @@
+Error en capturajava.lang.NumberFormatException: For input string: "asdf"
+Error en capturajava.lang.NumberFormatException: For input string: "asdf"
