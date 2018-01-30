@@ -33,13 +33,13 @@ public class BancoAD {
         try {
             archivoIn = new BufferedReader(new FileReader("Cliente.txt"));
             while(archivoIn.ready()){
-                datos += archivoIn.readLine()+"\n";
+                respuesta += archivoIn.readLine()+"\n";
             }
             //Capturar Datos
-            archivoOut.println(datos);
+            archivoOut.println(respuesta);
             //Cerrar Archivo
             archivoOut.close();
-            respuesta = "Datois capturados: " + datos;
+            respuesta = "Datois capturados: " + respuesta;
         } catch (IOException e) {
             respuesta = "ERROR" + e;
         }
