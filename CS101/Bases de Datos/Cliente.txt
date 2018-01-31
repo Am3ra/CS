@@ -1,2 +1,2 @@
-Error en capturajava.lang.NumberFormatException: For input string: "asdf"
-Error en capturajava.lang.NumberFormatException: For input string: "asdf"
+123_alan_credito_2000
+321_miguel_credito_2000

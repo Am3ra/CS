@@ -35,11 +35,10 @@ public class BancoAD {
             while(archivoIn.ready()){
                 respuesta += archivoIn.readLine()+"\n";
             }
-            //Capturar Datos
-            archivoOut.println(respuesta);
             //Cerrar Archivo
-            archivoOut.close();
-            respuesta = "Datois capturados: " + respuesta;
+            archivoIn.close();
+            respuesta = "Consulta de Clientes: \n" + respuesta;
+            
         } catch (IOException e) {
             respuesta = "ERROR" + e;
         }

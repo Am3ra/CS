@@ -35,12 +35,13 @@ public class ClienteGUI extends JFrame implements ActionListener{
         panel1 = new JPanel();
         panel2 = new JPanel();
         taDatos = new JTextArea(10,30);
+        taDatos.setEditable(false);
 
         bSalir.addActionListener(this);
         bConsultar.addActionListener(this);
         bCapturar.addActionListener(this);
 
-        panel1.setLayout(new GridLayout(6,2));
+        panel1.setLayout(new GridLayout(5,2));
         panel2.setLayout(new FlowLayout());
 
         panel1.add(new JLabel("No de cuenta"));
@@ -53,9 +54,10 @@ public class ClienteGUI extends JFrame implements ActionListener{
         panel1.add(tfSaldo);
         panel1.add(bCapturar);
         panel1.add(bConsultar);
-        panel1.add(bSalir);
+        
 
         panel2.add(panel1);
+        panel2.add(bSalir);
         panel2.add(new JScrollPane(taDatos));
         add(panel2);
         setSize(400,400);
@@ -63,7 +65,7 @@ public class ClienteGUI extends JFrame implements ActionListener{
 
     }
     private String obtenerDatos(){
-        String nocta = tfCuenta.getText(), nombre = tfCuenta.getText(),tipo = tfCuenta.getText(), saldo = tfCuenta.getText(),datos;
+        String nocta = tfCuenta.getText(), nombre = tfNombre.getText(),tipo = tfTipo.getText(), saldo = tfSaldo.getText(),datos;
 
         if (nocta.equals("")|| nombre.isEmpty()||tipo.equals("")||saldo.isEmpty()){
             datos =  "VACIO";
@@ -72,7 +74,7 @@ public class ClienteGUI extends JFrame implements ActionListener{
                 int n  = Integer.parseInt(saldo);
                 datos = nocta+"_"+nombre+"_"+tipo+"_"+saldo;
             } catch(Exception e){
-                datos = "Error en captura"+e;
+                datos = "NO_NUMERICO";
                 System.out.println("ERROR"+e);
             }
         }
@@ -93,10 +95,10 @@ public class ClienteGUI extends JFrame implements ActionListener{
             taDatos.setText(respuesta);
         }
         if (event.getSource() == bConsultar) {
-
+            taDatos.setText(bancoad.consultarClientes());
         }
         if (event.getSource() == bSalir) {
-
+            System.exit(0);
         }
     }
     public static void main(String[] args) {
