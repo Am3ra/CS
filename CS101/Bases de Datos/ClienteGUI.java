@@ -62,6 +62,7 @@ public class ClienteGUI extends JFrame implements ActionListener{
         add(panel2);
         setSize(400,400);
         setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
     private String obtenerDatos(){
