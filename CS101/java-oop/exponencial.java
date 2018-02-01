@@ -51,7 +51,11 @@ public class exponencial extends JFrame implements ActionListener{
         // Hacer visible el JFrame
         add(panel2);
         setSize(500,300);
-        setVisible(true);
+        //setVisible(true);
+    }
+    
+    public JPanel getPanel2() {
+        return panel2;
     }
     public void actionPerformed(ActionEvent event){
         if (event.getSource() == bCalcular) {

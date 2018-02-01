@@ -48,11 +48,16 @@ public class GradosGUI5 extends JFrame implements ActionListener{
 
         panel2.add(panel1);
         panel2.add(new JScrollPane(taDatos));
-        panel1.add(bSalir);
+        panel2.add(bSalir);
         // Hacer visible el JFrame
         add(panel2);
         setSize(500,300);
-        setVisible(true);
+        //setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+    
+    public JPanel getPanel2() {
+        return panel2;
     }
     public void actionPerformed(ActionEvent event){
         if (event.getSource() == bCalcular1) {
@@ -81,6 +86,7 @@ public class GradosGUI5 extends JFrame implements ActionListener{
             System.exit(0);
         }
     }
+    
     public static void main(String[] args) {
         GradosGUI5 grados = new GradosGUI5();
     }
