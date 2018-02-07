@@ -17,9 +17,11 @@ import javax.swing.JTextField;
 public class ClienteGUI extends JFrame implements ActionListener{
     private JTextField tfCuenta, tfNombre, tfTipo, tfSaldo;
     private JButton bCapturar, bConsultar, bSalir;
+    private JButton bConsultarNocta, bRetiro, bDeposito, bCancelar;
     private JPanel panel1, panel2;
     private JTextArea taDatos;
     
+
     private BancoAD bancoad = new BancoAD();
 
     public ClienteGUI(){
@@ -37,11 +39,20 @@ public class ClienteGUI extends JFrame implements ActionListener{
         taDatos = new JTextArea(10,30);
         taDatos.setEditable(false);
 
+        bConsultarNocta =new JButton("Consultar no. Cuenta");
+        bRetiro = new JButton("Retiro de cuenta");
+        bDeposito =new JButton("Depositar");
+        bCancelar=new JButton("Salir");
+
         bSalir.addActionListener(this);
         bConsultar.addActionListener(this);
         bCapturar.addActionListener(this);
+        bConsultarNocta.addActionListener(this);
+        bRetiro.addActionListener(this);
+        bDeposito.addActionListener(this);
+        bCancelar.addActionListener(this);
 
-        panel1.setLayout(new GridLayout(5,2));
+        panel1.setLayout(new GridLayout(9,2));
         panel2.setLayout(new FlowLayout());
 
         panel1.add(new JLabel("No de cuenta"));
@@ -54,6 +65,10 @@ public class ClienteGUI extends JFrame implements ActionListener{
         panel1.add(tfSaldo);
         panel1.add(bCapturar);
         panel1.add(bConsultar);
+        panel1.add(bConsultarNocta);
+        panel1.add(bRetiro);
+        panel1.add(bDeposito);
+        panel1.add(bCancelar);
         
 
         panel2.add(panel1);
