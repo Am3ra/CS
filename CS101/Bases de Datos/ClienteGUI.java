@@ -22,7 +22,8 @@ public class ClienteGUI extends JFrame implements ActionListener{
     private JTextArea taDatos;
     
 
-    private BancoAD bancoad = new BancoAD();
+    // private BancoAD bancoad = new BancoAD();
+    private BancoADjdbc bancoad = new BancoADjdbc();
 
     public ClienteGUI(){
         super("ADMON de Clientes");
@@ -33,7 +34,7 @@ public class ClienteGUI extends JFrame implements ActionListener{
         tfSaldo = new JTextField();
         bCapturar = new JButton("Capturar Datos");
         bConsultar = new JButton("consultar Clientes");
-        bSalir =new JButton("Salir");
+        bCancelar =new JButton("Salir");
         panel1 = new JPanel();
         panel2 = new JPanel();
         taDatos = new JTextArea(10,30);
@@ -42,7 +43,7 @@ public class ClienteGUI extends JFrame implements ActionListener{
         bConsultarNocta =new JButton("Consultar no. Cuenta");
         bRetiro = new JButton("Retiro de cuenta");
         bDeposito =new JButton("Depositar");
-        bCancelar=new JButton("Salir");
+        bSalir=new JButton("Salir");
 
         bSalir.addActionListener(this);
         bConsultar.addActionListener(this);

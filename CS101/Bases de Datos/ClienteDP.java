@@ -1,3 +1,5 @@
+import java.util.StringTokenizer;
+
 public class ClienteDP{
     private String nocta, nombre, tipo;
     private int saldo;
@@ -9,10 +11,11 @@ public class ClienteDP{
         this.saldo = 0; 
     }
     public ClienteDP(String datos){
+        StringTokenizer st = new StringTokenizer(datos);
         this.nocta= st.nextToken();
         this.nombre= st.nextToken();
         this.tipo= st.nextToken();
-        this.saldo= st.nextToken();
+        this.saldo= Integer.parseInt(st.nextToken());
     }
     public String getNocta(){
         return this.nocta;
@@ -26,10 +29,10 @@ public class ClienteDP{
     public int getSaldo(){
         return this.saldo;
     }
-    public void setNocta(string ncta){
+    public void setNocta(String ncta){
         this.nocta = ncta;
     }
-    public void setNombre(string nom){
+    public void setNombre(String nom){
         this.nombre = nom;
     }
     public void setTipo(String  tcta){

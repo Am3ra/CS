@@ -51,7 +51,7 @@ public class CalculosGUI2 extends JFrame implements ActionListener{
 
         //Colocar el JMenuBAr en el Jframe
         setJMenuBar(mbPrincipal);
-        setSize(400,400);
+        setSize(500,400);
         setVisible(true);
         
 

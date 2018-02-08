@@ -1,6 +1,5 @@
 import javax.swing.JOptionPane;
 
-import com.sun.xml.internal.org.jvnet.staxex.util.XMLStreamReaderToXMLStreamWriter.Breakpoint;
 
 public class Grados {
     private static void convCentigrados() {

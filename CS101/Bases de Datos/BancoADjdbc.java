@@ -15,7 +15,10 @@ import java.util.StringTokenizer;
 
 /**
  * BancoADjdbcjdbc
+ * 
+ * 
  */
+
 public class BancoADjdbc {
 
     private BufferedReader archivoIn;
@@ -28,7 +31,7 @@ public class BancoADjdbc {
     public BancoADjdbc() {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:mysl://localhost/banco?user=root");
+            conexion = DriverManager.getConnection("jdbc:mysql://localhost/banco?user=root&password=hhooppee&useSSL=false");
             System.out.println("Conexion exitosa a la BD...");
         } catch (ClassNotFoundException e) {
             System.out.println("Error 1:" + e);
@@ -55,7 +58,7 @@ public class BancoADjdbc {
 
         clientedp = new ClienteDP(datos);
 
-        String insertCliente = "INSERT INTO Cliente VALUES('" + clientedp.toStringSql() + "')";
+        String insertCliente = "INSERT INTO Clientes VALUES('" + clientedp.toStringSql() + "')";
         //Abrir archivo Datos
 
 
@@ -85,7 +88,7 @@ public class BancoADjdbc {
         String cta, nombre, tipo;
         int saldo;
         //Abrir archivo Datos
-        String query = "SELECT * FROM Cliente";
+        String query = "SELECT * FROM Clientes";
         try {
             // archivoIn = new BufferedReader(new FileReader("Cliente.txt"));
             // while(archivoIn.ready()){
@@ -108,7 +111,7 @@ public class BancoADjdbc {
 
                 // respuesta = respuesta + cta + "_" + nombre + "_" + tipo + "_" + saldo;
 
-                clientedp.setNocta(tr.getString("nocta"));
+                clientedp.setNocta(tr.getString("cuenta"));
                 clientedp.setNombre(tr.getString("nombre"));
                 clientedp.setTipo(tr.getString("tipo"));
                 clientedp.setSaldo(tr.getInt("saldo"));
