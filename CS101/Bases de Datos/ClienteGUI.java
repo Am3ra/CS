@@ -33,8 +33,8 @@ public class ClienteGUI extends JFrame implements ActionListener{
         tfTipo = new JTextField();
         tfSaldo = new JTextField();
         bCapturar = new JButton("Capturar Datos");
-        bConsultar = new JButton("consultar Clientes");
-        bCancelar =new JButton("Salir");
+        bConsultar = new JButton("Consultar Clientes");
+        bCancelar =new JButton("Cancelar Transacción");
         panel1 = new JPanel();
         panel2 = new JPanel();
         taDatos = new JTextArea(10,30);
@@ -50,7 +50,9 @@ public class ClienteGUI extends JFrame implements ActionListener{
         bCapturar.addActionListener(this);
         bConsultarNocta.addActionListener(this);
         bRetiro.addActionListener(this);
+        bRetiro.setEnabled(false);
         bDeposito.addActionListener(this);
+        bDeposito.setEnabled(false);
         bCancelar.addActionListener(this);
 
         panel1.setLayout(new GridLayout(9,2));
@@ -70,13 +72,12 @@ public class ClienteGUI extends JFrame implements ActionListener{
         panel1.add(bRetiro);
         panel1.add(bDeposito);
         panel1.add(bCancelar);
-        
-
+        panel1.add(bSalir);
+       
         panel2.add(panel1);
-        panel2.add(bSalir);
         panel2.add(new JScrollPane(taDatos));
         add(panel2);
-        setSize(400,400);
+        setSize(400,500);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

@@ -11,11 +11,11 @@ public class ClienteDP{
         this.saldo = 0; 
     }
     public ClienteDP(String datos){
-        StringTokenizer st = new StringTokenizer(datos);
-        this.nocta= st.nextToken();
-        this.nombre= st.nextToken();
-        this.tipo= st.nextToken();
-        this.saldo= Integer.parseInt(st.nextToken());
+        String[] st = datos.split("_");
+        this.nocta= st[0];
+        this.nombre= st[1];
+        this.tipo= st[2];
+        this.saldo= Integer.parseInt(st[3]);
     }
     public String getNocta(){
         return this.nocta;
@@ -45,6 +45,6 @@ public class ClienteDP{
         return this.nocta+"_"+this.nombre+"_"+this.tipo+"_"+this.saldo;
     }
     public String toStringSql(){
-        return "'"+this.nocta + "','" + this.nombre + "','" + this.tipo + "','" + this.saldo;
+        return ""+this.nocta + "','" + this.nombre + "','" + this.tipo + "','" + this.saldo;
     }
 }
