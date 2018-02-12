@@ -4,12 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
 
 /**
  * ClienteGUI
@@ -20,6 +23,7 @@ public class ClienteGUI extends JFrame implements ActionListener{
     private JButton bConsultarNocta, bRetiro, bDeposito, bCancelar;
     private JPanel panel1, panel2;
     private JTextArea taDatos;
+    private JComboBox cbtiposcuenta;
     
 
     // private BancoAD bancoad = new BancoAD();
@@ -27,10 +31,11 @@ public class ClienteGUI extends JFrame implements ActionListener{
 
     public ClienteGUI(){
         super("ADMON de Clientes");
+        String[] tiposCuentas = { "HIPOTECA", "INVERSION", "AHORRO", "CREDITO"};
 
         tfCuenta = new JTextField();
         tfNombre = new JTextField();
-        tfTipo = new JTextField();
+        // tfTipo = new JTextField();
         tfSaldo = new JTextField();
         bCapturar = new JButton("Capturar Datos");
         bConsultar = new JButton("Consultar Clientes");
@@ -38,6 +43,7 @@ public class ClienteGUI extends JFrame implements ActionListener{
         panel1 = new JPanel();
         panel2 = new JPanel();
         taDatos = new JTextArea(10,30);
+        cbtiposcuenta = new JComboBox(tiposCuentas);
         taDatos.setEditable(false);
 
         bConsultarNocta =new JButton("Consultar no. Cuenta");
@@ -63,7 +69,7 @@ public class ClienteGUI extends JFrame implements ActionListener{
         panel1.add(new JLabel("Nombre"));
         panel1.add(tfNombre);
         panel1.add(new JLabel("Tipo de cuenta"));
-        panel1.add(tfTipo);
+        panel1.add(cbtiposcuenta);
         panel1.add(new JLabel("Saldo"));
         panel1.add(tfSaldo);
         panel1.add(bCapturar);
@@ -83,7 +89,7 @@ public class ClienteGUI extends JFrame implements ActionListener{
 
     }
     private String obtenerDatos(){
-        String nocta = tfCuenta.getText(), nombre = tfNombre.getText(),tipo = tfTipo.getText(), saldo = tfSaldo.getText(),datos;
+        String nocta = tfCuenta.getText(), nombre = tfNombre.getText(),tipo =(String) cbtiposcuenta.getSelectedItem(), saldo = tfSaldo.getText(),datos;
 
         if (nocta.equals("")|| nombre.isEmpty()||tipo.equals("")||saldo.isEmpty()){
             datos =  "VACIO";
@@ -117,6 +123,23 @@ public class ClienteGUI extends JFrame implements ActionListener{
         }
         if (event.getSource() == bSalir) {
             System.exit(0);
+        } if (event.getSource()== bDeposito){
+            //OBtener numero de cuenta
+            String ncta = tfCuenta.getText();
+            //obtener numero de deposito
+            int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Cantidad a depositar = " ));
+            respuesta = bancoad.depositar(ncta, cantidad);
+            //Desplegar el resultado
+            taDatos.setText(respuesta);
+            // activarBotones();
+        }if (event.getSource()== bRetiro){
+
+        }
+        if (event.getSource()== bConsultarNocta){
+            String ncta = tfCuenta.getText();
+            // respuesta = bancoad.buscar(ncta, cantidad);
+
+            //respuesta = BancoADjdbc.consultarncta(ncta);
         }
     }
     public static void main(String[] args) {

@@ -127,4 +127,43 @@ public class BancoADjdbc {
 
         return respuesta;
     }
+    public String depositar(String ncta, int cantidad) {
+        //Abrir BD
+        String transaccion = "";
+        String query;
+        ResultSet tr;
+        String update;
+        try {
+            statement = conexion.createStatement();
+            //Preparar Query de consulta con cuentaa
+            query = "SELECT * from clientes where cuenta = "+ncta+";";
+            tr = statement.executeQuery(query);
+            //Realizar deposito
+            if(tr.next()){
+                clientedp.setNocta(tr.getString("cuenta"));
+                clientedp.setNombre(tr.getString("nombre"));
+                clientedp.setSaldo(tr.getInt("saldo"));
+                clientedp.setTipo(tr.getString("tipo"));
+                if (clientedp.getTipo() == "INVERSION"|| clientedp.getTipo() == "AHORRO") {
+                    clientedp.setSaldo(clientedp.getSaldo()+cantidad);
+                } else {
+                    clientedp.setSaldo(clientedp.getSaldo() - cantidad);
+                }
+
+                update ="update clientes set saldo="+clientedp.getSaldo()+"where cuenta = "+ncta+";";
+                statement.executeUpdate(update);
+                transaccion = "Deposito exitoso, nuevo saldo = "+clientedp.getSaldo();
+                System.out.println(update);
+            }else{
+                transaccion = "Numero de cta. No encontrado";
+            }
+            // Cerrar BD
+            statement.close();
+
+        } catch (SQLException e) {
+            transaccion = "Error on update: "+e;
+        }
+       
+        return transaccion;
+    }
 }
