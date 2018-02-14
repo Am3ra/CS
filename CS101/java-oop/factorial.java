@@ -38,7 +38,7 @@ public class factorial extends JFrame implements ActionListener{
         panel2.setLayout(new FlowLayout());
 
         // Poner los objetos de atributos en el Jpanel
-        panel1.add(new JLabel("Grados a convertir = "));
+        panel1.add(new JLabel("Factorial de N= "));
         panel1.add(tffactorial);
         panel1.add(bCalcular);
         panel1.add(bSalir);
