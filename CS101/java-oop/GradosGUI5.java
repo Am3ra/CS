@@ -37,7 +37,7 @@ public class GradosGUI5 extends JFrame implements ActionListener{
 
         //definir layout de JPanels
         panel1.setLayout(new GridLayout(2,2));
-        panel2.setLayout(new FlowLayout());
+        panel2.setLayout(new GridLayout(1,1));
 
         // Poner los objetos de atributos en el Jpanel
         panel1.add(new JLabel("Grados a convertir = "));
@@ -52,7 +52,7 @@ public class GradosGUI5 extends JFrame implements ActionListener{
         // Hacer visible el JFrame
         add(panel2);
         setSize(500,300);
-        //setVisible(true);
+        setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     

@@ -11,12 +11,14 @@ import javax.swing.JPanel;
 public class CalculosGUI2 extends JFrame implements ActionListener{
     private JMenuBar mbPrincipal;
     private JMenu menuCalculos, menuGrados;
-    private JMenuItem miFactorial, miGradosCF, miGradosFC, miExponencial, miSalir;
+    private JMenuItem miFactorial, miGradosCF, miGradosFC, miExponencial,miEcuacion,miAudio, miSalir;
     private JPanel panel;
 
     private factorial factor = new factorial();
     private exponencial expo = new exponencial();
     private GradosGUI5 grados = new GradosGUI5();
+    private Raizes raiz = new Raizes();
+    private Audio2 audio2 = new Audio2();
 
     public CalculosGUI2(){
         super("Java APP: Calculos varios");
@@ -25,7 +27,9 @@ public class CalculosGUI2 extends JFrame implements ActionListener{
         menuCalculos = new JMenu("Calculos Varios");
         menuGrados = new JMenu("Conversion de Grados");
         miFactorial = new JMenuItem("Factorial de N");
-        miExponencial = new JMenuItem("Y = B^X");
+        miEcuacion = new JMenuItem("Ecuación Cuadrática");
+        miAudio = new JMenuItem("Reproducción de Audio");
+        miExponencial = new JMenuItem("Exponencial");
         miGradosCF = new JMenuItem("C a F");
         miGradosFC = new JMenuItem("F a C");
         miSalir = new JMenuItem("Exit");
@@ -37,6 +41,8 @@ public class CalculosGUI2 extends JFrame implements ActionListener{
         miExponencial.addActionListener(this);
         miGradosCF.addActionListener(this);
         miGradosFC.addActionListener(this);
+        miEcuacion.addActionListener(this);
+        miAudio.addActionListener(this);
 
         //Colocar los JMENUITEMS
         menuGrados.add(miGradosCF);
@@ -44,6 +50,8 @@ public class CalculosGUI2 extends JFrame implements ActionListener{
         menuCalculos.add(miFactorial);
         menuCalculos.add(miExponencial);
         menuCalculos.add(menuGrados);
+        menuCalculos.add(miEcuacion);
+        menuCalculos.add(miAudio);
         menuCalculos.add(miSalir);
 
         //Colocar JMenuBar

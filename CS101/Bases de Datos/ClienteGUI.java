@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 public class ClienteGUI extends JFrame implements ActionListener{
     private JTextField tfCuenta, tfNombre, tfTipo, tfSaldo;
     private JButton bCapturar, bConsultar, bSalir;
-    private JButton bConsultarNocta, bRetiro, bDeposito, bCancelar;
+    private JButton bConsultarNocta, bRetiro, bDeposito, bCancelar, bConRet,bConDep;
     private JPanel panel1, panel2;
     private JTextArea taDatos;
     private JComboBox cbtiposcuenta;
@@ -40,6 +40,8 @@ public class ClienteGUI extends JFrame implements ActionListener{
         bCapturar = new JButton("Capturar Datos");
         bConsultar = new JButton("Consultar Clientes");
         bCancelar =new JButton("Cancelar Transacción");
+        bConRet =new JButton("Consultar Retiro");
+        bConDep =new JButton("Consultar Deposito");
         panel1 = new JPanel();
         panel2 = new JPanel();
         taDatos = new JTextArea(10,30);
@@ -56,12 +58,12 @@ public class ClienteGUI extends JFrame implements ActionListener{
         bCapturar.addActionListener(this);
         bConsultarNocta.addActionListener(this);
         bRetiro.addActionListener(this);
-        bRetiro.setEnabled(false);
         bDeposito.addActionListener(this);
-        bDeposito.setEnabled(false);
         bCancelar.addActionListener(this);
+        bConDep.addActionListener(this);
+        bConRet.addActionListener(this);
 
-        panel1.setLayout(new GridLayout(9,2));
+        panel1.setLayout(new GridLayout(10,2));
         panel2.setLayout(new FlowLayout());
 
         panel1.add(new JLabel("No de cuenta"));
@@ -78,6 +80,8 @@ public class ClienteGUI extends JFrame implements ActionListener{
         panel1.add(bRetiro);
         panel1.add(bDeposito);
         panel1.add(bCancelar);
+        panel1.add(bConDep);
+        panel1.add(bConRet);
         panel1.add(bSalir);
        
         panel2.add(panel1);
@@ -86,7 +90,24 @@ public class ClienteGUI extends JFrame implements ActionListener{
         setSize(400,500);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        apagar();
+    }
+    public void apagar(){
+        bCancelar.setEnabled(false);
+        bDeposito.setEnabled(false);
+        bRetiro.setEnabled(false);
+        bCapturar.setEnabled(true);
+        bConsultar.setEnabled(true);
+        bConsultarNocta.setEnabled(true);
+        
+    }
+    public void prender(){
+        bCancelar.setEnabled(true);
+        bDeposito.setEnabled(true);
+        bRetiro.setEnabled(true);
+        bCapturar.setEnabled(false);
+        bConsultar.setEnabled(false);
+        bConsultarNocta.setEnabled(false);
     }
     private String obtenerDatos(){
         String nocta = tfCuenta.getText(), nombre = tfNombre.getText(),tipo =(String) cbtiposcuenta.getSelectedItem(), saldo = tfSaldo.getText(),datos;
@@ -123,7 +144,8 @@ public class ClienteGUI extends JFrame implements ActionListener{
         }
         if (event.getSource() == bSalir) {
             System.exit(0);
-        } if (event.getSource()== bDeposito){
+        } 
+        if (event.getSource()== bDeposito){
             //OBtener numero de cuenta
             String ncta = tfCuenta.getText();
             //obtener numero de deposito
@@ -132,14 +154,35 @@ public class ClienteGUI extends JFrame implements ActionListener{
             //Desplegar el resultado
             taDatos.setText(respuesta);
             // activarBotones();
-        }if (event.getSource()== bRetiro){
-
+        }
+        if (event.getSource()== bRetiro){
+            //OBtener numero de cuenta
+            String ncta = tfCuenta.getText();
+            //obtener numero de deposito
+            int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Cantidad a retirar = "));
+            respuesta = bancoad.retirar(ncta, cantidad);
+            //Desplegar el resultado
+            taDatos.setText(respuesta);
+            // activarBotones();
         }
         if (event.getSource()== bConsultarNocta){
             String ncta = tfCuenta.getText();
             // respuesta = bancoad.buscar(ncta, cantidad);
-
+            respuesta = bancoad.consultarCuenta(ncta);
+            //Desplegar el resultado
+            taDatos.setText(respuesta);
             //respuesta = BancoADjdbc.consultarncta(ncta);
+            prender();
+        }
+        if (event.getSource() == bConDep){
+            
+        }
+        if (event.getSource() == bConRet){
+
+        }
+        if (event.getSource() == bCancelar){
+            apagar();
+            taDatos.setText("");
         }
     }
     public static void main(String[] args) {

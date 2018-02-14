@@ -1,10 +1,10 @@
 import java.util.StringTokenizer;
 
-public class ClienteDP{
+public class ClienteDPret{
     private String nocta, nombre, tipo,fecha,hora;
     private int saldo;
 
-    public ClienteDP(){
+    public ClienteDPret(){
         this.nocta ="";
         this.nombre = "";
         this.tipo = "";
@@ -12,13 +12,11 @@ public class ClienteDP{
         this.fecha = "0000-00-00";
         this.hora= "00:00:00";
     }
-    public ClienteDP(String datos){
+    public ClienteDPret(String datos){
         String[] st = datos.split("_");
         this.nocta= st[0];
         this.nombre= st[1];
         this.tipo= st[2];
-        this.fecha= st[4];
-        this.hora= st[5];
         this.saldo= Integer.parseInt(st[3]);
     }
     public String getNocta(){

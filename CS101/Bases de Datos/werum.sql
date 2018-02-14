@@ -1,0 +1,28 @@
+CREATE DATABASE WERUM;
+
+USE WERUM;
+
+CREATE TABLE Employees(
+    ide INT(5) NOT NULL,
+    name VARCHAR(10) NOT NULL,
+    lastname VARCHAR(10) NOT NULL,
+    department VARCHAR(10) NOT NULL);
+
+CREATE TABLE Suppliers(
+    ids INT(5) NOT NULL,
+    name VARCHAR(15) NOT NULL,
+    lastname VARCHAR(10) NOT NULL,
+    area VARCHAR(10) NOT NULL,
+    number INT(10) NOT NULL);
+
+CREATE TABLE Clients(
+    idc INT(5) NOT NULL,
+    company VARCHAR(10) NOT NULL,
+    name VARCHAR(10) NOT NULL,
+    lastname VARCHAR(10) NOT NULL,
+    department VARCHAR(10) NOT NULL,
+    number INT(10) NOT NULL);
+
+INSERT INTO Employees VALUES(34563,"ALAN","MACEDO","INNOV");
+INSERT INTO Suppliers VALUES(‘62461’,’FAAB’,’JIKLSZ’,’TECH’,’2813858770’);
+INSERT INTO Clients VALUES(‘17535’,'ARMANDO',’GERARDO’,’ORTEGA’,’PROD’,’321890298’);

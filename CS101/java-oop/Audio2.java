@@ -28,7 +28,7 @@ public class Audio2 extends JFrame implements ActionListener{
     private Clip clip;
     private JButton bStart, bStop;
     private JPanel panel1,panel2;
-    private JLabel label1;
+    private JLabel label1,label2;
     private JTextField tf1;
 
 
@@ -37,18 +37,23 @@ public class Audio2 extends JFrame implements ActionListener{
         bStart = new JButton("Start");
         bStop= new JButton("stop");
         panel1 = new JPanel();
-        label1 =  new JLabel("Now playing");
+        panel2 = new JPanel();
+        label1 =  new JLabel("Song:");
+        label2 =  new JLabel("");
         tf1 = new JTextField();
 
         bStart.addActionListener(this);
         bStop.addActionListener(this);
-        panel1.setLayout(new GridLayout(2, 2));
+        panel1.setLayout(new GridLayout(2,2));
+        panel2.setLayout(new FlowLayout());
         panel1.add(label1);
         panel1.add(tf1);
         panel1.add(bStart);
         panel1.add(bStop);
 
-        add(panel1);
+        panel2.add(panel1);
+        // panel2.add(label2);
+        add(panel2);
         setSize(400,300);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,16 +75,16 @@ public class Audio2 extends JFrame implements ActionListener{
     }
     
     private void reproducir(String cancion) throws Exception {
-        if (clip.isActive()) {
-            clip.stop();
-        }
         //Rekacionar nombre con archivo wav
-        label1.setText("Now Playing: "+cancion);
+        label2.setText("Now Playing: "+cancion);
         fileSong = new File(cancion);
         //Preparar audio stream
         audioStream = AudioSystem.getAudioInputStream(fileSong);
         //reproducir audio
         clip = AudioSystem.getClip();
+            if (clip.isRunning()) {
+                clip.stop();
+            }
         clip.open(audioStream);
         clip.start();
         
