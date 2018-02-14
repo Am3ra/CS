@@ -54,7 +54,7 @@ public class Raizes extends JFrame implements ActionListener{
         // Hacer visible el JFrame
         add(panel2);
         setSize(500,500);
-        setVisible(true);
+        // setVisible(true);
     }
     public JPanel getPanel2(){
         return panel2;

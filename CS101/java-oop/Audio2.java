@@ -55,7 +55,7 @@ public class Audio2 extends JFrame implements ActionListener{
         // panel2.add(label2);
         add(panel2);
         setSize(400,300);
-        setVisible(true);
+        // setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
@@ -72,6 +72,9 @@ public class Audio2 extends JFrame implements ActionListener{
             // System.out.println("ok");
             clip.stop();
         }
+    }
+    public JPanel getPanel2() {
+        return panel2;
     }
     
     private void reproducir(String cancion) throws Exception {

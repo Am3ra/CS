@@ -81,9 +81,24 @@ public class CalculosGUI2 extends JFrame implements ActionListener{
             panel.setVisible(true);
             add(panel);
             setVisible(true);
-        } if (a.getSource()==miGradosFC||a.getSource()==miGradosCF) {
+        } 
+        if (a.getSource()==miGradosFC||a.getSource()==miGradosCF) {
             panel.setVisible(false);
             panel = grados.getPanel2();
+            panel.setVisible(true);
+            add(panel);
+            setVisible(true);
+        }
+        if (a.getSource()==miEcuacion) {
+            panel.setVisible(false);
+            panel = raiz.getPanel2();
+            panel.setVisible(true);
+            add(panel);
+            setVisible(true);
+        }
+        if (a.getSource()==miAudio) {
+            panel.setVisible(false);
+            panel = audio2.getPanel2();
             panel.setVisible(true);
             add(panel);
             setVisible(true);
