@@ -99,12 +99,16 @@ public class ClienteGUI extends JFrame implements ActionListener{
         bCapturar.setEnabled(true);
         bConsultar.setEnabled(true);
         bConsultarNocta.setEnabled(true);
+        bConDep.setEnabled(false);
+        bConRet.setEnabled(false);
         
     }
     public void prender(){
         bCancelar.setEnabled(true);
         bDeposito.setEnabled(true);
         bRetiro.setEnabled(true);
+        bConDep.setEnabled(true);
+        bConRet.setEnabled(true);
         bCapturar.setEnabled(false);
         bConsultar.setEnabled(false);
         bConsultarNocta.setEnabled(false);
@@ -175,10 +179,10 @@ public class ClienteGUI extends JFrame implements ActionListener{
             prender();
         }
         if (event.getSource() == bConDep){
-            
+            taDatos.setText(bancoad.consultarDepositos(tfCuenta.getText()));
         }
         if (event.getSource() == bConRet){
-
+            taDatos.setText(bancoad.consultarRetiros(tfCuenta.getText()));
         }
         if (event.getSource() == bCancelar){
             apagar();

@@ -1,65 +1,62 @@
 import java.util.StringTokenizer;
 
-public class ClienteDPret{
-    private String nocta, nombre, tipo,fecha,hora;
-    private int saldo;
+public class ClienteDPret {
+    private String fecha, cuenta;
+    private int mp, cambio, ma;
 
-    public ClienteDPret(){
-        this.nocta ="";
-        this.nombre = "";
-        this.tipo = "";
-        this.saldo = 0; 
-        this.fecha = "0000-00-00";
-        this.hora= "00:00:00";
+    public ClienteDPret() {
+        this.mp = 0;
+        this.cambio = 0;
+        this.ma = 0;
+        this.cuenta = "";
+        this.fecha = "";
     }
-    public ClienteDPret(String datos){
-        String[] st = datos.split("_");
-        this.nocta= st[0];
-        this.nombre= st[1];
-        this.tipo= st[2];
-        this.saldo= Integer.parseInt(st[3]);
+
+    public String getNocta() {
+        return this.cuenta;
     }
-    public String getNocta(){
-        return this.nocta;
+
+    public int getMA() {
+        return this.ma;
     }
-    public String getNombre(){
-        return this.nombre;
+
+    public int getMP() {
+        return this.mp;
     }
-    public String getTipo(){
-        return this.tipo;
+
+    public int getCambio() {
+        return this.cambio;
     }
-    public int getSaldo(){
-        return this.saldo;
-    }
-    public String getFecha(){
+
+    public String getFecha() {
         return this.fecha;
     }
-    public String getHora(){
-        return this.hora;
+
+    public void setNocta(String ncta) {
+        this.cuenta = ncta;
     }
-    public void setNocta(String ncta){
-        this.nocta = ncta;
+
+    public void setMP(int cantidad) {
+        this.mp = cantidad;
     }
-    public void setNombre(String nom){
-        this.nombre = nom;
-    }
-    public void setTipo(String  tcta){
-        this.tipo = tcta;
-    }
-    public void setSaldo(int cantidad){
-        this.saldo=cantidad;
-    }
-    
+
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
-    public void setHora(String hora) {
-        this.hora = hora;
+
+    public void setMA(int hora) {
+        this.ma = hora;
     }
-    public String toString(){
-        return this.nocta+"_"+this.nombre+"_"+this.tipo+"_"+this.saldo+"_"+this.fecha+"_"+this.hora;
+
+    public void setCambio(int hora) {
+        this.cambio = hora;
     }
-    public String toStringSql(){
-        return "'"+this.nocta + "','" + this.nombre + "','" + this.tipo + "','" + this.saldo+"',now(),now()";
+
+    public String toString() {
+        return this.mp + "_" + this.cambio + "_" + this.ma + "_" + this.cuenta + "_" + this.fecha;
+    }
+
+    public String toStringSql() {
+        return "'" + this.mp + "','" + this.cambio + "','" + this.ma + "','" + this.cuenta + "',now()";
     }
 }
