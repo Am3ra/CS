@@ -39,20 +39,20 @@ public class Audio2 extends JFrame implements ActionListener{
         panel1 = new JPanel();
         panel2 = new JPanel();
         label1 =  new JLabel("Song:");
-        label2 =  new JLabel("");
+        label2 =  new JLabel("Now Playing: ");
         tf1 = new JTextField();
 
         bStart.addActionListener(this);
         bStop.addActionListener(this);
-        panel1.setLayout(new GridLayout(2,2));
+        panel1.setLayout(new GridLayout(3,2));
         panel2.setLayout(new FlowLayout());
         panel1.add(label1);
         panel1.add(tf1);
         panel1.add(bStart);
         panel1.add(bStop);
+        panel1.add(label2);
 
         panel2.add(panel1);
-        panel2.add(label2);
         add(panel2);
         setSize(400,300);
         // setVisible(true);
