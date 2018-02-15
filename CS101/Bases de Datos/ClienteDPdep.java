@@ -2,17 +2,17 @@ import java.util.StringTokenizer;
 
 public class ClienteDPdep{
     private String fecha, cuenta;
-    private int mp,cambio,ma;
+    private int monto_previo,cambio,monto_actual;
 
     public ClienteDPdep(){
-        this.mp = 0;
+        this.monto_previo = 0;
         this.cambio = 0;
-        this.ma = 0;
+        this.monto_actual = 0;
         this.cuenta ="";
         this.fecha= "";
     }
 
-    public String getNocta(){
+    public String getCuenta(){
         return this.cuenta;
     }
 
@@ -25,25 +25,25 @@ public class ClienteDPdep{
     }
 
     public int getMA(){
-        return this.ma;
+        return this.monto_actual;
     }
     public int getMP(){
-        return this.mp;
+        return this.monto_previo;
     }
     public int getCambio(){
         return this.cambio;
     }
 
-    public void setNocta(String ncta){
+    public void setCuenta(String ncta){
         this.cuenta = ncta;
     }
 
     public void setMP(int cantidad){
-        this.mp=cantidad;
+        this.monto_previo=cantidad;
     }
     
     public void setMA(int hora) {
-        this.ma = hora;
+        this.monto_actual = hora;
     }
     public void setCambio(int hora) {
         this.cambio = hora;
@@ -51,9 +51,9 @@ public class ClienteDPdep{
 
 
     public String toString(){
-        return this.mp+"_"+this.cambio+"_"+this.ma+"_"+this.cuenta+"_"+this.fecha;
+        return this.monto_previo+"_"+this.cambio+"_"+this.monto_actual+"_"+this.cuenta+"_"+this.fecha;
     }
     public String toStringSql(){
-        return "'"+this.mp + "','" + this.cambio + "','" + this.ma + "','" + this.cuenta+"',now()";
+        return "'"+this.monto_previo + "','" + this.cambio + "','" + this.monto_actual + "','" + this.cuenta+"',now()";
     }
 }

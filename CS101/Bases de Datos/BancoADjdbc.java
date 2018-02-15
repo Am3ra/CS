@@ -125,11 +125,11 @@ public class BancoADjdbc {
             //Realizar deposito
             if(tr.next()){
                 clientedpd.setCambio(cantidad);
-                clientedp.setNocta(tr.getString("cuenta"));
                 clientedpd.setNocta(tr.getString("cuenta"));
+                clientedpd.setMP(tr.getInt("saldo"));
+                clientedp.setNocta(tr.getString("cuenta"));
                 clientedp.setNombre(tr.getString("nombre"));
                 clientedp.setSaldo(tr.getInt("saldo"));
-                clientedpd.setMP(tr.getInt("saldo"));
                 clientedp.setTipo(tr.getString("tipo"));
                 clientedp.setFecha(tr.getString("fecha"));
                 clientedp.setHora(tr.getString("hora"));
@@ -258,7 +258,7 @@ public class BancoADjdbc {
             tr = statement.executeQuery(query);
             while (tr.next()) {
 
-                clientedpd.setNocta(tr.getString("cuenta"));
+                clientedpd.setCuenta(tr.getString("cuenta"));
                 clientedpd.setFecha(tr.getString("fecha"));
                 clientedpd.setMP(Integer.parseInt(tr.getString("monto_previo")));
                 clientedpd.setMA(Integer.parseInt(tr.getString("monto_actual")));

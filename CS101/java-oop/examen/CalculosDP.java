@@ -1,7 +1,6 @@
 public class CalculosDP
 {
-    private float numA;
-    private String operation;
+    
     public float gradosCF(float centigrados)
     {
         float farenheit = (float)9/5 * centigrados + 32;
@@ -26,14 +25,6 @@ public class CalculosDP
         }
         
         return f;
-    }
-
-    public Float cuadrado(float a){
-        return a*a;
-    }
-
-    public Float raiz(float a) {
-        return (float) Math.sqrt(a);
     }
     
     public int exponencial(int b, int x)
@@ -98,34 +89,6 @@ public class CalculosDP
         }
         return respuesta;
     }
-    public void setNum(float num){
-        this.numA = num;
-    }
-    public float getNum(){
-        return this.numA;
-    }
-    public void setOP(String op) {
-        this.operation = op;
-    }
-    public String getOP() {
-        return this.operation;
-    }
-    public String result(float b){
-        String respuesta = "";
-        if (this.operation == "suma") {
-            respuesta += (this.numA + b);
-        } else if (this.operation == "resta"){
-            respuesta += (this.numA - b);
-        } else if (this.operation == "divide"){
-            respuesta += (this.numA/b);
-        } else if (this.operation == "multiplica"){
-            respuesta += (this.numA*b);
-        } else if (this.operation == "exponencial"){
-            respuesta += ((float)Math.pow(this.numA,b));
-        }
-        return respuesta;
-    }
-
 }
 
 

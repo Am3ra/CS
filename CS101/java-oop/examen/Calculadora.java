@@ -15,17 +15,14 @@ import java.awt.Panel;
 public class Calculadora extends JFrame implements ActionListener
 {
     private JTextField tfNumero = new JTextField(8);
-    private CalculosDP calculosdp = new CalculosDP();
     
     private JButton bSuma, bResta, bMultiplica, bDivide, bIgual, bClear, bPunto;
     private JButton b0, b1, b2, b3, b4, b5, b6, b7, b8, b9;
     private JButton bFactorial, bExpo, bRaiz, bCuadrado;
     private Panel panel1, panel2;
     
-    private float n1, n2;
-    private String operacion = "";
-    private String strNumero = "";
-    private int base, x;
+    private float n1;
+    private String operation = "";
     
     public Calculadora()
     {
@@ -132,46 +129,81 @@ public class Calculadora extends JFrame implements ActionListener
         setVisible(true);
     }
     
+    public String result(float b) {
+        String respuesta = "";
+        if (operation == "suma") {
+            respuesta += (n1  + b);
+        } else if (operation == "resta") {
+            respuesta += (n1  - b);
+        } else if (operation == "divide") {
+            respuesta += (n1  / b);
+        } else if (operation == "multiplica") {
+            respuesta += (n1  * b);
+        } else if (operation == "exponencial") {
+            respuesta += ((float) Math.pow(n1 , b));
+        }
+        return respuesta;
+    }
+    
+    public Float cuadrado(float a) {
+        return a * a;
+    }
+    
+
+    public Float raiz(float a) {
+        return (float) Math.sqrt(a);
+    }
+    
+    public int factorial(int n) {
+        int f = 1;
+
+        for (int i = 1; i <= n; i++) {
+            f = f * i;
+        }
+
+        return f;
+    }
+
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == bFactorial) {
-            tfNumero.setText(""+(calculosdp.factorial(Integer.parseInt(tfNumero.getText()))));
+            tfNumero.setText(""+factorial(Integer.parseInt(tfNumero.getText())));
         }
         if (event.getSource() == bCuadrado) {
-            tfNumero.setText("" + (calculosdp.cuadrado(Float.parseFloat(tfNumero.getText()))));
+            tfNumero.setText("" + (cuadrado(Float.parseFloat(tfNumero.getText()))));
         }
         if (event.getSource() == bDivide) {
-            calculosdp.setNum(Float.parseFloat(tfNumero.getText()));
-            calculosdp.setOP("divide");
+            n1 = Float.parseFloat(tfNumero.getText());
+            operation = ("divide");
             tfNumero.setText("");
         }
         if (event.getSource() == bClear) {
             tfNumero.setText("");
         }
         if (event.getSource() == bRaiz) {
-            tfNumero.setText(""+calculosdp.raiz(Float.parseFloat(tfNumero.getText())));
+            tfNumero.setText(""+raiz(Float.parseFloat(tfNumero.getText())));
         }
         if (event.getSource() == bExpo) {
-            calculosdp.setNum(Float.parseFloat(tfNumero.getText()));
-            calculosdp.setOP("exponencial");
+            n1 = (Float.parseFloat(tfNumero.getText()));
+            operation = ("exponencial");
             tfNumero.setText("");
         }
         if (event.getSource() == bSuma) {
-            calculosdp.setNum(Float.parseFloat(tfNumero.getText()));
-            calculosdp.setOP("suma");
+            n1 = (Float.parseFloat(tfNumero.getText()));
+            operation = ("suma");
             tfNumero.setText("");
         }
         if (event.getSource() == bResta) {
-            calculosdp.setNum(Float.parseFloat(tfNumero.getText()));
-            calculosdp.setOP("resta");
+            n1 = (Float.parseFloat(tfNumero.getText()));
+            operation = ("resta");
             tfNumero.setText("");
         }
         if (event.getSource() == bMultiplica) {
-            calculosdp.setNum(Float.parseFloat(tfNumero.getText()));
-            calculosdp.setOP("multiplica");
+            n1 = (Float.parseFloat(tfNumero.getText()));
+            operation = ("multiplica");
             tfNumero.setText("");
         }
         if (event.getSource() == bIgual) {
-            tfNumero.setText(calculosdp.result(Float.parseFloat(tfNumero.getText())));
+            tfNumero.setText(result(Float.parseFloat(tfNumero.getText())));
         }
         if (event.getSource() == bPunto) {
             tfNumero.setText(tfNumero.getText()+".");
