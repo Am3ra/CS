@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 public class ClienteGUI extends JFrame implements ActionListener{
     private JTextField tfCuenta, tfNombre, tfTipo, tfSaldo;
     private JButton bCapturar, bConsultar, bSalir;
-    private JButton bConsultarNocta, bRetiro, bDeposito, bCancelar, bConRet,bConDep;
+    private JButton bConsultarNocta, bRetiro, bDeposito, bCancelar, bConRet,bConDep,bTrans,bConTrans,bConTipo;
     private JPanel panel1, panel2;
     private JTextArea taDatos;
     private JComboBox cbtiposcuenta;
@@ -42,6 +42,9 @@ public class ClienteGUI extends JFrame implements ActionListener{
         bCancelar =new JButton("Cancelar Transacción");
         bConRet =new JButton("Consultar Retiro");
         bConDep =new JButton("Consultar Deposito");
+        bConTipo =new JButton("Consultar Tipo");
+        bConTrans =new JButton("Consultar Transferencias");
+        bTrans =new JButton("Hacer Transferencia");
         panel1 = new JPanel();
         panel2 = new JPanel();
         taDatos = new JTextArea(10,30);
@@ -62,6 +65,9 @@ public class ClienteGUI extends JFrame implements ActionListener{
         bCancelar.addActionListener(this);
         bConDep.addActionListener(this);
         bConRet.addActionListener(this);
+        bTrans.addActionListener(this);
+        bConTrans.addActionListener(this);
+        bConTipo.addActionListener(this);
 
         panel1.setLayout(new GridLayout(10,2));
         panel2.setLayout(new FlowLayout());
@@ -77,17 +83,20 @@ public class ClienteGUI extends JFrame implements ActionListener{
         panel1.add(bCapturar);
         panel1.add(bConsultar);
         panel1.add(bConsultarNocta);
+        panel1.add(bConTipo);
         panel1.add(bRetiro);
-        panel1.add(bDeposito);
-        panel1.add(bCancelar);
-        panel1.add(bConDep);
         panel1.add(bConRet);
+        panel1.add(bDeposito);
+        panel1.add(bConDep);
+        panel1.add(bTrans);
+        panel1.add(bConTrans);
+        panel1.add(bCancelar);
         panel1.add(bSalir);
        
         panel2.add(panel1);
         panel2.add(new JScrollPane(taDatos));
         add(panel2);
-        setSize(400,500);
+        setSize(500,500);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         apagar();
@@ -96,22 +105,24 @@ public class ClienteGUI extends JFrame implements ActionListener{
         bCancelar.setEnabled(false);
         bDeposito.setEnabled(false);
         bRetiro.setEnabled(false);
+        bTrans.setEnabled(false);
+
         bCapturar.setEnabled(true);
         bConsultar.setEnabled(true);
         bConsultarNocta.setEnabled(true);
-        bConDep.setEnabled(false);
-        bConRet.setEnabled(false);
+        bConTipo.setEnabled(true);
         
     }
     public void prender(){
         bCancelar.setEnabled(true);
         bDeposito.setEnabled(true);
         bRetiro.setEnabled(true);
-        bConDep.setEnabled(true);
-        bConRet.setEnabled(true);
+        bTrans.setEnabled(true);
+    
         bCapturar.setEnabled(false);
         bConsultar.setEnabled(false);
         bConsultarNocta.setEnabled(false);
+        bConTipo.setEnabled(false);
     }
     private String obtenerDatos(){
         String nocta = tfCuenta.getText(), nombre = tfNombre.getText(),tipo =(String) cbtiposcuenta.getSelectedItem(), saldo = tfSaldo.getText(),datos;
@@ -157,7 +168,7 @@ public class ClienteGUI extends JFrame implements ActionListener{
             respuesta = bancoad.depositar(ncta, cantidad);
             //Desplegar el resultado
             taDatos.setText(respuesta);
-            // activarBotones();
+
         }
         if (event.getSource()== bRetiro){
             //OBtener numero de cuenta
@@ -167,7 +178,6 @@ public class ClienteGUI extends JFrame implements ActionListener{
             respuesta = bancoad.retirar(ncta, cantidad);
             //Desplegar el resultado
             taDatos.setText(respuesta);
-            // activarBotones();
         }
         if (event.getSource()== bConsultarNocta){
             String ncta = tfCuenta.getText();
@@ -187,6 +197,22 @@ public class ClienteGUI extends JFrame implements ActionListener{
         if (event.getSource() == bCancelar){
             apagar();
             taDatos.setText("");
+        }
+        if(event.getSource()==bConTipo){
+            taDatos.setText(bancoad.consultarTipo((String)cbtiposcuenta.getSelectedItem()));
+        }
+        if(event.getSource()==bConTrans){
+            taDatos.setText(bancoad.consultarTransferencia(tfCuenta.getText()));
+        }
+        if(event.getSource()==bTrans){
+            int ncta = Integer.parseInt(tfCuenta.getText());
+            System.out.println(ncta);
+            //obtener numero de deposito
+            int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Cantidad a retirar = "));
+            int nocta2 = Integer.parseInt(JOptionPane.showInputDialog("Cuenta A depositar= "));
+            respuesta = bancoad.transferencia(ncta, cantidad, nocta2);
+            //Desplegar el resultado
+            taDatos.setText(respuesta);
         }
     }
     public static void main(String[] args) {

@@ -36,7 +36,7 @@ public class RetiroDP {
         this.cuenta = ncta;
     }
 
-    public void setMP(int cantidad) {
+    public void setMontoPrevio(int cantidad) {
         this.monto_previo = cantidad;
     }
 
@@ -44,7 +44,7 @@ public class RetiroDP {
         this.fecha = fecha;
     }
 
-    public void setMA(int hora) {
+    public void setMontoActual(int hora) {
         this.monto_actual = hora;
     }
 

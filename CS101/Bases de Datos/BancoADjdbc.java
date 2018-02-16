@@ -27,6 +27,7 @@ public class BancoADjdbc {
     private ClienteDP clientedp = new ClienteDP();
     private RetiroDP retirodp = new RetiroDP();
     private DepositoDP depositodp = new DepositoDP();
+    private TransferenciaDP transferenciadp = new TransferenciaDP();
     
     public BancoADjdbc() {
         try {
@@ -179,7 +180,7 @@ public class BancoADjdbc {
             if(tr.next()){
                 retirodp.setCambio(cantidad);
                 retirodp.setCuenta(tr.getString("cuenta"));
-                retirodp.setMP(tr.getInt("saldo"));
+                retirodp.setMontoPrevio(tr.getInt("saldo"));
                 clientedp.setNocta(tr.getString("cuenta"));
                 clientedp.setNombre(tr.getString("nombre"));
                 clientedp.setSaldo(tr.getInt("saldo"));
@@ -191,11 +192,11 @@ public class BancoADjdbc {
                     return "No se puede retirar de cuenta de ahorros";
                 } else if (clientedp.getTipo() == "INVERSION"|| clientedp.getTipo() == "AHORRO") {
                     clientedp.setSaldo(clientedp.getSaldo()-cantidad);
-                    retirodp.setMA(retirodp.getMontoPrevio()-cantidad);
+                    retirodp.setMontoActual(retirodp.getMontoPrevio()-cantidad);
 
                 } else {
                     clientedp.setSaldo(clientedp.getSaldo() + cantidad);
-                    retirodp.setMA(retirodp.getMontoPrevio()+cantidad);
+                    retirodp.setMontoActual(retirodp.getMontoPrevio()+cantidad);
 
                 }
                 // 
@@ -228,6 +229,9 @@ public class BancoADjdbc {
         //Abrir archivo Datos
         String query = "SELECT * FROM Clientes where cuenta = "+cuenta+";" ;
         System.out.println(query);
+        if (cuenta.equals("")){
+            return "No se introdujo cuenta";
+        }
         try {
 
             statement = conexion.createStatement();
@@ -242,7 +246,7 @@ public class BancoADjdbc {
                 clientedp.setFecha(tr.getString("fecha"));
                 clientedp.setHora(tr.getString("hora"));
 
-                respuesta += clientedp.toString() + "\n";
+                respuesta += clientedp.toString();
             }
             statement.close();
             System.out.println(query);
@@ -258,6 +262,9 @@ public class BancoADjdbc {
         ResultSet tr;
         //Abrir archivo Datos
         String query = "SELECT * FROM deposito where cuenta = "+ cuenta;
+        if(cuenta.equals("")){
+            query ="SELECT * FROM deposito";
+        }
         try {
             statement = conexion.createStatement();
             tr = statement.executeQuery(query);
@@ -284,6 +291,9 @@ public class BancoADjdbc {
         ResultSet tr;
         //Abrir archivo Datos
         String query = "SELECT * FROM retiro where cuenta = "+ cuenta;
+        if(cuenta.equals("")){
+            query ="SELECT * FROM retiro";
+        }
         try {
             statement = conexion.createStatement();
             tr = statement.executeQuery(query);
@@ -291,8 +301,8 @@ public class BancoADjdbc {
 
                 retirodp.setCuenta(tr.getString("cuenta"));
                 retirodp.setFecha(tr.getString("fecha"));
-                retirodp.setMP(Integer.parseInt(tr.getString("monto_previo")));
-                retirodp.setMA(Integer.parseInt(tr.getString("monto_actual")));
+                retirodp.setMontoPrevio(Integer.parseInt(tr.getString("monto_previo")));
+                retirodp.setMontoActual(Integer.parseInt(tr.getString("monto_actual")));
                 retirodp.setCambio(Integer.parseInt(tr.getString("cambio")));
 
                 respuesta += retirodp.toString() + "\n";
@@ -303,6 +313,89 @@ public class BancoADjdbc {
             respuesta = "ERROR: " + e;
         }
 
+        return respuesta;
+    }
+    public String consultarTipo(String tipo) {
+        String respuesta = "";
+        ResultSet tr;
+        //Abrir archivo Datos
+        String query = "SELECT * FROM Clientes where tipo = '" + tipo+"'";
+        if (tipo.equals("")){
+            return "No se introdujo tipo";
+        }
+        try {
+            statement = conexion.createStatement();
+            tr = statement.executeQuery(query);
+            clientedp = new ClienteDP();
+            while (tr.next()) {
+                
+                clientedp.setNocta(tr.getString("cuenta"));
+                clientedp.setNombre(tr.getString("nombre"));
+                clientedp.setTipo(tr.getString("tipo"));
+                clientedp.setSaldo(tr.getInt("saldo"));
+                clientedp.setFecha(tr.getString("fecha"));
+                clientedp.setHora(tr.getString("hora"));
+
+                respuesta += clientedp.toString()+"\n";
+            }
+            statement.close();
+            System.out.println(query);
+        } catch (SQLException e) {
+            respuesta = "ERROR" + e;
+        }
+
+        return respuesta;
+    }
+    public String transferencia(int ncta, int cantidad,int ncta2){
+        String respuesta = "";
+        System.out.println(ncta);
+        String datos=""+ consultarCuenta(""+ncta)+"_"+consultarCuenta(""+ncta2)+"_"+cantidad;
+        System.out.println(datos);
+        transferenciadp = new TransferenciaDP(datos);
+
+        String transaccion = "";
+        String query;
+        ResultSet tr;
+        String update;
+
+        try
+
+        return respuesta;
+    }
+    public String consultarTransferencia(String cuenta) {
+        String respuesta = "";
+        ResultSet tr;
+        //Abrir archivo Datos
+        String query = "SELECT * FROM transferencia where cuenta = '"+ cuenta+"'";
+        if(cuenta.equals("")){
+            query ="SELECT * FROM transferencia";
+        }
+        try {
+            statement = conexion.createStatement();
+            tr = statement.executeQuery(query);
+            while (tr.next()) {
+
+                transferenciadp.setNoctaRetiro(Integer.parseInt(tr.getString("noctaRetiro")));
+                transferenciadp.setNoctaDeposito(Integer.parseInt(tr.getString("noctaDeposito")));
+                transferenciadp.setTipoRetiro(tr.getString("tipoRetiro"));
+                transferenciadp.setTipoDeposito(tr.getString("tipoDeposito"));
+                transferenciadp.setSaldoAnteriorRetiro(Integer.parseInt(tr.getString("saldoAnteriorRetiro")));
+                transferenciadp.setSaldoAnteriorDeposito(Integer.parseInt(tr.getString("saldoAnteriorDeposito")));
+                transferenciadp.setCantidadRetiro(Integer.parseInt(tr.getString("cantidadRetiro")));
+                transferenciadp.setCantidadDeposito(Integer.parseInt(tr.getString("cantidadDeposito")));
+                transferenciadp.setFechaTransferencia(tr.getString("fechaTransferencia"));
+                transferenciadp.setHoraTransferencia(tr.getString("horaTransferencia"));
+
+                respuesta += transferenciadp.toString() + "\n";
+            }
+            statement.close();
+            System.out.println(query);
+        } catch (SQLException e) {
+            respuesta = "ERROR" + e;
+        }
+        if (respuesta.equals("")){
+            return "No hay transferencias";
+        }
         return respuesta;
     }
 }
