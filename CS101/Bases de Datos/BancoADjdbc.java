@@ -25,8 +25,8 @@ public class BancoADjdbc {
     private Statement statement;
 
     private ClienteDP clientedp = new ClienteDP();
-    private ClienteDPret clientedpr = new ClienteDPret();
-    private ClienteDPdep clientedpd = new ClienteDPdep();
+    private RetiroDP retirodp = new RetiroDP();
+    private DepositoDP depositodp = new DepositoDP();
     
     public BancoADjdbc() {
         try {
@@ -124,9 +124,9 @@ public class BancoADjdbc {
             tr = statement.executeQuery(query);
             //Realizar deposito
             if(tr.next()){
-                clientedpd.setCambio(cantidad);
-                clientedpd.setNocta(tr.getString("cuenta"));
-                clientedpd.setMP(tr.getInt("saldo"));
+                depositodp.setCambio(cantidad);
+                depositodp.setCuenta(tr.getString("cuenta"));
+                depositodp.setMP(tr.getInt("saldo"));
                 clientedp.setNocta(tr.getString("cuenta"));
                 clientedp.setNombre(tr.getString("nombre"));
                 clientedp.setSaldo(tr.getInt("saldo"));
@@ -135,17 +135,19 @@ public class BancoADjdbc {
                 clientedp.setHora(tr.getString("hora"));
                 if (clientedp.getTipo() == "INVERSION"|| clientedp.getTipo() == "AHORRO") {
                     clientedp.setSaldo(clientedp.getSaldo()+cantidad);
-                    clientedpd.setMA(clientedpd.getMP()+cantidad);
-                } else {
+                    depositodp.setMA(depositodp.getMP()+cantidad);
+                }
+                
+                else {
                     clientedp.setSaldo(clientedp.getSaldo() - cantidad);
-                    clientedpd.setMA(clientedpd.getMP() - cantidad);
+                    depositodp.setMA(depositodp.getMP() - cantidad);
                 }
                 // 
                 update ="update clientes set saldo="+clientedp.getSaldo()+" where cuenta = "+ncta+";";
                 System.out.println(update);
                 statement.executeUpdate(update);
                 
-                update = "INSERT INTO depositos VALUES(" + clientedpd.toStringSql() + ")";
+                update = "INSERT INTO deposito VALUES(" + depositodp.toStringSql() + ")";
                 System.out.println(update);
                 statement.executeUpdate(update);
                 
@@ -175,31 +177,34 @@ public class BancoADjdbc {
             tr = statement.executeQuery(query);
             //Realizar deposito
             if(tr.next()){
+                retirodp.setCambio(cantidad);
+                retirodp.setCuenta(tr.getString("cuenta"));
+                retirodp.setMP(tr.getInt("saldo"));
                 clientedp.setNocta(tr.getString("cuenta"));
-                clientedpr.setCambio(cantidad);
-                clientedpr.setNocta(tr.getString("cuenta"));
                 clientedp.setNombre(tr.getString("nombre"));
-                clientedpr.setMP(tr.getInt("saldo"));
                 clientedp.setSaldo(tr.getInt("saldo"));
                 clientedp.setTipo(tr.getString("tipo"));
                 clientedp.setFecha(tr.getString("fecha"));
                 clientedp.setHora(tr.getString("hora"));
-                if (clientedp.getTipo() == "INVERSION"|| clientedp.getTipo() == "AHORRO") {
+
+                if (clientedp.getTipo().equals("HIPOTECA")) {
+                    return "No se puede retirar de cuenta de ahorros";
+                } else if (clientedp.getTipo() == "INVERSION"|| clientedp.getTipo() == "AHORRO") {
                     clientedp.setSaldo(clientedp.getSaldo()-cantidad);
-                    clientedpr.setMA(clientedpr.getMP()-cantidad);
+                    retirodp.setMA(retirodp.getMontoPrevio()-cantidad);
 
                 } else {
                     clientedp.setSaldo(clientedp.getSaldo() + cantidad);
-                    clientedpr.setMA(clientedpr.getMP()+cantidad);
+                    retirodp.setMA(retirodp.getMontoPrevio()+cantidad);
 
                 }
                 // 
                 update ="update clientes set saldo="+clientedp.getSaldo()+" where cuenta = "+ncta+";";
                 System.out.println(update);
                 statement.executeUpdate(update);
-                transaccion = "Deposito exitoso, nuevo saldo = "+clientedp.getSaldo();
+                transaccion = "Retiro exitoso, nuevo saldo = "+clientedp.getSaldo();
 
-                update = "INSERT INTO retiros VALUES(" + clientedpr.toStringSql() + ")";
+                update = "INSERT INTO retiro VALUES(" + retirodp.toStringSql() + ")";
                 System.out.println(update);
                 statement.executeUpdate(update);
                 
@@ -252,19 +257,19 @@ public class BancoADjdbc {
         String respuesta = "";
         ResultSet tr;
         //Abrir archivo Datos
-        String query = "SELECT * FROM depositos where cuenta = "+ cuenta;
+        String query = "SELECT * FROM deposito where cuenta = "+ cuenta;
         try {
             statement = conexion.createStatement();
             tr = statement.executeQuery(query);
             while (tr.next()) {
 
-                clientedpd.setCuenta(tr.getString("cuenta"));
-                clientedpd.setFecha(tr.getString("fecha"));
-                clientedpd.setMP(Integer.parseInt(tr.getString("monto_previo")));
-                clientedpd.setMA(Integer.parseInt(tr.getString("monto_actual")));
-                clientedpd.setCambio(Integer.parseInt(tr.getString("cambio")));
+                depositodp.setCuenta(tr.getString("cuenta"));
+                depositodp.setFecha(tr.getString("fecha"));
+                depositodp.setMP(Integer.parseInt(tr.getString("monto_previo")));
+                depositodp.setMA(Integer.parseInt(tr.getString("monto_actual")));
+                depositodp.setCambio(Integer.parseInt(tr.getString("cambio")));
 
-                respuesta += clientedpd.toString() + "\n";
+                respuesta += depositodp.toString() + "\n";
             }
             statement.close();
             System.out.println(query);
@@ -278,19 +283,19 @@ public class BancoADjdbc {
         String respuesta = "";
         ResultSet tr;
         //Abrir archivo Datos
-        String query = "SELECT * FROM retiros where cuenta = "+ cuenta;
+        String query = "SELECT * FROM retiro where cuenta = "+ cuenta;
         try {
             statement = conexion.createStatement();
             tr = statement.executeQuery(query);
             while (tr.next()) {
 
-                clientedpr.setNocta(tr.getString("cuenta"));
-                clientedpr.setFecha(tr.getString("fecha"));
-                clientedpr.setMP(Integer.parseInt(tr.getString("monto_previo")));
-                clientedpr.setMA(Integer.parseInt(tr.getString("monto_actual")));
-                clientedpr.setCambio(Integer.parseInt(tr.getString("cambio")));
+                retirodp.setCuenta(tr.getString("cuenta"));
+                retirodp.setFecha(tr.getString("fecha"));
+                retirodp.setMP(Integer.parseInt(tr.getString("monto_previo")));
+                retirodp.setMA(Integer.parseInt(tr.getString("monto_actual")));
+                retirodp.setCambio(Integer.parseInt(tr.getString("cambio")));
 
-                respuesta += clientedpr.toString() + "\n";
+                respuesta += retirodp.toString() + "\n";
             }
             statement.close();
             System.out.println(query);

@@ -1,10 +1,10 @@
 import java.util.StringTokenizer;
 
-public class ClienteDPdep{
+public class DepositoDP{
     private String fecha, cuenta;
     private int monto_previo,cambio,monto_actual;
 
-    public ClienteDPdep(){
+    public DepositoDP(){
         this.monto_previo = 0;
         this.cambio = 0;
         this.monto_actual = 0;
