@@ -8,7 +8,7 @@ public class CalculosDP {
     public float gradosFC(float farenheit){
         return (float) 5/9 * (farenheit -32);
     }
-    public int factorial(int n){
+    public int factorial(int n) throws Exception{
         int f=1;
         for(int i=1 ; i<=n; i++){
             f*=i;

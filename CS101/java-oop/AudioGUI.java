@@ -19,20 +19,20 @@ import java.awt.event.ActionEvent;
 /**
  * Audio
  */
-public class Audio2 extends JFrame implements ActionListener{
+public class AudioGUI extends JFrame implements ActionListener{
     /*
     Clase creadora delaudio
      */
-    private File fileSong;
-    private AudioInputStream audioStream;
-    private Clip clip;
+    
     private JButton bStart, bStop;
     private JPanel panel1,panel2;
     private JLabel label1,label2;
     private JTextField tf1;
 
+    private AudioOS audioOS = new AudioOS();
 
-    public Audio2() {
+
+    public AudioGUI() {
         super("audio TEC");
         bStart = new JButton("Start");
         bStop= new JButton("stop");
@@ -62,7 +62,8 @@ public class Audio2 extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent event){
         if (event.getSource()==bStart) {
             try {
-                reproducir(tf1.getText()+".wav");
+                audioOS.reproducir(tf1.getText()+".wav");
+                label2.setText("Now Playing: " + (tf1.getText()));
             } catch (Exception e) {
                 System.out.println(e);
             }
@@ -70,29 +71,16 @@ public class Audio2 extends JFrame implements ActionListener{
         }
         if (event.getSource()==bStop) {
             // System.out.println("ok");
-            clip.stop();
+            audioOS.stop();
         }
     }
     public JPanel getPanel2() {
         return panel2;
     }
+
     
-    private void reproducir(String cancion) throws Exception {
-        //Rekacionar nombre con archivo wav
-        label2.setText("Now Playing: "+cancion);
-        fileSong = new File(cancion);
-        //Preparar audio stream
-        audioStream = AudioSystem.getAudioInputStream(fileSong);
-        //reproducir audio
-        clip = AudioSystem.getClip();
-            if (clip.isRunning()) {
-                clip.stop();
-            }
-        clip.open(audioStream);
-        clip.start();
-        
-    }
-    public static void main(String[] args) throws Exception {
-        Audio2 audio = new Audio2();
+    
+    public static void main(String[] args){
+        AudioGUI audio = new AudioGUI();
     }
 }

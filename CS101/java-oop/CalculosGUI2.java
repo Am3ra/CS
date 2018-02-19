@@ -14,11 +14,11 @@ public class CalculosGUI2 extends JFrame implements ActionListener{
     private JMenuItem miFactorial, miGradosCF, miGradosFC, miExponencial,miEcuacion,miAudio, miSalir;
     private JPanel panel;
 
-    private factorial factor = new factorial();
+    private Factorial factor = new Factorial();
     private exponencial expo = new exponencial();
     private GradosGUI5 grados = new GradosGUI5();
     private Raizes raiz = new Raizes();
-    private Audio2 audio2 = new Audio2();
+    private AudioGUI audio2 = new AudioGUI();
 
     public CalculosGUI2(){
         super("Java APP: Calculos varios");
