@@ -24,8 +24,8 @@ public class TransferenciaDP {
         this.saldoNuevoRetiro = 0;
         this.saldoNuevoDeposito = 0;
         this.noctaRetiro = Integer.parseInt(st[0]);
-        this.saldoAnteriorDeposito = Integer.parseInt(st[9]);
-        this.saldoAnteriorRetiro = Integer.parseInt(st[3]);
+        // this.saldoAnteriorDeposito = Integer.parseInt(st[9]);
+        // this.saldoAnteriorRetiro = Integer.parseInt(st[3]);
         this.cantidadRetiro = Integer.parseInt(st[12]);
         this.noctaDeposito = Integer.parseInt(st[6]);
         this.cantidadDeposito = Integer.parseInt(st[12]);
@@ -52,19 +52,19 @@ public class TransferenciaDP {
         return this.saldoAnteriorRetiro;
     }
     public int getCantidadRetiro(){
-        return this.saldoAnteriorRetiro;
+        return this.cantidadRetiro;
     }
     public int getSaldoNuevoRetiro(){
         return this.saldoNuevoRetiro;
     }
     public int getSaldoNuevoDeposito(){
-        return this.saldoAnteriorDeposito;
+        return this.saldoNuevoDeposito;
     }
     public int getNoctaDeposito(){
-        return this.saldoAnteriorDeposito;
+        return this.noctaDeposito;
     }
     public int getCantidadDeposito(){
-        return this.saldoAnteriorDeposito;
+        return this.cantidadDeposito;
     }
     public void setTipoRetiro(String a){
         this.tipoRetiro=a;
@@ -88,19 +88,19 @@ public class TransferenciaDP {
         this.saldoAnteriorRetiro=a;
     }
     public void setCantidadRetiro(int a){
-        this.saldoAnteriorRetiro=a;
+        this.cantidadRetiro=a;
     }
     public void setSaldoNuevoRetiro(int a){
         this.saldoNuevoRetiro=a;
     }
     public void setSaldoNuevoDeposito(int a){
-        this.saldoAnteriorDeposito=a;
+        this.saldoNuevoDeposito=a;
     }
     public void setNoctaDeposito(int a){
-        this.saldoAnteriorDeposito=a;
+        this.noctaDeposito=a;
     }
     public void setCantidadDeposito(int a){
-        this.saldoAnteriorDeposito=a;
+        this.cantidadDeposito=a;
     }
 
     public String toString() {
@@ -108,6 +108,6 @@ public class TransferenciaDP {
     }
 
     public String toStringSql() {
-        return "'" +this.noctaRetiro + "','"  + this.tipoRetiro + "','"  + this.saldoAnteriorRetiro + "','"  + this.cantidadRetiro + "','"  + this.saldoNuevoRetiro+"','" +this.noctaDeposito + "','"  + this.tipoDeposito + "','"  + this.saldoAnteriorDeposito + "','"  + this.cantidadDeposito + "','"  + this.saldoNuevoDeposito+ "',now(),now";
+        return "'" +this.noctaRetiro + "','"  + this.tipoRetiro + "','"  + this.saldoAnteriorRetiro + "','"  + this.cantidadRetiro + "','"  + this.saldoNuevoRetiro+"','" +this.noctaDeposito + "','"  + this.tipoDeposito + "','"  + this.saldoAnteriorDeposito + "','"  + this.cantidadDeposito + "','"  + this.saldoNuevoDeposito+ "',now(),now()";
     }
 }

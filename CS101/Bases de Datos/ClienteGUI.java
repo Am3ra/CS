@@ -18,7 +18,7 @@ import javax.swing.JTextField;
  * ClienteGUI
  */
 public class ClienteGUI extends JFrame implements ActionListener{
-    private JTextField tfCuenta, tfNombre, tfTipo, tfSaldo;
+    private JTextField tfCuenta, tfNombre, tfSaldo;
     private JButton bCapturar, bConsultar, bSalir;
     private JButton bConsultarNocta, bRetiro, bDeposito, bCancelar, bConRet,bConDep,bTrans,bConTrans,bConTipo;
     private JPanel panel1, panel2;
@@ -131,7 +131,6 @@ public class ClienteGUI extends JFrame implements ActionListener{
             datos =  "VACIO";
         } else{
             try {
-                int n  = Integer.parseInt(saldo);
                 datos = nocta+"_"+nombre+"_"+tipo+"_"+saldo;
             } catch(Exception e){
                 datos = "NO_NUMERICO";
@@ -140,7 +139,6 @@ public class ClienteGUI extends JFrame implements ActionListener{
         }
         return datos;
     }   
-
     public void actionPerformed(ActionEvent event){
         String datos, respuesta;
         if(event.getSource()==bCapturar){

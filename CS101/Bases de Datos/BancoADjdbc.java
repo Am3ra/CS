@@ -23,6 +23,8 @@ public class BancoADjdbc {
 
     private Connection conexion;
     private Statement statement;
+    private BufferedReader archivoIn;
+    private PrintWriter archivoOut;
 
     private ClienteDP clientedp = new ClienteDP();
     private RetiroDP retirodp = new RetiroDP();
@@ -60,9 +62,7 @@ public class BancoADjdbc {
         clientedp = new ClienteDP(datos);
 
         String insertCliente = "INSERT INTO Clientes VALUES(" + clientedp.toStringSql() + ")";
-        System.out.println("INSERT INTO Clientes VALUES(" + clientedp.toStringSql() + ")");
         //Abrir archivo Datos
-
 
         try {
             // archivoOut = new PrintWriter(new FileWriter("Cliente.txt", true));
@@ -160,7 +160,7 @@ public class BancoADjdbc {
             statement.close();
 
         } catch (SQLException e) {
-            transaccion = "Error on update: "+e;
+            transaccion = "Error en el update: "+e;
         }
        
         return transaccion;
@@ -253,7 +253,9 @@ public class BancoADjdbc {
         } catch (SQLException e) {
             respuesta = "ERROR" + e;
         }
-
+        if (respuesta.equals("")){
+            return "No se encontro cuenta.";
+        };
         return respuesta;
     }
     
@@ -350,25 +352,59 @@ public class BancoADjdbc {
         String respuesta = "";
         System.out.println(ncta);
         String datos=""+ consultarCuenta(""+ncta)+"_"+consultarCuenta(""+ncta2)+"_"+cantidad;
-        System.out.println(datos);
+        System.out.println("These are the initializers"+datos);
+        if (consultarCuenta("" + ncta2).equals("No se encontro cuenta.")) {
+            return "Segunda cuenta no existe.";
+        } 
         transferenciadp = new TransferenciaDP(datos);
-
         String transaccion = "";
-        String query;
-        ResultSet tr;
         String update;
 
-        try
+        try {
+            //verificar existencia de segunda cuenta
+            
+            //hacer Retiro de ncta1
+            transferenciadp.setSaldoAnteriorRetiro(Integer.parseInt(consultarCuenta(""+ncta).split("_")[3]));
+            transferenciadp.setSaldoAnteriorDeposito(Integer.parseInt(consultarCuenta(""+ncta2).split("_")[3]));
+            respuesta = retirar(""+ncta, cantidad);
+            System.out.println(respuesta);
+            System.out.println(respuesta.split("Retiro exitoso, nuevo saldo = ")[0]);
+            if (respuesta.equals("No se puede retirar de cuenta de ahorros")) {
+                return "No se puede retirar de cuenta de ahorros";
+            } else{
+                transferenciadp.setSaldoNuevoRetiro(Integer.parseInt(respuesta.split("Retiro exitoso, nuevo saldo = ")[1]));
+            }
+            //verificar que se puede
 
-        return respuesta;
+
+            //hacer deposito
+            respuesta = depositar(""+ncta2, cantidad);
+            transferenciadp.setSaldoNuevoDeposito(Integer.parseInt(respuesta.split("Deposito exitoso, nuevo saldo = ")[1]));
+            statement = conexion.createStatement();
+            
+            transferenciadp.setCantidadRetiro(cantidad);
+            transferenciadp.setCantidadDeposito(cantidad);
+            update = "INSERT INTO transferencia VALUES(" + transferenciadp.toStringSql() + ")";
+            System.out.println(update);
+            statement.executeUpdate(update);
+
+            transaccion = "Transferencia Exitosa!";
+            statement.close();
+        } catch (SQLException e) {
+            transaccion = "Error en el update: " + e;
+        }
+
+        return transaccion;
     }
     public String consultarTransferencia(String cuenta) {
         String respuesta = "";
         ResultSet tr;
         //Abrir archivo Datos
-        String query = "SELECT * FROM transferencia where cuenta = '"+ cuenta+"'";
-        if(cuenta.equals("")){
+        String query;
+        if(cuenta.equals("")||cuenta.isEmpty()){
             query ="SELECT * FROM transferencia";
+        }else{
+             query = "SELECT * FROM transferencia where noctaRetiro = "+ Integer.parseInt(cuenta);
         }
         try {
             statement = conexion.createStatement();
@@ -389,7 +425,7 @@ public class BancoADjdbc {
                 respuesta += transferenciadp.toString() + "\n";
             }
             statement.close();
-            System.out.println(query);
+
         } catch (SQLException e) {
             respuesta = "ERROR" + e;
         }
