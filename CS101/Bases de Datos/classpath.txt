@@ -1,0 +1,1 @@
+export CLASSPATH=/Users/macbookpro/Documents/mysql-connector-java-5.1.45/mysql-connector-java-5.1.45-bin.jar:$CLASSPATH

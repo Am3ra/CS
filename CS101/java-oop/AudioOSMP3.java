@@ -17,9 +17,6 @@ public class AudioOSMP3 {
     public void reproducir(String cancion) {
         Media med = new Media(getClass().getResource(cancion).toExternalForm());
         mPlayer = new MediaPlayer(med);
-        if (mPlayer.getStatus().toString()=="PLAYING"){
-            mPlayer.stop();
-        }
         mPlayer.play();
     }
 
