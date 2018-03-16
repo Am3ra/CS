@@ -1,10 +1,7 @@
-	.data 
-str: 	.asciiz  "Hello World!\n"
+.data 
+	MyMessage: .asciiz "Hello world\n"
 
-	.text 
-main: 	li $v0, 4
-	la $a0, str
-	syscall 
-	
-	li $v0, 10
+.text 
+	li $v0, 4
+	la $a0, MyMessage
 	syscall 

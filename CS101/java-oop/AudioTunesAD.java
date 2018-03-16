@@ -31,7 +31,8 @@ public class AudioTunesAD {
        
         return artistas;
     }  
-    public String getAlbums(String artista) {
+    public String obtenerAlbums(String artista) {
+        System.out.println("Called method");
         String str, albums="";
         //Abrir archivo
         try {
@@ -39,7 +40,7 @@ public class AudioTunesAD {
             while (archivoIn.ready()) {
                 str = archivoIn.readLine();
                 String[] parts = str.split("_");
-                if (parts[0]==artista) {
+                if (parts[0].equals(artista)) {
                     albums += str + "\n";
                 }
                 
@@ -53,6 +54,6 @@ public class AudioTunesAD {
         //Leer archivo
 
         //cerrar archivo
-        return "";
+        return albums;
     }
 }

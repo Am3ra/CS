@@ -81,6 +81,7 @@ public class AudioTunesGUI2 extends JFrame implements ActionListener {
 		add(panelPrincipal);
 		setSize(700, 400);
 		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	public void actionPerformed(ActionEvent evento) {
@@ -91,7 +92,7 @@ public class AudioTunesGUI2 extends JFrame implements ActionListener {
 
 			taArtistas.setText(artistas);
 		}
-		if (evento.getSource()== bAlbums) {
+		if (evento.getSource() == bAlbums) {
 			//obtener artista
 			artista = tfArtista.getText();
 			//obtener albums
@@ -101,8 +102,12 @@ public class AudioTunesGUI2 extends JFrame implements ActionListener {
 		}
 		if (evento.getSource() == bPlay) {
 			song = tfSong.getText();
+			try {
+				audio.reproducir(song);
+			} catch (Exception e) {
+				System.out.println("Error: " + e);
+			}
 
-			audio.reproducir(song);
 		}
 		if (evento.getSource() == bStop) {
 			audio.stop();
