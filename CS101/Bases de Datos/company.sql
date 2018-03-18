@@ -1,0 +1,62 @@
+-- CREATE DATABASE company;
+-- Use company;
+-- CREATE TABLE empleado (
+-- `nss`  varchar
+-- (10) NOT NULL PRIMARY KEY,
+-- nombre  varchar
+-- (10) not null,
+-- direccion  varchar
+-- (10) not null,
+-- salario float not null,
+-- fecha_n date not null,
+-- sexo  varchar
+-- (10) not null
+-- );
+-- CREATE TABLE  departamento(
+-- `ndepto` INT NOT null PRIMARY KEY,
+-- nombre  varchar
+-- (10) not null,
+-- fecha_inicio date not null
+-- );
+-- CREATE TABLE proyecto (
+-- `nproyecto` INT NOT NULL PRIMARY KEY,
+-- nombre  varchar
+-- (10) not null,
+-- localidad  varchar
+-- (10) not null
+-- );
+-- CREATE TABLE dependiente (
+-- `nss`  varchar
+-- (10) NOT NULL,
+-- nombre  varchar
+-- (10) not null ,
+-- πfecha_n  varchar
+-- (10) not null,
+-- sexo  varchar
+-- (10) not null,
+-- parentesco  varchar
+-- (10) not null,
+-- CONSTRAINT PK_Person
+-- PRIMARY KEY
+-- (nss,nombre)
+-- );
+-- CREATE TABLE localidad (
+-- `ndepto` INT NOT NULL ,
+-- nombre  varchar
+-- (10) not null ,
+-- direccion  varchar
+-- (10) not null,
+-- telefono  varchar
+-- (10) not null,
+-- CONSTRAINT PK_localidad
+-- PRIMARY KEY
+-- (ndepto,nombre)
+-- );
+-- CREATE TABLE trabaja_en (
+-- `nproyecto` INT NOT NULL PRIMARY KEY,
+-- nss  varchar
+-- (10) not null,
+-- horas float not null
+-- );  
+
+

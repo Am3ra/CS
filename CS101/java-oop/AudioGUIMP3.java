@@ -54,9 +54,12 @@ public class AudioGUIMP3 extends JFrame implements ActionListener {
         panel2.add(panel1);
         add(panel2);
         setSize(400, 300);
-        setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+    }
+    
+    public JPanel getPanel2() {
+        return panel2;
     }
 
     public void actionPerformed(ActionEvent event) {

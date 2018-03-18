@@ -8,12 +8,13 @@ import java.io.IOException;
  */
 public class AudioTunesAD {
     private BufferedReader archivoIn;
-    public String obtenerArtistas(){
+
+    public String obtenerArtistas() {
         String artistas = "", str;
         try {
             //Abrir archivo
             archivoIn = new BufferedReader(new FileReader("Artistas.txt"));
-            
+
             //Leer datos
             while (archivoIn.ready()) {
                 str = archivoIn.readLine();
@@ -21,19 +22,19 @@ public class AudioTunesAD {
             }
             // Cerrar el archivo
             archivoIn.close();
-            
+
         } catch (FileNotFoundException e) {
-            System.out.println("error: "+e);
-        } catch (IOException e){
+            System.out.println("error: " + e);
+        } catch (IOException e) {
             System.out.println("error: " + e);
         }
-       
-       
+
         return artistas;
-    }  
+    }
+
     public String obtenerAlbums(String artista) {
         System.out.println("Called method");
-        String str, albums="";
+        String str, albums = "";
         //Abrir archivo
         try {
             archivoIn = new BufferedReader(new FileReader("Albums.txt"));
@@ -43,14 +44,14 @@ public class AudioTunesAD {
                 if (parts[0].equals(artista)) {
                     albums += str + "\n";
                 }
-                
+
             }
             archivoIn.close();
         } catch (FileNotFoundException e) {
             System.out.println("Error: " + e);
         } catch (IOException e) {
             System.out.println("Error: " + e);
-        }       
+        }
         //Leer archivo
 
         //cerrar archivo
