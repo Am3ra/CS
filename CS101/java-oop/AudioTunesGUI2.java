@@ -1,9 +1,14 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Vector;
+
 import javax.sound.sampled.Clip;
 
-public class AudioTunesGUI2 extends JFrame implements ActionListener {
+public class AudioTunesGUI2 extends JFrame implements ActionListener, ListSelectionListener {
 	//Atributos de la aplicacion
 	private JPanel panelUsuario, panelArtistas, panelAlbums, panelSongs, panelPrincipal, panelAudio;
 	private JButton bCatalogo, bArtista, bAlbums, bSongs;
@@ -14,6 +19,9 @@ public class AudioTunesGUI2 extends JFrame implements ActionListener {
 
 	private AudioOS audio = new AudioOS();
 	private AudioTunesAD atad = new AudioTunesAD();
+
+	private Vector vArtistas,vAlbums, vSongs;
+	private JList listaArtistas, listaAlbums, listaSongs;
 
 	public AudioTunesGUI2() {
 		super("Audio Tunes Super");
@@ -88,17 +96,30 @@ public class AudioTunesGUI2 extends JFrame implements ActionListener {
 		String song, respuesta, artistas, artista, albums;
 		if (evento.getSource() == bCatalogo) {
 
-			artistas = atad.obtenerArtistas();
+			// artistas = atad.obtenerArtistas();
+			vArtistas = atad.obtenerArtistas();
 
-			taArtistas.setText(artistas);
+			// taArtistas.setText(artistas);
+			listaArtistas = new JList(vArtistas);
+			listaArtistas.addListSelectionListener(this);
+			panelArtistas.setVisible(false);
+			panelArtistas.removeAll();
+			panelArtistas.add(listaArtistas);
+			panelArtistas.setVisible(true);
+
 		}
 		if (evento.getSource() == bAlbums) {
 			//obtener artista
 			artista = tfArtista.getText();
 			//obtener albums
-			albums = atad.obtenerAlbums(artista);
+			vAlbums = atad.obtenerAlbums(artista);
 			//desplegar resultados
-			taAlbums.setText(albums);
+			listaAlbums = new JList(vAlbums);
+			listaAlbums.addListSelectionListener(this);
+			panelAlbums.setVisible(false);
+			panelAlbums.removeAll();
+			panelAlbums.add(listaAlbums);
+			panelAlbums.setVisible(true);
 		}
 		if (evento.getSource() == bPlay) {
 			song = tfSong.getText();
@@ -113,7 +134,45 @@ public class AudioTunesGUI2 extends JFrame implements ActionListener {
 			audio.stop();
 		}
 	}
+	public void valueChanged(ListSelectionEvent eListener) {
+		String artistaElegido,albumElegido,songElegido;
+		if (eListener.getValueIsAdjusting()==true) {
+			if (eListener.getSource()==listaArtistas) {
+				artistaElegido = (String)listaArtistas.getSelectedValue();
+				tfArtista.setText(artistaElegido);
+				System.out.println(artistaElegido);
+				vAlbums = atad.obtenerAlbums(artistaElegido);
+				//desplegar resultados
+				listaAlbums = new JList(vAlbums);
+				listaAlbums.addListSelectionListener(this);
+				panelAlbums.setVisible(false);
+				panelAlbums.removeAll();
+				panelAlbums.add(listaAlbums);
+				panelAlbums.setVisible(true);
+			}
+			if (eListener.getSource() == listaAlbums) {
+				albumElegido = (String) listaAlbums.getSelectedValue();
+				tfAlbum.setText(albumElegido);
+				System.out.println(albumElegido);
 
+				vSongs = atad.obtenerCancion(albumElegido);
+				//desplegar resultados
+				listaSongs = new JList(vSongs);
+				listaSongs.addListSelectionListener(this);
+				panelSongs.setVisible(false);
+				panelSongs.removeAll();
+				panelSongs.add(listaSongs);
+				panelSongs.setVisible(true);
+			}
+			if (eListener.getSource() == listaSongs) {
+				songElegido = (String) listaSongs.getSelectedValue();
+				tfSong.setText(songElegido);
+				System.out.println(songElegido);
+			}
+			
+		}
+		
+	}
 	public static void main(String args[]) {
 		new AudioTunesGUI2();
 	}
