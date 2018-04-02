@@ -25,7 +25,7 @@
 	
 		add $t4, $t1,$t0	#t4 = t0 +t1
 		la $t0, ($t1)		#t0 = t1
-		la $t1,($t4)			#t1 = t4	
+		la $t1,($t4)		#t1 = t4	
 	
 		addi $t2,$t2,1
 		blt  $t2,$t3,for	#loop counter
