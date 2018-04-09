@@ -10,14 +10,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-public class factorial extends JFrame implements ActionListener{
+public class Factorial extends JFrame implements ActionListener{
     private JTextField tffactorial;
     private JButton bCalcular, bSalir;
     private JPanel panel1, panel2;
     private JTextArea taDatos;
     private CalculosDP calculos = new CalculosDP();
 
-    public factorial(){
+    public Factorial(){
         super("Caculo de Factorial");
 
         // Crear objetos de atributos/variables de clase
@@ -59,18 +59,23 @@ public class factorial extends JFrame implements ActionListener{
             String strfactorial = tffactorial.getText();
             //Hacer la conversion 
             
-            Integer num = Integer.parseInt(strfactorial);
-            Integer cool =calculos.factorial(num);
             
-            //Desplegar resultado
-            taDatos.setText(cool + " Es el resultado");
+            try {
+                Integer num = Integer.parseInt(strfactorial);
+                Integer cool = calculos.factorial(num);
+                taDatos.setText(cool + " Es el resultado");
 
+            } catch (Exception e) {
+                System.out.println(e);
+                taDatos.setText(""+e);
+            }
+            
         }
         if(event.getSource()==bSalir){
             System.exit(0);
         }
     }
     public static void main(String[] args) {
-        factorial factorial = new factorial();
+        Factorial factorial = new Factorial();
     }
 }

@@ -57,7 +57,7 @@ public class CalculosGUI extends JFrame implements ActionListener{
         } if (a.getSource()==miExponencial) {
             new exponencial();
         } if (a.getSource()==miFactorial) {
-            new factorial();
+            new Factorial();
         } if (a.getSource()==miGradosFC||a.getSource()==miGradosCF) {
             new GradosGUI5();
         }

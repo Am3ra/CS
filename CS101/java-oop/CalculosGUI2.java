@@ -7,33 +7,40 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-
-public class CalculosGUI2 extends JFrame implements ActionListener{
+public class CalculosGUI2 extends JFrame implements ActionListener {
     private JMenuBar mbPrincipal;
-    private JMenu menuCalculos, menuGrados;
-    private JMenuItem miFactorial, miGradosCF, miGradosFC, miExponencial,miEcuacion,miAudio, miSalir;
+    private JMenu menuCalculos, menuGrados, menuAudio, menuTunes;
+    private JMenuItem miFactorial, miGradosCF, miGradosFC, miExponencial, miEcuacion, miAudio, miAudioMP3, miSalir,
+            miAudioTunesWAV, miAudioTunesMP3;
     private JPanel panel;
 
-    private factorial factor = new factorial();
+    private Factorial factor = new Factorial();
     private exponencial expo = new exponencial();
     private GradosGUI5 grados = new GradosGUI5();
     private Raizes raiz = new Raizes();
-    private Audio2 audio2 = new Audio2();
+    private AudioGUI audio2 = new AudioGUI();
+    private AudioGUIMP3 audioGUIMP3 = new AudioGUIMP3();
+    private AudioTunesGUI2 audioTunesGUI2 = new AudioTunesGUI2();
 
-    public CalculosGUI2(){
+    public CalculosGUI2() {
         super("Java APP: Calculos varios");
         //Crear objeto de los atributos
         mbPrincipal = new JMenuBar();
         menuCalculos = new JMenu("Calculos Varios");
         menuGrados = new JMenu("Conversion de Grados");
+        menuAudio = new JMenu("audioPlayer");
+        menuTunes = new JMenu("MENU AUDIOTUNES");
         miFactorial = new JMenuItem("Factorial de N");
         miEcuacion = new JMenuItem("Ecuación Cuadrática");
-        miAudio = new JMenuItem("Reproducción de Audio");
+        miAudio = new JMenuItem("Audio WAV");
+        miAudioMP3 = new JMenuItem("Audio MP3");
         miExponencial = new JMenuItem("Exponencial");
         miGradosCF = new JMenuItem("C a F");
         miGradosFC = new JMenuItem("F a C");
         miSalir = new JMenuItem("Exit");
-        panel =  new JPanel();
+        miAudioTunesMP3 = new JMenuItem("MP3");
+        miAudioTunesWAV = new JMenuItem("WAV");
+        panel = new JPanel();
 
         //Colocar action listeners
         miSalir.addActionListener(this);
@@ -43,6 +50,9 @@ public class CalculosGUI2 extends JFrame implements ActionListener{
         miGradosFC.addActionListener(this);
         miEcuacion.addActionListener(this);
         miAudio.addActionListener(this);
+        miAudioMP3.addActionListener(this);
+        miAudioTunesMP3.addActionListener(this);
+        miAudioTunesWAV.addActionListener(this);
 
         //Colocar los JMENUITEMS
         menuGrados.add(miGradosCF);
@@ -51,60 +61,78 @@ public class CalculosGUI2 extends JFrame implements ActionListener{
         menuCalculos.add(miExponencial);
         menuCalculos.add(menuGrados);
         menuCalculos.add(miEcuacion);
-        menuCalculos.add(miAudio);
         menuCalculos.add(miSalir);
+
+        menuAudio.add(miAudio);
+        menuAudio.add(miAudioMP3);
+
+        menuTunes.add(miAudioTunesMP3);
+        menuTunes.add(miAudioTunesWAV);
 
         //Colocar JMenuBar
         mbPrincipal.add(menuCalculos);
+        mbPrincipal.add(menuAudio);
+        mbPrincipal.add(menuTunes);
 
         //Colocar el JMenuBAr en el Jframe
         setJMenuBar(mbPrincipal);
-        setSize(500,400);
+        setSize(500, 400);
         setVisible(true);
-        
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    public void actionPerformed(ActionEvent a){
-        if(a.getSource()==miSalir){
+
+    public void actionPerformed(ActionEvent a) {
+        System.out.println("" + a);
+        if (a.getSource() == miSalir) {
             System.exit(0);
-        } if (a.getSource()==miExponencial) {
+        } else if (a.getSource() == miExponencial) {
             panel.setVisible(false);
             panel = expo.getPanel2();
             panel.setVisible(true);
             add(panel);
             setVisible(true);
-        } if (a.getSource()==miFactorial) {
+        } else if (a.getSource() == miFactorial) {
             panel.setVisible(false);
             panel = factor.getPanel2();
             panel.setVisible(true);
             add(panel);
             setVisible(true);
-        } 
-        if (a.getSource()==miGradosFC||a.getSource()==miGradosCF) {
+        } else if (a.getSource() == miGradosFC || a.getSource() == miGradosCF) {
             panel.setVisible(false);
             panel = grados.getPanel2();
             panel.setVisible(true);
             add(panel);
             setVisible(true);
-        }
-        if (a.getSource()==miEcuacion) {
+        } else if (a.getSource() == miEcuacion) {
             panel.setVisible(false);
             panel = raiz.getPanel2();
             panel.setVisible(true);
             add(panel);
             setVisible(true);
-        }
-        if (a.getSource()==miAudio) {
+        } else if (a.getSource() == miAudio) {
             panel.setVisible(false);
             panel = audio2.getPanel2();
+            panel.setVisible(true);
+            add(panel);
+            setVisible(true);
+        } else if (a.getSource() == miAudioMP3) {
+            panel.setVisible(false);
+            panel = audioGUIMP3.getPanel2();
+            panel.setVisible(true);
+            add(panel);
+            setVisible(true);
+        } if (a.getSource() == miAudioTunesMP3) {
+            panel.setVisible(false);
+            panel = audioTunesGUI2.getPanel2();
             panel.setVisible(true);
             add(panel);
             setVisible(true);
         }
 
     }
+
     public static void main(String[] args) {
         new CalculosGUI2();
     }

@@ -17,8 +17,6 @@ public class ClienteDP{
         this.nocta= st[0];
         this.nombre= st[1];
         this.tipo= st[2];
-        this.fecha= st[4];
-        this.hora= st[5];
         this.saldo= Integer.parseInt(st[3]);
     }
     public String getNocta(){
