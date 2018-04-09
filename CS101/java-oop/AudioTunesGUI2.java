@@ -23,6 +23,8 @@ public class AudioTunesGUI2 extends JFrame implements ActionListener, ListSelect
 	private Vector vArtistas, vAlbums, vSongs;
 	private JList listaArtistas, listaAlbums, listaSongs;
 
+	private ImageIcon iconAlbum[];
+
 	public AudioTunesGUI2() {
 		super("Audio Tunes Super");
 
@@ -146,27 +148,30 @@ public class AudioTunesGUI2 extends JFrame implements ActionListener, ListSelect
 				artistaElegido = (String) listaArtistas.getSelectedValue();
 				tfArtista.setText(artistaElegido);
 				System.out.println(artistaElegido);
-				vAlbums = atad.obtenerAlbums(artistaElegido);
+
+
+				// vAlbums = atad.obtenerAlbums(artistaElegido);
+				iconAlbum = atad.obtenerAlbumsIcon(artistaElegido);
 				//desplegar resultados
-				listaAlbums = new JList(vAlbums);
+				listaAlbums = new JList(iconAlbum);
 				listaAlbums.addListSelectionListener(this);
+
 				panelAlbums.setVisible(false);
 				panelAlbums.removeAll();
-				panelAlbums.add(listaAlbums);
+				panelAlbums.add(new JScrollPane(listaAlbums));
 				panelAlbums.setVisible(true);
 			}
 			if (eListener.getSource() == listaAlbums) {
-				albumElegido = (String) listaAlbums.getSelectedValue();
-				tfAlbum.setText(albumElegido);
-				System.out.println(albumElegido);
-
+				int albumSelected = listaAlbums.getSelectedIndex();
+				System.out.println(albumSelected);
+				albumElegido = atad.getAlbum(albumSelected);
 				vSongs = atad.obtenerCancion(albumElegido);
 				//desplegar resultados
 				listaSongs = new JList(vSongs);
 				listaSongs.addListSelectionListener(this);
 				panelSongs.setVisible(false);
 				panelSongs.removeAll();
-				panelSongs.add(listaSongs);
+				panelSongs.add(new JScrollPane(listaSongs));
 				panelSongs.setVisible(true);
 			}
 			if (eListener.getSource() == listaSongs) {
