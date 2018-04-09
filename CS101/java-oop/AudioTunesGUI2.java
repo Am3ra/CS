@@ -20,7 +20,7 @@ public class AudioTunesGUI2 extends JFrame implements ActionListener, ListSelect
 	private AudioOS audio = new AudioOS();
 	private AudioTunesAD atad = new AudioTunesAD();
 
-	private Vector vArtistas,vAlbums, vSongs;
+	private Vector vArtistas, vAlbums, vSongs;
 	private JList listaArtistas, listaAlbums, listaSongs;
 
 	public AudioTunesGUI2() {
@@ -88,8 +88,12 @@ public class AudioTunesGUI2 extends JFrame implements ActionListener, ListSelect
 
 		add(panelPrincipal);
 		setSize(700, 400);
-		setVisible(true);
+		// setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	public JPanel getPanel2() {
+		return panelPrincipal;
 	}
 
 	public void actionPerformed(ActionEvent evento) {
@@ -134,11 +138,12 @@ public class AudioTunesGUI2 extends JFrame implements ActionListener, ListSelect
 			audio.stop();
 		}
 	}
+
 	public void valueChanged(ListSelectionEvent eListener) {
-		String artistaElegido,albumElegido,songElegido;
-		if (eListener.getValueIsAdjusting()==true) {
-			if (eListener.getSource()==listaArtistas) {
-				artistaElegido = (String)listaArtistas.getSelectedValue();
+		String artistaElegido, albumElegido, songElegido;
+		if (eListener.getValueIsAdjusting() == true) {
+			if (eListener.getSource() == listaArtistas) {
+				artistaElegido = (String) listaArtistas.getSelectedValue();
 				tfArtista.setText(artistaElegido);
 				System.out.println(artistaElegido);
 				vAlbums = atad.obtenerAlbums(artistaElegido);
@@ -169,10 +174,11 @@ public class AudioTunesGUI2 extends JFrame implements ActionListener, ListSelect
 				tfSong.setText(songElegido);
 				System.out.println(songElegido);
 			}
-			
+
 		}
-		
+
 	}
+
 	public static void main(String args[]) {
 		new AudioTunesGUI2();
 	}
