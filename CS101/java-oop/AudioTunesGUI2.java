@@ -11,11 +11,11 @@ import javax.sound.sampled.Clip;
 public class AudioTunesGUI2 extends JFrame implements ActionListener, ListSelectionListener {
 	//Atributos de la aplicacion
 	private JPanel panelUsuario, panelArtistas, panelAlbums, panelSongs, panelPrincipal, panelAudio;
-	private JButton bCatalogo, bArtista, bAlbums, bSongs;
+	private JButton bCatalogo, bAlbums, bSongs;
 	private JButton bPlay, bStop;
 	private JTextField tfArtista, tfAlbum, tfSong;
 	private JTextArea taArtistas, taAlbums, taSongs;
-	private Clip clip;
+
 
 	private AudioOS audio = new AudioOS();
 	private AudioTunesAD atad = new AudioTunesAD();
@@ -99,7 +99,7 @@ public class AudioTunesGUI2 extends JFrame implements ActionListener, ListSelect
 	}
 
 	public void actionPerformed(ActionEvent evento) {
-		String song, respuesta, artistas, artista, albums;
+		String song, artista;
 		if (evento.getSource() == bCatalogo) {
 
 			// artistas = atad.obtenerArtistas();

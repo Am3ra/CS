@@ -14,11 +14,12 @@ public class BibliotecaGUI extends JFrame implements ActionListener, ListSelecti
 
     private JButton bEditorial, bBuscar;
     private JTextArea taEditorial, taLibros;
-    private JTextField tfBuscar;
     private BibliotecaAD bibliotecaad = new BibliotecaAD();
 
     private Vector vectorEditoriales, vectorInformacion;
     private JList listaEditoriales, listaInformacion;
+
+    private ImageIcon iconAlbum[];
 
     public BibliotecaGUI() {
         super("BIBLIOTECA TEC");
@@ -53,12 +54,10 @@ public class BibliotecaGUI extends JFrame implements ActionListener, ListSelecti
         panelLibros.add(new JScrollPane(taLibros));
 
         panelBuscar.add(bBuscar);
-        panelBuscar.add(tfBuscar);
 
         panelPrincipal.add(panelUsuario);
         panelPrincipal.add(panelEditoriales);
         panelPrincipal.add(panelLibros);
-
 
         // 4. Adicionar el panelPrincipal al JFrame
         add(panelPrincipal);
@@ -85,14 +84,20 @@ public class BibliotecaGUI extends JFrame implements ActionListener, ListSelecti
             if (lse.getSource() == listaEditoriales) {
                 editorialElegido = (String) listaEditoriales.getSelectedValue();
                 System.out.println(editorialElegido);
-                vectorInformacion = bibliotecaad.obtenerInfo(editorialElegido);
+                iconAlbum = bibliotecaad.obtenerInfoIcons(editorialElegido);
 
-                listaInformacion = new JList(vectorInformacion);
+                listaInformacion = new JList(iconAlbum);
                 listaInformacion.addListSelectionListener(this);
                 panelLibros.setVisible(false);
                 panelLibros.removeAll();
-                panelLibros.add(listaInformacion);
+                panelLibros.setSize(100, 400);
+                panelLibros.add(new JScrollPane(listaInformacion));
                 panelLibros.setVisible(true);
+                bibliotecaad.obtenerInfo(editorialElegido);
+            }
+            if (lse.getSource() == listaInformacion) {
+    
+                JOptionPane.showMessageDialog(panelPrincipal,bibliotecaad.getInfo(listaInformacion.getSelectedIndex()));
             }
 
         }

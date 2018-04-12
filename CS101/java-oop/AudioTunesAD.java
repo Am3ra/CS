@@ -69,34 +69,14 @@ public class AudioTunesAD {
     }
 
     public ImageIcon[] obtenerAlbumsIcon(String artista) {
-        // System.out.println("Called method");
-        String str;
-        //Abrir archivo
-        try {
-            archivoIn = new BufferedReader(new FileReader("Albums.txt"));
-            vAlbums = new Vector();
-            while (archivoIn.ready()) {
-                str = archivoIn.readLine();
-                String[] parts = str.split("_");
-                if (parts[0].equals(artista)) {
-                    // albums += str + "\n";
-                    System.out.println(str);
-                    vAlbums.add(parts[1]);
-                }
-            }
-            archivoIn.close();
-            imageAlbums = new ImageIcon[vAlbums.size()];
-            
-            for (int i = 0; i < imageAlbums.length; i++) {
-                imageAlbums[i]= new ImageIcon(getClass().getResource("image/"+vAlbums.get(i).toString()+".jpg"));
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("Error: " + e);
-        } catch (IOException e) {
-            System.out.println("Error: " + e);
-        }
-        //Leer archivo
 
+        //Abrir archivo
+        vAlbums = obtenerAlbums(artista);
+        imageAlbums = new ImageIcon[vAlbums.size()];
+
+        for (int i = 0; i < imageAlbums.length; i++) {
+            imageAlbums[i] = new ImageIcon(getClass().getResource("image/" + vAlbums.get(i).toString() + ".jpg"));
+        }
         //cerrar archivo
         return imageAlbums;
     }

@@ -4,6 +4,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
+
 
 /**
  * BibliotecaAD
@@ -11,6 +13,8 @@ import java.util.Vector;
 public class BibliotecaAD {
     private BufferedReader archivoIn;
     private Vector vPersonas, vInfo;
+    private ImageIcon imageEditorial[];
+
     public Vector obtenerEditoriales() {
         String str;
         try {
@@ -48,12 +52,12 @@ public class BibliotecaAD {
                 str = archivoIn.readLine();
                 String[] parts = str.split("_");
                 if (parts[2].equals(editorial)) {
-                    // albums += str + "\n";
-                    vInfo.add("Titulo: " + parts[0]);
-                    vInfo.add("Autor: " + parts[1]);
-                    vInfo.add("Editorial: " + parts[2]);
-                    vInfo.add("\n");
-
+                    str = "";
+                    str+="Titulo: " + parts[0]+"\n";
+                    str+="Autor: " + parts[1] + "\n";
+                    str+="Editorial: " + parts[2]+"\n";
+                    str+="\n";
+                    vInfo.add(str);
                 }
             }
             archivoIn.close();
@@ -66,6 +70,41 @@ public class BibliotecaAD {
 
         //cerrar archivo
         return vInfo;
+    }
+    
+    public ImageIcon[] obtenerInfoIcons(String editorial) {
+        String str;
+        //Abrir archivo
+        try {
+            archivoIn = new BufferedReader(new FileReader("Libros.txt"));
+            vInfo = new Vector();
+            while (archivoIn.ready()) {
+                str = archivoIn.readLine();
+                String[] parts = str.split("_");
+                if (parts[2].equals(editorial)) {
+                    vInfo.add(parts[0]);
+                }
+            }
+            archivoIn.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: " + e);
+        } catch (IOException e) {
+            System.out.println("Error: " + e);
+        }
+
+        imageEditorial = new ImageIcon[vInfo.size()];
+
+        for (int i = 0; i < imageEditorial.length; i++) {
+            System.out.println(vInfo.get(i).toString());
+            imageEditorial[i] = new ImageIcon(getClass().getResource("images/" + vInfo.get(i).toString() + ".jpg"));
+        }
+        //cerrar archivo
+        return imageEditorial;
+    }
+    
+    public String getInfo(int bookSelected) {
+        System.out.println(vInfo);
+        return vInfo.get(bookSelected).toString();
     }
     
 }
