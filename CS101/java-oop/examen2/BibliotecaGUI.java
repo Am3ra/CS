@@ -10,10 +10,10 @@ import java.util.Vector;
 
 public class BibliotecaGUI extends JFrame implements ActionListener, ListSelectionListener {
     // Atributos de la aplicacion
-    private JPanel panelUsuario, panelEditoriales, panelLibros, panelPrincipal, panelBuscar;
+    private JPanel panelUsuario, panelEditoriales, panelLibros, panelPrincipal,panelInfo;
 
     private JButton bEditorial, bBuscar;
-    private JTextArea taEditorial, taLibros;
+    private JTextArea taEditorial, taLibros,taInfo;
     private BibliotecaAD bibliotecaad = new BibliotecaAD();
 
     private Vector vectorEditoriales, vectorInformacion;
@@ -30,34 +30,37 @@ public class BibliotecaGUI extends JFrame implements ActionListener, ListSelecti
         bBuscar = new JButton("Buscar Titulo");
 
         taEditorial = new JTextArea("EDITORIALES", 20, 20);
-        taLibros = new JTextArea("LIBROS DE UNA EDITORIAL", 20, 20);
+        taLibros = new JTextArea("LIBROS DE UNA EDITORIAL");
+        taInfo = new JTextArea("INFORMACION SOBRE ");
 
         panelUsuario = new JPanel();
         panelEditoriales = new JPanel();
         panelLibros = new JPanel();
         panelPrincipal = new JPanel();
-        panelBuscar = new JPanel();
+        panelInfo = new JPanel();
 
         // Adionar actionListener a los JButtons
         bEditorial.addActionListener(this);
 
         // 2. Definir Layouts de los JPanels
         panelUsuario.setLayout(new FlowLayout());
-        panelEditoriales.setLayout(new GridLayout(1, 2));
+        panelEditoriales.setLayout(new GridLayout(1, 1));
+        panelInfo.setLayout(new GridLayout(1, 1));
         panelLibros.setLayout(new GridLayout(1, 1));
-        panelPrincipal.setLayout(new FlowLayout());
+        panelPrincipal.setLayout(new BorderLayout(5,5));
 
         // 3. Colocar los objetos de los atributos en los panels correspondientes
         panelUsuario.add(bEditorial);
 
         panelEditoriales.add(new JScrollPane(taEditorial));
         panelLibros.add(new JScrollPane(taLibros));
+        panelInfo.add(new JScrollPane(taInfo));
 
-        panelBuscar.add(bBuscar);
 
-        panelPrincipal.add(panelUsuario);
-        panelPrincipal.add(panelEditoriales);
-        panelPrincipal.add(panelLibros);
+        panelPrincipal.add(panelUsuario, BorderLayout.NORTH);
+        panelPrincipal.add(panelEditoriales,BorderLayout.WEST);
+        panelPrincipal.add(panelLibros, BorderLayout.CENTER);
+        panelPrincipal.add(panelInfo, BorderLayout.EAST);
 
         // 4. Adicionar el panelPrincipal al JFrame
         add(panelPrincipal);
@@ -91,13 +94,13 @@ public class BibliotecaGUI extends JFrame implements ActionListener, ListSelecti
                 panelLibros.setVisible(false);
                 panelLibros.removeAll();
                 panelLibros.setSize(100, 400);
-                panelLibros.add(new JScrollPane(listaInformacion));
+                panelLibros.add(new  JScrollPane(listaInformacion));
                 panelLibros.setVisible(true);
                 bibliotecaad.obtenerInfo(editorialElegido);
             }
             if (lse.getSource() == listaInformacion) {
     
-                JOptionPane.showMessageDialog(panelPrincipal,bibliotecaad.getInfo(listaInformacion.getSelectedIndex()));
+                taInfo.setText(bibliotecaad.getInfo(listaInformacion.getSelectedIndex()));
             }
 
         }

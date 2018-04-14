@@ -14,7 +14,9 @@ class FTPserver():
     def __init__(self, backlog=3):
         '''initialization of class'''
         self.sock = socket.socket()
+        print("Socket Created")
         self.sock.bind((LOCAL_IP, FTP_PORT))
+        print("socket bound")
         self.backlog = backlog
 
     def start(self):
