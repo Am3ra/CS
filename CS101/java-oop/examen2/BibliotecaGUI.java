@@ -10,16 +10,20 @@ import java.util.Vector;
 
 public class BibliotecaGUI extends JFrame implements ActionListener, ListSelectionListener {
     // Atributos de la aplicacion
-    private JPanel panelUsuario, panelEditoriales, panelLibros, panelPrincipal,panelInfo;
+    private JPanel panelUsuario, panelEditoriales, panelLibros, panelPrincipal, panelInfo;
+
+    private JTextField tfLibroSearch;
 
     private JButton bEditorial, bBuscar;
-    private JTextArea taEditorial, taLibros,taInfo;
+    private JTextArea taEditorial, taLibros, taInfo;
     private BibliotecaAD bibliotecaad = new BibliotecaAD();
 
-    private Vector vectorEditoriales, vectorInformacion;
+    private Vector vectorEditoriales;
     private JList listaEditoriales, listaInformacion;
 
     private ImageIcon iconAlbum[];
+
+    private Object objectBook[];
 
     public BibliotecaGUI() {
         super("BIBLIOTECA TEC");
@@ -28,6 +32,8 @@ public class BibliotecaGUI extends JFrame implements ActionListener, ListSelecti
 
         bEditorial = new JButton("Editoriales");
         bBuscar = new JButton("Buscar Titulo");
+
+        tfLibroSearch = new JTextField("", 10);
 
         taEditorial = new JTextArea("EDITORIALES", 20, 20);
         taLibros = new JTextArea("LIBROS DE UNA EDITORIAL");
@@ -41,24 +47,27 @@ public class BibliotecaGUI extends JFrame implements ActionListener, ListSelecti
 
         // Adionar actionListener a los JButtons
         bEditorial.addActionListener(this);
+        bBuscar.addActionListener(this);
 
         // 2. Definir Layouts de los JPanels
+        
         panelUsuario.setLayout(new FlowLayout());
         panelEditoriales.setLayout(new GridLayout(1, 1));
         panelInfo.setLayout(new GridLayout(1, 1));
-        panelLibros.setLayout(new GridLayout(1, 1));
-        panelPrincipal.setLayout(new BorderLayout(5,5));
+        panelLibros.setLayout(new GridLayout(1, 3));
+        panelPrincipal.setLayout(new BorderLayout(5, 5));
 
         // 3. Colocar los objetos de los atributos en los panels correspondientes
         panelUsuario.add(bEditorial);
+        panelUsuario.add(tfLibroSearch);
+        panelUsuario.add(bBuscar);
 
         panelEditoriales.add(new JScrollPane(taEditorial));
         panelLibros.add(new JScrollPane(taLibros));
         panelInfo.add(new JScrollPane(taInfo));
 
-
         panelPrincipal.add(panelUsuario, BorderLayout.NORTH);
-        panelPrincipal.add(panelEditoriales,BorderLayout.WEST);
+        panelPrincipal.add(panelEditoriales, BorderLayout.WEST);
         panelPrincipal.add(panelLibros, BorderLayout.CENTER);
         panelPrincipal.add(panelInfo, BorderLayout.EAST);
 
@@ -78,6 +87,19 @@ public class BibliotecaGUI extends JFrame implements ActionListener, ListSelecti
             panelEditoriales.removeAll();
             panelEditoriales.add(listaEditoriales);
             panelEditoriales.setVisible(true);
+        } else if (e.getSource() == bBuscar) {
+            objectBook = bibliotecaad.getBook(tfLibroSearch.getText());
+            System.out.println(objectBook[1]);
+            
+            panelLibros.setVisible(false);
+            panelLibros.removeAll();
+            panelLibros.add(new JLabel((ImageIcon)objectBook[1]));
+            panelLibros.setVisible(true);
+
+            panelInfo.setVisible(false);
+            panelInfo.removeAll();
+            panelInfo.add(new JTextArea(objectBook[0].toString()));
+            panelInfo.setVisible(true);
         }
     }
 
@@ -94,12 +116,12 @@ public class BibliotecaGUI extends JFrame implements ActionListener, ListSelecti
                 panelLibros.setVisible(false);
                 panelLibros.removeAll();
                 panelLibros.setSize(100, 400);
-                panelLibros.add(new  JScrollPane(listaInformacion));
+                panelLibros.add(new JScrollPane(listaInformacion));
                 panelLibros.setVisible(true);
                 bibliotecaad.obtenerInfo(editorialElegido);
             }
             if (lse.getSource() == listaInformacion) {
-    
+
                 taInfo.setText(bibliotecaad.getInfo(listaInformacion.getSelectedIndex()));
             }
 
