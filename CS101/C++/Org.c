@@ -8,7 +8,7 @@ struct cache{
     unsigned int address;
     char         state;
 };
-struct cacheFA{
+struct cacheFA{ //Cache with time attribute for FA
     unsigned int address;
     unsigned int time;
     char         state;
@@ -16,6 +16,7 @@ struct cacheFA{
 
 unsigned int events = 0;
 
+//declare caches
 struct cache myCache[CACHESIZE];
 struct cacheFA myCacheFA[CACHESIZE];
 
@@ -67,15 +68,14 @@ unsigned int GetAddr (FILE *fp)
 int CacheAccess (unsigned int address){
     
     static unsigned int hit = 0;
-    int end = address & 0x000f;
+    int end = address & 0x000f; //get last 4 bits of address
     
     if(myCache[end].state==VALID && myCache[end].address == address)
     {
-        hit++;
-    }else
-    {
-        myCache[end].state=VALID;
-        myCache[end].address=address;
+        hit++; //Address found correctly, no further action necessary
+    }else{
+        myCache[end].state=VALID;//Set state to valid (checking not really necessary)
+        myCache[end].address=address; //set cache address to searched address
     }
     
     
@@ -95,32 +95,32 @@ int CacheAccess (unsigned int address){
 int CacheAccessFA (unsigned int address){
     
     static unsigned int hit = 0;
-    unsigned int minTime=99999;
-    bool found=false;
+    unsigned int minTime=99999; //Set min time to very high number
+    bool found=false;//found flag set to false
     
     for(int i = 0;i < CACHESIZE;i++)
     {
-        if (myCacheFA[i].time <minTime)
+        if (myCacheFA[i].time <minTime) //try to find lowest time
         {
-            minTime = myCacheFA[i].time;
+            minTime = myCacheFA[i].time; 
         }
-        if (myCacheFA[i].state==VALID && myCacheFA[i].address == address)
+        if (myCacheFA[i].state==VALID && myCacheFA[i].address == address) //find hit
         {
             hit++;
-            found = true;
-            myCacheFA[i].time= events+1;
+            found = true; //change found flag
+            myCacheFA[i].time= events+1; //events plus 1, as is end of last event.
             break;
         }
     }
 
-    if (!found)
+    if (!found) //hit not found
     {
         for(int i = 0;i < CACHESIZE;i++)
         {
-            if (myCacheFA[i].time == minTime){
+            if (myCacheFA[i].time == minTime){ // find first element with lowest time
                 
                 myCacheFA[i].state = VALID;
-                myCacheFA[i].address = address;
+                myCacheFA[i].address = address;//set element to relevant info
                 myCacheFA[i].time = events+1;
                 break;
             }
@@ -148,7 +148,7 @@ int main (int argc, const char * argv[]) {
 
     while (!feof(fp)) {
         ref = GetAddr(fp);
-        hitsDM = CacheAccess(ref);
+        hitsDM = CacheAccess(ref); //Continuously update hits for both types
         hitsFA = CacheAccessFA(ref);
         events++;
     }
