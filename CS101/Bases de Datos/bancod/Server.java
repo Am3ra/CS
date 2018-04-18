@@ -90,6 +90,7 @@ public class Server extends JFrame
     private void iniciarServer()
     {
         String transaccion="";
+        String respuesta="";
         
         try
         {
@@ -111,13 +112,13 @@ public class Server extends JFrame
                 bufferSalida.flush();
                 
                 // 4. Recibir datos o mensaje del cliente
-                mensaje = recibirDatos();
+                transaccion = recibirDatos();
 
                 if (transaccion.equals("consultarNocta")) {
                     String ncta = recibirDatos(); // recibir datos
 
                     // Realizar transaccion
-                    String respuesta = bancoad.consultarNocta(ncta);
+                    respuesta = bancoad.consultarCuenta(ncta);
 
                     //Mandar datos
                     enviarDatos(respuesta);
@@ -129,8 +130,8 @@ public class Server extends JFrame
                 cerrarConexion();
 
                 //7 desplegar transaccion
-                taDatos.append("Mensaje recibido: " + mensaje);
-
+                taDatos.append("Transaccion realizada: " + transaccion);
+                System.out.println("Datos Enviados:"+respuesta);
             }
             
         }

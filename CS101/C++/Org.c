@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <stdbool.h> 
 
 #define CACHESIZE 16
 
@@ -7,12 +8,18 @@ struct cache{
     unsigned int address;
     char         state;
 };
+struct cacheFA{
+    unsigned int address;
+    unsigned int time;
+    char         state;
+};
 
 unsigned int events = 0;
 
 struct cache myCache[CACHESIZE];
+struct cacheFA myCacheFA[CACHESIZE];
 
-enum values { VALID = 0, INVALID, EMPTY };
+enum values { VALID, INVALID, EMPTY };
 
 /**********************************************************************/
 /*                                                                    */
@@ -57,40 +64,97 @@ unsigned int GetAddr (FILE *fp)
 /* Outputs:     The hit rate (p)                                      */
 /*                                                                    */
 /**********************************************************************/
-float CacheAccess (unsigned int adress){
+int CacheAccess (unsigned int address){
     
     static unsigned int hit = 0;
+    int end = address & 0x000f;
     
-    /* Fill in your code here */
+    if(myCache[end].state==VALID && myCache[end].address == address)
+    {
+        hit++;
+    }else
+    {
+        myCache[end].state=VALID;
+        myCache[end].address=address;
+    }
     
-    return (hit/(float)events);
+    
+    return hit;
+}
+/**********************************************************************/
+/*                                                                    */
+/* Name: CacheAccessFA                                                */
+/*                                                                    */
+/* Description: This function will simulate a fully associative cache */
+/*                                                                    */
+/* Inputs:      An address in hexadecimal format                      */
+/*                                                                    */
+/* Outputs:     The hit rate (p)                                      */
+/*                                                                    */
+/**********************************************************************/
+int CacheAccessFA (unsigned int address){
+    
+    static unsigned int hit = 0;
+    unsigned int minTime=99999;
+    bool found=false;
+    
+    for(int i = 0;i < CACHESIZE;i++)
+    {
+        if (myCacheFA[i].time <minTime)
+        {
+            minTime = myCacheFA[i].time;
+        }
+        if (myCacheFA[i].state==VALID && myCacheFA[i].address == address)
+        {
+            hit++;
+            found = true;
+            myCacheFA[i].time= events+1;
+            break;
+        }
+    }
+
+    if (!found)
+    {
+        for(int i = 0;i < CACHESIZE;i++)
+        {
+            if (myCacheFA[i].time == minTime){
+                
+                myCacheFA[i].state = VALID;
+                myCacheFA[i].address = address;
+                myCacheFA[i].time = events+1;
+                break;
+            }
+        }
+    }
+    
+    return hit;
 }
 
 int main (int argc, const char * argv[]) {
     
     FILE         *fp;                    /* Pointer to the input file */
-    unsigned int ref;
+    unsigned int ref,hitsDM,hitsFA;
     
     /* Initialize the cache */
     for (int i=0; i < CACHESIZE; i++){
         myCache[i].state = INVALID;
         myCache[i].address = EMPTY;
+        myCacheFA[i].state = INVALID;
+        myCacheFA[i].address = EMPTY;
+        myCacheFA[i].time = 0;
     }
     
     fp = fopen ("trace.txt","r");		 /* Open file for read operation */
 
     while (!feof(fp)) {
         ref = GetAddr(fp);
-        CacheAccess(ref);
+        hitsDM = CacheAccess(ref);
+        hitsFA = CacheAccessFA(ref);
         events++;
     }
     /* Print the hit rate of the cache */
+    printf("Percentage hits Direct Mapped     : %2.2f%% (%d/%d)\n",hitsDM/(float)events*100,hitsDM,events);
+    printf("Percentage hits Fully Associative : %2.2f%% (%d/%d)\n",hitsFA/(float)events*100,hitsFA,events);
+
+    return 0;
 }
-
-
-
-
-
-
-
-
