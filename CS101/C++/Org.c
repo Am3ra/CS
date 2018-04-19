@@ -1,3 +1,6 @@
+//Alan Macedo Esparza A0136288
+//Karen Bolaños A0134733
+
 #include <stdio.h>
 #include <ctype.h>
 #include <stdbool.h> 
