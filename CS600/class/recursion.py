@@ -34,3 +34,7 @@ def palindrome(strPalindrome):
 
 
 print(palindrome('racecar'))
+
+
+def fibonacci(n):
+    pass

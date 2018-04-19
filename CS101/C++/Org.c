@@ -23,7 +23,7 @@ unsigned int events = 0;
 struct cache myCache[CACHESIZE];
 struct cacheFA myCacheFA[CACHESIZE];
 
-enum values { VALID, INVALID, EMPTY };
+enum values {VALID, INVALID, EMPTY };
 
 /**********************************************************************/
 /*                                                                    */
@@ -100,13 +100,11 @@ int CacheAccessFA (unsigned int address){
     static unsigned int hit = 0;
     unsigned int minTime=99999; //Set min time to very high number
     bool found=false;//found flag set to false
+    unsigned int minAddress;
     
     for(int i = 0;i < CACHESIZE;i++)
     {
-        if (myCacheFA[i].time <minTime) //try to find lowest time
-        {
-            minTime = myCacheFA[i].time; 
-        }
+        
         if (myCacheFA[i].state==VALID && myCacheFA[i].address == address) //find hit
         {
             hit++;
@@ -118,16 +116,18 @@ int CacheAccessFA (unsigned int address){
 
     if (!found) //hit not found
     {
-        for(int i = 0;i < CACHESIZE;i++)
-        {
-            if (myCacheFA[i].time == minTime){ // find first element with lowest time
-                
-                myCacheFA[i].state = VALID;
-                myCacheFA[i].address = address;//set element to relevant info
-                myCacheFA[i].time = events+1;
-                break;
+        for(int i = 0;i < CACHESIZE;i++){
+            if (myCacheFA[i].time <minTime){ //try to find lowest time
+                minTime = myCacheFA[i].time; 
+                minAddress = i;
             }
         }
+        
+        myCacheFA[minAddress].state = VALID;
+        myCacheFA[minAddress].address = address;//set element to relevant info
+        myCacheFA[minAddress].time = events+1;
+
+
     }
     
     return hit;
