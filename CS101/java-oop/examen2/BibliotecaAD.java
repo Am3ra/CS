@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Vector;
 
@@ -11,6 +13,7 @@ import javax.swing.ImageIcon;
  */
 public class BibliotecaAD {
     private BufferedReader archivoIn;
+    private BufferedWriter archivoOut;
     private Vector vPersonas, vInfo;
     private ImageIcon imageEditorial[];
 
@@ -40,6 +43,28 @@ public class BibliotecaAD {
         }
 
         return vPersonas;
+    }
+
+    public String obtenerLibros() {
+        String str="";
+        try {
+            //Abrir archivo
+            archivoIn = new BufferedReader(new FileReader("Libros.txt"));
+
+            //Leer datos
+            while (archivoIn.ready()) {
+                str += archivoIn.readLine()+"\n";
+            }
+            // Cerrar el archivo
+            archivoIn.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("error: " + e);
+        } catch (IOException e) {
+            System.out.println("error: " + e);
+        }
+
+        return str;
     }
 
     public Vector obtenerInfo(String editorial) {
@@ -148,4 +173,20 @@ public class BibliotecaAD {
         return vInfo.get(bookSelected).toString();
     }
 
+    public String capturarDatos(String datos) {
+        try {
+            //Abrir archivo
+            archivoOut = new BufferedWriter(new FileWriter("Libros.txt",true));
+            //escribir datos
+            archivoOut.write(datos+"\n");
+            // Cerrar el archivo
+            archivoOut.close();
+            return "Successfully written";
+        } catch (FileNotFoundException e) {
+            System.out.println("error: " + e);
+        } catch (IOException e) {
+            System.out.println("error: " + e);
+        }
+        return "Failure in capturing data";
+    }
 }
