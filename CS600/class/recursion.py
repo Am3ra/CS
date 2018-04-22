@@ -37,4 +37,14 @@ print(palindrome('racecar'))
 
 
 def fibonacci(n):
-    pass
+    # Assumes input > 0
+    if n<=1:
+        return 1
+    else:
+        return fibonacci(n-1)+fibonacci(n-2)
+
+#rabbits model
+#1 pair of rabits start
+#sexual maturity and gestation period of 1 month
+#never die
+#always produces 1 pair

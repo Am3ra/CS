@@ -27,7 +27,7 @@ public class ClienteGUI extends JFrame implements ActionListener{
     
 
     // private BancoAD bancoad = new BancoAD();
-    private BancoADjdbc bancoad = new BancoADjdbc();
+    private Cliente cliente  = new Cliente();
 
     public ClienteGUI(){
         super("ADMON de Clientes");
@@ -138,22 +138,40 @@ public class ClienteGUI extends JFrame implements ActionListener{
             }
         }
         return datos;
-    }   
+    }  
+    private String printData(String datos) {
+        String[] intermediate = datos.split("&");
+        datos = "";
+        for ( int i = 0; i < intermediate.length; i++) {
+            datos+=intermediate[i]+"\n";
+        }
+        return datos;
+    } 
     public void actionPerformed(ActionEvent event){
         String datos, respuesta;
         if(event.getSource()==bCapturar){
+            cliente.establecerConexion();
             datos = obtenerDatos();
             if (datos.equals("VACIO")){
                 respuesta =  "Algun campo esta vacio";
             } else if (datos.equals("NO_NUMERICO")){
                 respuesta= "Saldo no numerico";
             }else {
-                respuesta = bancoad.capturar(datos);
+                cliente.enviarDatos("capturar");
+                cliente.enviarDatos(datos);
+                respuesta = cliente.recibirDatos();
             }
+            cliente.cerrarConexion();
             taDatos.setText(respuesta);
         }
         if (event.getSource() == bConsultar) {
-            taDatos.setText(bancoad.consultarClientes());
+            cliente.establecerConexion();
+            cliente.enviarDatos("consultarClientesR");
+            respuesta = cliente.recibirDatos();
+            cliente.cerrarConexion();
+            //Desplegar el resultado
+            taDatos.setText(printData(respuesta));
+            // taDatos.setText(bancoad.consultarClientes());
         }
         if (event.getSource() == bSalir) {
             System.exit(0);
@@ -162,53 +180,92 @@ public class ClienteGUI extends JFrame implements ActionListener{
             //OBtener numero de cuenta
             String ncta = tfCuenta.getText();
             //obtener numero de deposito
-            int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Cantidad a depositar = " ));
-            respuesta = bancoad.depositar(ncta, cantidad);
+            String cantidad = JOptionPane.showInputDialog("Cantidad a depositar = " );
+            cliente.establecerConexion();
+            cliente.enviarDatos("depositar");
+            cliente.enviarDatos(ncta);
+            cliente.enviarDatos(cantidad);
+            respuesta = cliente.recibirDatos();
+            cliente.cerrarConexion();
             //Desplegar el resultado
-            taDatos.setText(respuesta);
-
+            taDatos.setText(printData(respuesta));
         }
         if (event.getSource()== bRetiro){
             //OBtener numero de cuenta
             String ncta = tfCuenta.getText();
             //obtener numero de deposito
-            int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Cantidad a retirar = "));
-            respuesta = bancoad.retirar(ncta, cantidad);
+            String cantidad = JOptionPane.showInputDialog("Cantidad a retirar = " );
+            cliente.establecerConexion();
+            cliente.enviarDatos("retirar");
+            cliente.enviarDatos(ncta);
+            cliente.enviarDatos(cantidad);
+            respuesta = cliente.recibirDatos();
+            cliente.cerrarConexion();
             //Desplegar el resultado
-            taDatos.setText(respuesta);
+            taDatos.setText(printData(respuesta));
         }
         if (event.getSource()== bConsultarNocta){
             String ncta = tfCuenta.getText();
-            // respuesta = bancoad.buscar(ncta, cantidad);
-            respuesta = bancoad.consultarCuenta(ncta);
+            //respuesta = bancoad.consultarCuenta(ncta);
+            cliente.establecerConexion();
+            cliente.enviarDatos("consultarNocta");
+            cliente.enviarDatos(ncta);
+            respuesta = cliente.recibirDatos();
+            cliente.cerrarConexion();
             //Desplegar el resultado
             taDatos.setText(respuesta);
-            //respuesta = BancoADjdbc.consultarncta(ncta);
             prender();
         }
         if (event.getSource() == bConDep){
-            taDatos.setText(bancoad.consultarDepositos(tfCuenta.getText()));
+            cliente.establecerConexion();
+            cliente.enviarDatos("consultarDepositosR");
+            cliente.enviarDatos(tfCuenta.getText());
+            respuesta = cliente.recibirDatos();
+            cliente.cerrarConexion();
+            taDatos.setText(printData(respuesta));
         }
         if (event.getSource() == bConRet){
-            taDatos.setText(bancoad.consultarRetiros(tfCuenta.getText()));
+            cliente.establecerConexion();
+            cliente.enviarDatos("consultarRetirosR");
+            cliente.enviarDatos(tfCuenta.getText());
+            respuesta = cliente.recibirDatos();
+            cliente.cerrarConexion();
+            taDatos.setText(printData(respuesta));
         }
         if (event.getSource() == bCancelar){
             apagar();
             taDatos.setText("");
         }
         if(event.getSource()==bConTipo){
-            taDatos.setText(bancoad.consultarTipo((String)cbtiposcuenta.getSelectedItem()));
+            cliente.establecerConexion();
+            cliente.enviarDatos("consultarTipoR");
+            cliente.enviarDatos((String)cbtiposcuenta.getSelectedItem());
+            respuesta = cliente.recibirDatos();
+            cliente.cerrarConexion();
+            //Desplegar el resultado
+            taDatos.setText(printData(respuesta));
+            // taDatos.setText(bancoad.consultarTipo((String)cbtiposcuenta.getSelectedItem()));
         }
         if(event.getSource()==bConTrans){
-            taDatos.setText(bancoad.consultarTransferencia(tfCuenta.getText()));
+            cliente.establecerConexion();
+            cliente.enviarDatos("consultarTransferenciaR");
+            cliente.enviarDatos(tfCuenta.getText());
+            respuesta = cliente.recibirDatos();
+            cliente.cerrarConexion();
+            taDatos.setText(printData(respuesta));
         }
         if(event.getSource()==bTrans){
-            int ncta = Integer.parseInt(tfCuenta.getText());
-            System.out.println(ncta);
+            String ncta = tfCuenta.getText();
             //obtener numero de deposito
-            int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Cantidad a retirar = "));
-            int nocta2 = Integer.parseInt(JOptionPane.showInputDialog("Cuenta A depositar= "));
-            respuesta = bancoad.transferencia(ncta, cantidad, nocta2);
+            String cantidad = JOptionPane.showInputDialog("Cantidad a retirar = ");
+            String nocta2 = JOptionPane.showInputDialog("Cuenta A depositar= ");
+            cliente.establecerConexion();
+            cliente.enviarDatos("transferencia");
+            cliente.enviarDatos(ncta);
+            cliente.enviarDatos(cantidad);
+            cliente.enviarDatos(nocta2);
+            respuesta = cliente.recibirDatos();
+            cliente.cerrarConexion();
             //Desplegar el resultado
             taDatos.setText(respuesta);
         }
