@@ -9,9 +9,8 @@ import javax.swing.JPanel;
 
 public class CalculosGUI2 extends JFrame implements ActionListener {
     private JMenuBar mbPrincipal;
-    private JMenu menuCalculos, menuGrados, menuAudio, menuTunes;
-    private JMenuItem miFactorial, miGradosCF, miGradosFC, miExponencial, miEcuacion, miAudio, miAudioMP3, miSalir,
-            miAudioTunesWAV, miAudioTunesMP3;
+    private JMenu menuCalculos, menuGrados, menuAudio, menuTunes,menuBiblioteca;
+    private JMenuItem miFactorial, miGradosCF, miGradosFC, miExponencial, miEcuacion, miAudio, miAudioMP3, miSalir, miAudioTunesWAV, miAudioTunesMP3, miBibliotecaGUI, miBibliotecaAdmon;
     private JPanel panel;
 
     private Factorial factor = new Factorial();
@@ -21,6 +20,8 @@ public class CalculosGUI2 extends JFrame implements ActionListener {
     private AudioGUI audio2 = new AudioGUI();
     private AudioGUIMP3 audioGUIMP3 = new AudioGUIMP3();
     private AudioTunesGUI2 audioTunesGUI2 = new AudioTunesGUI2();
+    private AdminBiblioteca adminBiblioteca = new AdminBiblioteca();    
+    private BibliotecaGUI bibliotecaGUI = new BibliotecaGUI();
 
     public CalculosGUI2() {
         super("Java APP: Calculos varios");
@@ -30,6 +31,7 @@ public class CalculosGUI2 extends JFrame implements ActionListener {
         menuGrados = new JMenu("Conversion de Grados");
         menuAudio = new JMenu("audioPlayer");
         menuTunes = new JMenu("MENU AUDIOTUNES");
+        menuBiblioteca = new JMenu("MENU BIBLIOTECA");
         miFactorial = new JMenuItem("Factorial de N");
         miEcuacion = new JMenuItem("Ecuación Cuadrática");
         miAudio = new JMenuItem("Audio WAV");
@@ -40,6 +42,8 @@ public class CalculosGUI2 extends JFrame implements ActionListener {
         miSalir = new JMenuItem("Exit");
         miAudioTunesMP3 = new JMenuItem("MP3");
         miAudioTunesWAV = new JMenuItem("WAV");
+        miBibliotecaGUI = new JMenuItem("GUI");
+        miBibliotecaAdmon = new JMenuItem("ADMON");
         panel = new JPanel();
 
         //Colocar action listeners
@@ -53,6 +57,8 @@ public class CalculosGUI2 extends JFrame implements ActionListener {
         miAudioMP3.addActionListener(this);
         miAudioTunesMP3.addActionListener(this);
         miAudioTunesWAV.addActionListener(this);
+        miBibliotecaAdmon.addActionListener(this);
+        miBibliotecaGUI.addActionListener(this);
 
         //Colocar los JMENUITEMS
         menuGrados.add(miGradosCF);
@@ -68,15 +74,19 @@ public class CalculosGUI2 extends JFrame implements ActionListener {
 
         menuTunes.add(miAudioTunesMP3);
         menuTunes.add(miAudioTunesWAV);
+        
+        menuBiblioteca.add(miBibliotecaGUI);
+        menuBiblioteca.add(miBibliotecaAdmon);
 
         //Colocar JMenuBar
         mbPrincipal.add(menuCalculos);
         mbPrincipal.add(menuAudio);
         mbPrincipal.add(menuTunes);
+        mbPrincipal.add(menuBiblioteca);
 
         //Colocar el JMenuBAr en el Jframe
         setJMenuBar(mbPrincipal);
-        setSize(500, 400);
+        setSize(600, 400);
         setVisible(true);
 
         setVisible(true);
@@ -123,14 +133,25 @@ public class CalculosGUI2 extends JFrame implements ActionListener {
             panel.setVisible(true);
             add(panel);
             setVisible(true);
-        } if (a.getSource() == miAudioTunesMP3) {
+        } else if (a.getSource() == miAudioTunesMP3) {
             panel.setVisible(false);
             panel = audioTunesGUI2.getPanel2();
             panel.setVisible(true);
             add(panel);
             setVisible(true);
+        } else if (a.getSource() == miBibliotecaAdmon) {
+            panel.setVisible(false);
+            panel = adminBiblioteca.getPanel2();
+            panel.setVisible(true);
+            add(panel);
+            setVisible(true);
+        } else if (a.getSource() == miBibliotecaGUI) {
+            panel.setVisible(false);
+            panel = bibliotecaGUI.getPanel2();
+            panel.setVisible(true);
+            add(panel);
+            setVisible(true);
         }
-
     }
 
     public static void main(String[] args) {

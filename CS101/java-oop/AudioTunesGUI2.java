@@ -11,7 +11,7 @@ import javax.sound.sampled.Clip;
 public class AudioTunesGUI2 extends JFrame implements ActionListener, ListSelectionListener {
 	//Atributos de la aplicacion
 	private JPanel panelUsuario, panelArtistas, panelAlbums, panelSongs, panelPrincipal, panelAudio;
-	private JButton bCatalogo, bAlbums, bSongs;
+	private JButton bCatalogo, bAlbums, bSongs,bArtista;
 	private JButton bPlay, bStop;
 	private JTextField tfArtista, tfAlbum, tfSong;
 	private JTextArea taArtistas, taAlbums, taSongs;

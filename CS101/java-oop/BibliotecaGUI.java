@@ -12,9 +12,9 @@ public class BibliotecaGUI extends JFrame implements ActionListener, ListSelecti
     // Atributos de la aplicacion
     private JPanel panelUsuario, panelEditoriales, panelLibros, panelPrincipal, panelInfo;
 
-    private JTextField tfLibroSearch;
+    private JTextField tfLibroSearch,tfEditorial;
 
-    private JButton bEditorial, bBuscar;
+    private JButton bEditorial, bBuscar,bCapturar;
     private JTextArea taEditorial, taLibros, taInfo;
     private BibliotecaAD bibliotecaad = new BibliotecaAD();
 
@@ -32,8 +32,10 @@ public class BibliotecaGUI extends JFrame implements ActionListener, ListSelecti
 
         bEditorial = new JButton("Editoriales");
         bBuscar = new JButton("Buscar Titulo");
+        bCapturar = new JButton("Capturar");
 
         tfLibroSearch = new JTextField("", 10);
+        tfEditorial = new JTextField("", 10);
 
         taEditorial = new JTextArea("EDITORIALES", 20, 20);
         taLibros = new JTextArea("LIBROS DE UNA EDITORIAL");
@@ -48,6 +50,7 @@ public class BibliotecaGUI extends JFrame implements ActionListener, ListSelecti
         // Adionar actionListener a los JButtons
         bEditorial.addActionListener(this);
         bBuscar.addActionListener(this);
+        bCapturar.addActionListener(this);
 
         // 2. Definir Layouts de los JPanels
         
@@ -61,6 +64,8 @@ public class BibliotecaGUI extends JFrame implements ActionListener, ListSelecti
         panelUsuario.add(bEditorial);
         panelUsuario.add(tfLibroSearch);
         panelUsuario.add(bBuscar);
+        panelUsuario.add(tfEditorial);
+        panelUsuario.add(bCapturar);
 
         panelEditoriales.add(new JScrollPane(taEditorial));
         panelLibros.add(new JScrollPane(taLibros));
@@ -74,7 +79,7 @@ public class BibliotecaGUI extends JFrame implements ActionListener, ListSelecti
         // 4. Adicionar el panelPrincipal al JFrame
         add(panelPrincipal);
         setSize(700, 400);
-        setVisible(true);
+        // setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -100,7 +105,13 @@ public class BibliotecaGUI extends JFrame implements ActionListener, ListSelecti
             panelInfo.removeAll();
             panelInfo.add(new JTextArea(objectBook[0].toString()));
             panelInfo.setVisible(true);
+        } else if (e.getSource() == bCapturar) {
+            
         }
+    }
+
+    public JPanel getPanel2() {
+        return panelPrincipal;
     }
 
     public void valueChanged(ListSelectionEvent lse) {

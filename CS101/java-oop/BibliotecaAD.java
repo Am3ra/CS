@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
  */
 public class BibliotecaAD {
     private BufferedReader archivoIn;
-    private BufferedWriter archivoOut;
+    private BufferedWriter archivoOut,archivoOut2;
     private Vector vPersonas, vInfo;
     private ImageIcon imageEditorial[];
 
@@ -174,19 +174,63 @@ public class BibliotecaAD {
     }
 
     public String capturarDatos(String datos) {
+        
         try {
             //Abrir archivo
             archivoOut = new BufferedWriter(new FileWriter("Libros.txt",true));
+            archivoOut2 = new BufferedWriter(new FileWriter("Editoriales.txt",true));
             //escribir datos
-            archivoOut.write(datos+"\n");
+            archivoIn = new BufferedReader(new FileReader("Editoriales.txt"));
+            boolean editorial = true;
+            while (archivoIn.ready()) {
+                String str = archivoIn.readLine();
+                System.out.println(datos.split("_")[2]);
+                if (str.equals(datos.split("_")[2])) {
+                    editorial = false;
+                } 
             // Cerrar el archivo
-            archivoOut.close();
-            return "Successfully written";
+            }
+            if (editorial) {
+                System.out.println("Editorial written");
+                System.out.println(datos.split("_")[2]);
+
+                archivoOut2.write(datos.split("_")[2]);
+            }
+        archivoOut.write(datos + "\n");
+        archivoOut.close();
+        archivoOut2.close();
+        archivoIn.close();
+        return "Successfully written";
         } catch (FileNotFoundException e) {
             System.out.println("error: " + e);
         } catch (IOException e) {
             System.out.println("error: " + e);
         }
         return "Failure in capturing data";
+    }
+
+    public String returnAll() {
+        String str, books="";
+        try {
+            archivoIn = new BufferedReader(new FileReader("Libros.txt"));
+            vInfo = new Vector();
+            while (archivoIn.ready()) {
+                str = archivoIn.readLine();
+                String[] parts = str.split("_");
+            
+                str = "";
+                str += "Titulo: " + parts[0] + "\n";
+                str += "Autor: " + parts[1] + "\n";
+                str += "Editorial: " + parts[2] + "\n";
+                str += "\n";
+                books += str;
+            }
+            archivoIn.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: " + e);
+        } catch (IOException e) {
+            System.out.println("Error: " + e);
+        }
+        return books;
     }
 }
