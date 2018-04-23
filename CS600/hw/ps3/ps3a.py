@@ -155,9 +155,10 @@ def update_hand(hand, word):
     returns: dictionary (string -> int)
     """
     for i in word:
-        hand[i] -= 1
-        if hand[i]==0:
-            del hand[i]
+        if hand.get(i) != None:
+            hand[i] -= 1
+            if hand[i]==0:
+                del hand[i]
     return hand
 #
 # Problem #3: Test word validity
@@ -172,16 +173,21 @@ def is_valid_word(word, hand, word_list):
     hand: dictionary (string -> int)
     word_list: list of lowercase strings
     """
-    Success = False
+    Success = True
 
-    if hand in word_list:
-        for i in hand:
-            pass
+    if word in word_list:
+        for i in word:
+            if hand.get(i) != None:
+                hand[i] -= 1
+                if hand[i] == 0:
+                    del hand[i]
+            else:
+                Success=False
     
     return Success
 
 
-def calculate_handlen(hand):
+def calculate_handlen(hand):    
     handlen = 0
     for v in list(hand.values()):
         handlen += v
@@ -218,8 +224,23 @@ def play_hand(hand, word_list):
       word_list: list of lowercase strings
       
     """
-    # TO DO ...
+    handlen = calculate_handlen(hand)
+    points = 0
+    while True:
+        print "Current Hand: ", hand
+        word = raw_input('Enter word, or a "." to indicate that you are finished: ')
+        if word == ".":
+            break
+        if not is_valid_word(hand, word, word_list):
+            print("Word not valid")
+            continue
+        else:
+            points += get_word_score(word,handlen)
+            print("'"+word+"' earned " + get_word_score(word, handlen)+"points. Total: " + points)
+        if calculate_handlen(hand) == 0:
+            break
 
+    print("Final Score:",points)
 #
 # Problem #5: Playing a game
 # Make sure you understand how this code works!
@@ -239,7 +260,7 @@ def play_game(word_list):
 
     * If the user inputs anything else, ask them again.
     """
-    # TO DO...
+    response = raw_input("")
 
 #
 # Build data structures used for entire session and play game
