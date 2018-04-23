@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+
 # 6.00 Problem Set 3A Solutions
 #
 # The 6.00 Word Game
@@ -17,10 +17,6 @@ HAND_SIZE = 7
 SCRABBLE_LETTER_VALUES = {
     'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10
 }
-
-# -----------------------------------
-# Helper code
-# (you don't need to understand this helper code)
 
 WORDLIST_FILENAME = "/Users/macbookpro/Documents/CS/CS600/hw/ps3/words.txt"
 
@@ -55,14 +51,7 @@ def get_frequency_dict(sequence):
     for x in sequence:
         freq[x] = freq.get(x,0) + 1
     return freq
-	
 
-# (end of helper code)
-# -----------------------------------
-
-#
-# Problem #1: Scoring a word
-#
 def get_word_score(word, n):
     """
     Returns the score for a word. Assumes the word is a
@@ -86,9 +75,7 @@ def get_word_score(word, n):
         score += 50
     
     return score
-#
-# Make sure you understand how this function works and what it does!
-#
+
 def display_hand(hand):
     """
     Displays the letters currently in the hand.
@@ -106,10 +93,6 @@ def display_hand(hand):
              print letter,              # print all on the same line
     print                               # print an empty line
 
-
-#
-# Make sure you understand how this function works and what it does!
-#
 def deal_hand(n):
     """
     Returns a random hand containing n lowercase letters.
@@ -135,9 +118,6 @@ def deal_hand(n):
         
     return hand
 
-#
-# Problem #2: Update a hand by removing letters
-#
 def update_hand(hand, word):
     """
     Assumes that 'hand' has all the letters in word.
@@ -160,9 +140,7 @@ def update_hand(hand, word):
             if hand[i]==0:
                 del hand[i]
     return hand
-#
-# Problem #3: Test word validity
-#
+
 def is_valid_word(word, hand, word_list):
     """
     Returns True if word is in the word_list and is entirely
@@ -186,16 +164,12 @@ def is_valid_word(word, hand, word_list):
     
     return Success
 
-
 def calculate_handlen(hand):    
     handlen = 0
     for v in list(hand.values()):
         handlen += v
     return handlen
 
-#
-# Problem #4: Playing a hand
-#
 def play_hand(hand, word_list):
 
     """
@@ -241,10 +215,7 @@ def play_hand(hand, word_list):
             break
 
     print("Final Score:",points)
-#
-# Problem #5: Playing a game
-# Make sure you understand how this code works!
-# 
+
 def play_game(word_list):
     """
     Allow the user to play an arbitrary number of hands.
@@ -260,11 +231,20 @@ def play_game(word_list):
 
     * If the user inputs anything else, ask them again.
     """
-    response = raw_input("")
+    while True:
+        hand = deal_hand(HAND_SIZE)
+        response = raw_input(
+            "Enter \'n\' for new (random) hand. \n Enter \'r\' to play the last hand again. \n Enter \'e\' to exit the game.")
+        if response == "n":
+            hand = deal_hand(HAND_SIZE)
+            play_hand(hand,word_list)
+        elif response == "r":
+            play_hand
+        elif response == "e":
+            break
+    print "Goodbye!"
 
-#
-# Build data structures used for entire session and play game
-#
 if __name__ == '__main__':
+    
     word_list = load_words()
     play_game(word_list)
