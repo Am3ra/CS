@@ -6,6 +6,9 @@
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -21,14 +24,14 @@ import java.io.PrintWriter;
 import java.io.InputStreamReader;
 
 import java.io.IOException;
-
+import java.io.InputStream;
 import java.net.Socket;
 
 
 public class Cliente
 {
 
-    private Socket socket;
+    public Socket socket;
     
     private BufferedReader bufferEntrada;
     private PrintWriter    bufferSalida;
@@ -73,8 +76,7 @@ public class Cliente
         }
     }
     
-    public void establecerConexion()
-    {
+    public void establecerConexion(){
         try
         {
                 // 1. Obtener del tfDatos el mensaje a eviar al server
@@ -89,12 +91,24 @@ public class Cliente
                 bufferSalida.flush();
                
         }
+
         catch(IOException ioe)
         {
             System.out.println("Error: "+ioe);
         }
     }
-    
+
+    public static synchronized void play(final InputStream in) throws Exception {
+        AudioInputStream ais = AudioSystem.getAudioInputStream(in);
+        try (Clip clip = AudioSystem.getClip()) {
+            clip.open(ais);
+            clip.start();
+            Thread.sleep(100);
+            clip.drain();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     
     public static void main(String args[])
     {

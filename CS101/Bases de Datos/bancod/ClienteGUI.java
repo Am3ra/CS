@@ -227,6 +227,7 @@ public class ClienteGUI extends JFrame implements ActionListener{
         if (event.getSource() == bConRet){
             cliente.establecerConexion();
             cliente.enviarDatos("consultarRetirosR");
+            cliente.enviarDatos("song.wav");
             cliente.enviarDatos(tfCuenta.getText());
             respuesta = cliente.recibirDatos();
             cliente.cerrarConexion();
@@ -270,6 +271,19 @@ public class ClienteGUI extends JFrame implements ActionListener{
             taDatos.setText(respuesta);
         }
     }
+
+    private static synchronized void play(final InputStream in) throws Exception {
+        AudioInputStream ais = AudioSystem.getAudioInputStream(in);
+        try (Clip clip = AudioSystem.getClip()) {
+            clip.open(ais);
+            clip.start();
+            Thread.sleep(100); 
+            clip.drain();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         new ClienteGUI();
     }

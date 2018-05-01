@@ -3,6 +3,8 @@
 /***              Class: Server                       ***/
 /***********************************************************/
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.JPanel;
@@ -12,9 +14,11 @@ import java.awt.GridLayout;
 import java.io.IOException;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.PrintWriter;
 import java.io.InputStreamReader;
-
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -75,6 +79,18 @@ public class Server extends JFrame {
             System.out.println("Error: " + ioe);
         }
     }
+
+    // private void enviarAudio(String cancion){
+    //     byte[] sendData = new byte[4096];
+    //     int sampleRate = 44100;
+    //     try {
+    //         AudioInputStream stream = AudioSystem.getAudioInputStream(new File(cancion));
+    //         stream.read(sendData);  
+
+    //     } catch (Exception e) {
+    //         System.out.println(e);
+    //     }
+    // }
 
     private void iniciarServer() {
         String transaccion = "";
@@ -143,7 +159,7 @@ public class Server extends JFrame {
                     String datos = recibirDatos();
                     respuesta = bancoad.capturar(datos);
                     enviarDatos(respuesta);
-                }
+                } 
                 // 6. Cerrar conexion
                 cerrarConexion();
 
