@@ -80,18 +80,6 @@ public class Server extends JFrame {
         }
     }
 
-    // private void enviarAudio(String cancion){
-    //     byte[] sendData = new byte[4096];
-    //     int sampleRate = 44100;
-    //     try {
-    //         AudioInputStream stream = AudioSystem.getAudioInputStream(new File(cancion));
-    //         stream.read(sendData);  
-
-    //     } catch (Exception e) {
-    //         System.out.println(e);
-    //     }
-    // }
-
     private void iniciarServer() {
         String transaccion = "";
         String respuesta = "";

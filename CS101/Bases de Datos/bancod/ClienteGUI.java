@@ -272,17 +272,6 @@ public class ClienteGUI extends JFrame implements ActionListener{
         }
     }
 
-    private static synchronized void play(final InputStream in) throws Exception {
-        AudioInputStream ais = AudioSystem.getAudioInputStream(in);
-        try (Clip clip = AudioSystem.getClip()) {
-            clip.open(ais);
-            clip.start();
-            Thread.sleep(100); 
-            clip.drain();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 
     public static void main(String[] args) {
         new ClienteGUI();

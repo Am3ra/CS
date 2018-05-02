@@ -30,7 +30,7 @@ public class CancionesADjdbc {
     public CancionesADjdbc() {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost/banco?user=root&password=hhooppee&useSSL=false");
+            conexion = DriverManager.getConnection("jdbc:mysql://localhost/canciones?user=root&password=hhooppee&useSSL=false");
             System.out.println("Conexion exitosa a la BD...");
         } catch (ClassNotFoundException e) {
             System.out.println("Error 1:" + e);
@@ -46,68 +46,23 @@ public class CancionesADjdbc {
     }
 
     
-    // public String consultarClientesR() {
-    //     String respuesta = "";
-    //     ResultSet tr;
-    //     //Abrir archivo Datos
-    //     String query = "SELECT * FROM Clientes";
-    //     try {
-    //         statement = conexion.createStatement();
-    //         tr = statement.executeQuery(query);
-    //         clientedp = new ClienteDP();
-    //         while (tr.next()) {
-                
-    //             clientedp.setNocta(tr.getString("cuenta"));
-    //             clientedp.setNombre(tr.getString("nombre"));
-    //             clientedp.setTipo(tr.getString("tipo"));
-    //             clientedp.setSaldo(tr.getInt("saldo"));
-    //             clientedp.setFecha(tr.getString("fecha"));
-    //             clientedp.setHora(tr.getString("hora"));
+    public String consultarCanciones() {
+        String respuesta = "";
+        ResultSet tr;
+        //Abrir archivo Datos
+        String query = "SELECT * FROM canciones";
+        try {
+            statement = conexion.createStatement();
+            tr = statement.executeQuery(query);
+            while (tr.next()) {
+                respuesta +=  tr.getString("titulo")+"&";
+            }
+            statement.close();
+            System.out.println(query);
+        } catch (SQLException e) {
+            respuesta = "ERROR" + e;
+        }
 
-    //             respuesta += clientedp.toString()+"&";
-    //         }
-    //         statement.close();
-    //         System.out.println(query);
-    //     } catch (SQLException e) {
-    //         respuesta = "ERROR" + e;
-    //     }
-
-    //     return respuesta;
-    // }
-    
-    // public String consultarCuenta(String cuenta) {
-    //     String respuesta = "";
-    //     ResultSet tr;
-    //     //Abrir archivo Datos
-    //     String query = "SELECT * FROM Clientes where cuenta = "+cuenta+";" ;
-    //     System.out.println(query);
-    //     if (cuenta.equals("")){
-    //         return "No se introdujo cuenta";
-    //     }
-    //     try {
-
-    //         statement = conexion.createStatement();
-    //         tr = statement.executeQuery(query);
-    //         clientedp = new ClienteDP();
-    //         while (tr.next()) {
-
-    //             clientedp.setNocta(tr.getString("cuenta"));
-    //             clientedp.setNombre(tr.getString("nombre"));
-    //             clientedp.setTipo(tr.getString("tipo"));
-    //             clientedp.setSaldo(tr.getInt("saldo"));
-    //             clientedp.setFecha(tr.getString("fecha"));
-    //             clientedp.setHora(tr.getString("hora"));
-
-    //             respuesta += clientedp.toString();
-    //         }
-    //         statement.close();
-    //         System.out.println(query);
-    //     } catch (SQLException e) {
-    //         respuesta = "ERROR" + e;
-    //     }
-    //     if (respuesta.equals("")){
-    //         return "No se encontro cuenta.";
-    //     };
-    //     return respuesta;
-    // }
+        return respuesta;
+    }
 }

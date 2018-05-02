@@ -112,6 +112,8 @@ public class ServerCancion extends JFrame {
                     while ((count = in.read(buffer)) != -1){
                         out.write(buffer, 0, count);
                     }
+                } else if (transaccion.equals("consultarCanciones")){
+                    enviarDatos(cADjdbc.consultarCanciones());
                 }
                 // if (transaccion.equals("consultarCanciones")) {
                 //     String ncta = recibirDatos(); // recibir datos
