@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.File;
 import java.awt.*;
 
 public class Editor extends JFrame implements ActionListener
@@ -11,6 +12,7 @@ public class Editor extends JFrame implements ActionListener
     private JTextArea taEditor= new JTextArea(20,40);
     private JPanel	  panel;
     private String    nombreArchivo="";
+    private EditorAD editorAD = new EditorAD();
     
     
     public Editor()
@@ -61,22 +63,41 @@ public class Editor extends JFrame implements ActionListener
         
         if(e.getSource() == menuItemNew)
         {
-            JOptionPane.showMessageDialog(null,"Abrir un Nuevo Archivo...");
+            nombreArchivo = JOptionPane.showInputDialog(null, "Write name of file:");            
+            panel.setVisible(true);
         }
         
         if(e.getSource() == menuItemAbrir)
         {
-            JOptionPane.showMessageDialog(null,"Abrir un Archivo ya existente...");
+            nombreArchivo = JOptionPane.showInputDialog("Abrir un Archivo:");
+            System.out.println(nombreArchivo);
+            taEditor.setText(editorAD.openFile(nombreArchivo));
+            // taEditor.setText("Good");
+            panel.setVisible(true);
+            
         }
         
         if(e.getSource() == menuItemGuardar)
         {
             JOptionPane.showMessageDialog(null,"Guardar un Archivo...");
+            if (nombreArchivo.isEmpty()) {
+                nombreArchivo = JOptionPane.showInputDialog("Write name of file");
+                editorAD.capturarDatos(taEditor.getText(), nombreArchivo);
+            } else {
+                editorAD.capturarDatos(taEditor.getText(), nombreArchivo);
+            }
+            JOptionPane.showMessageDialog(null, "Guardado con exito");
+            taEditor.setText("");
+            panel.setVisible(false);
+            nombreArchivo = "";
         }
         
-        if(e.getSource() == menuItemGuardarAs)
-        {
-            JOptionPane.showMessageDialog(null,"Abrir un Archivo con nuevo nombre...");
+        if(e.getSource() == menuItemGuardarAs){
+            nombreArchivo = JOptionPane.showInputDialog("Write name of file");
+            editorAD.capturarDatos(taEditor.getText(), nombreArchivo);     
+            panel.setVisible(false);
+            nombreArchivo = "";
+            taEditor.setText("");
         }
         
         if(e.getSource() == menuItemSalir)
