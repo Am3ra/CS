@@ -9,8 +9,8 @@ public class Editor extends JFrame implements ActionListener
     private JMenu     menu;
     private JMenuItem menuItemNew, menuItemAbrir, menuItemGuardar, menuItemGuardarAs, menuItemSalir;
     
-    private JTextArea taEditor= new JTextArea(20,40);
-    private JPanel	  panel;
+    private JTextArea taEditor= new JTextArea(20,40),tAreaDatos = new JTextArea();
+    private JPanel	  panel, panelBuscar;
     private String    nombreArchivo="";
     private EditorAD editorAD = new EditorAD();
     
@@ -22,6 +22,7 @@ public class Editor extends JFrame implements ActionListener
         menuBar = new JMenuBar();
         menu    = new JMenu("File");
         panel   = new JPanel();
+        panelBuscar   = new JPanel();
         panel.setLayout(new FlowLayout());
         
         menuItemNew = new JMenuItem("New");
@@ -55,6 +56,9 @@ public class Editor extends JFrame implements ActionListener
         setSize(500,400);
         setVisible(true);
         
+        panelBuscar.add(tAreaDatos);
+        tAreaDatos.setText("cool");
+        panelBuscar.setVisible(true);
         
     }
     

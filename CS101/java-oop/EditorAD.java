@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * EditorAD
@@ -41,5 +42,20 @@ public class EditorAD {
         }
         return "Failure in capturing data";
     }
-
+    public String archivosDisponibles() {
+        String lscmd = "ls $PWD/*";
+        String songs = "";
+        try {
+            Process p = Runtime.getRuntime().exec(new String[] { "bash", "-c", lscmd });
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line = reader.readLine();
+            while (line != null) {
+                songs += line.split("/")[7]+"\n";
+                line = reader.readLine();
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return songs;
+    }
 }

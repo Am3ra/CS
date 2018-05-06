@@ -88,13 +88,23 @@ public class PracticaCanciones extends JFrame implements ActionListener {
             cliente.cerrarConexion();
         }
         if (event.getSource()==bConsultar){
-            
+            cliente.establecerConexion();
+            cliente.enviarDatos("consultarCanciones");
+            taDatos.setText(printData(cliente.recibirDatos()));
         }
         if (event.getSource()==bSalir){
             System.exit(0);
         }
     }
 
+    private String printData(String datos) {
+        String[] intermediate = datos.split("&");
+        datos = "";
+        for (int i = 0; i < intermediate.length; i++) {
+            datos += intermediate[i] + "\n";
+        }
+        return datos;
+    }
     
     
     public static void main(String args[]) {

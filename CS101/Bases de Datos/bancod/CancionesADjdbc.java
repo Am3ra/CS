@@ -62,7 +62,7 @@ public class CancionesADjdbc {
         } catch (SQLException e) {
             respuesta = "ERROR" + e;
         }
-
+        System.out.println(respuesta);
         return respuesta;
     }
 }
