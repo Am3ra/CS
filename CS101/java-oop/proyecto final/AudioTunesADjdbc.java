@@ -1,0 +1,104 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.DriverManager;
+import java.sql.SQLDataException;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.util.StringTokenizer;
+
+
+
+/**
+ * AudioTunesADjdbcjdbc
+ * 
+ * 
+ */
+
+public class AudioTunesADjdbc {
+
+    private Connection conexion;
+    private Statement statement;
+    private BufferedReader archivoIn;
+    private PrintWriter archivoOut;
+    
+    public AudioTunesADjdbc() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            conexion = DriverManager.getConnection("jdbc:mysql://localhost/canciones?user=root&password=hhooppee&useSSL=false");
+            System.out.println("Conexion exitosa a la BD...");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error 1:" + e);
+        } catch (InstantiationException e) {
+            System.out.println("Error 2: " + e);
+        } catch (IllegalAccessException e) {
+            System.out.println("Error 3: " + e);
+        } catch (SQLDataException e) {
+            System.out.println("Error 4: " + e);
+        } catch (SQLException e) {
+            System.out.println("Error 5: " + e);
+        }
+    }
+
+    public String consultarCancionPorAlbum(String album) {
+        String respuesta = "";
+        ResultSet tr;
+        //Abrir archivo Datos
+        String query = "SELECT nombre FROM cancion WHERE album = '"+album+"'";
+        System.out.println(query);
+        try {
+            statement = conexion.createStatement();
+            tr = statement.executeQuery(query);
+            while (tr.next()) {
+                respuesta += tr.getString("nombre")+"&";
+            }
+            statement.close();
+            System.out.println(query);
+        } catch (SQLException e) {
+            respuesta = "ERROR" + e;
+        }
+        return respuesta;
+    }
+    public String consltarAlbumPorArtista(String artista) {
+        String respuesta = "";
+        ResultSet tr;
+        //Abrir archivo Datos
+        String query = "SELECT albumName FROM album WHERE artista = '"+artista+"'";
+        System.out.println(query);
+        try {
+            statement = conexion.createStatement();
+            tr = statement.executeQuery(query);
+            while (tr.next()) {
+                respuesta += tr.getString("albumName")+"&";
+            }
+            statement.close();
+            System.out.println(query);
+        } catch (SQLException e) {
+            respuesta = "ERROR" + e;
+        }
+        return respuesta;
+    }
+    public String consultarArtistas() {
+        String respuesta = "";
+        ResultSet tr;
+        //Abrir archivo Datos
+        String query = "SELECT artista FROM artista";
+        System.out.println(query);
+        try {
+            statement = conexion.createStatement();
+            tr = statement.executeQuery(query);
+            while (tr.next()) {
+                respuesta += tr.getString("artista")+"&";
+            }
+            statement.close();
+            System.out.println(query);
+        } catch (SQLException e) {
+            respuesta = "ERROR" + e;
+        }
+        return respuesta;
+    }
+}

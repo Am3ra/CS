@@ -163,7 +163,6 @@ public class Server extends JFrame {
 
     public static void main(String args[]) {
         Server serverApp = new Server();
-
         serverApp.iniciarServer();
     }
 }
