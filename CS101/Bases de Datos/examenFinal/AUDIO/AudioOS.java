@@ -5,10 +5,11 @@ import java.io.*;
 import javax.sound.sampled.*;
 
 public class AudioOS {
-
-    public static synchronized void play(final InputStream in) throws Exception {
+    Clip clip;
+    public synchronized void play(final InputStream in) throws Exception {
         AudioInputStream ais = AudioSystem.getAudioInputStream(in);
-        try (Clip clip = AudioSystem.getClip()) {
+        try{
+            clip = AudioSystem.getClip();
             clip.open(ais);
             clip.start();
             Thread.sleep(100);
@@ -16,5 +17,8 @@ public class AudioOS {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public void stop() {
+        clip.stop();
     }
 }

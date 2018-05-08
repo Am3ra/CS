@@ -87,12 +87,12 @@ public class ServerCancion extends JFrame {
             server = new ServerSocket(5005, 5);
 
             while (true) {
-                taDatos.append("\nMessage Server: estado listen()\n Esperando peticiones de conexion...\n");
+                taDatos.append("\nAudio Server: estado listen()\n Esperando peticiones de conexion...\n");
 
                 // 2. Al escuchar una peticion de conexion hacer el accept()
                 socket = server.accept();
 
-                taDatos.append("Message Server: Se recibio peticion de conexxion\n se hizo el accept()...\n");
+                taDatos.append("Audio Server: Se recibio peticion de conexxion\n se hizo el accept()...\n");
 
                 // 3. Preparar canales o buffers de comunicacion
                 bufferEntrada = new BufferedReader(new InputStreamReader(socket.getInputStream()));

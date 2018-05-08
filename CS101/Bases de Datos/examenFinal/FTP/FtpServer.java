@@ -22,19 +22,24 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class FtpServerextends JFrame {
+public class FtpServer extends JFrame {
     private JTextArea taDatos;
     private JPanel panel;
+
+    private Vector vUser,VServer,vData;
 
     private ServerSocket server;
     private Socket socket;
 
     private BufferedReader bufferEntrada;
     private PrintWriter bufferSalida;
+    private int bytesRead;
+    private int current = 0;
+    private FileOutputStream fos = null;
+    private BufferedOutputStream bos = null;
+    private Socket sock = null;
 
-    private BancoADjdbc bancoad = new BancoADjdbc();
-
-    public Server() {
+    public FtpServer() {
         super("Message Server");
 
         // 1. Crear objetos de los atributos
@@ -68,6 +73,25 @@ public class FtpServerextends JFrame {
     private void enviarDatos(String datos) {
         bufferSalida.println(datos);
         bufferSalida.flush();
+    }
+
+    private String returnDirectory(){
+        String songs = "";
+        String lscmd = "ls";
+        try {
+            Process p = Runtime.getRuntime().exec(new String[] { "bash", "-c", lscmd });
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line = reader.readLine();
+            System.out.println(line);
+            while (line != null) {
+                System.out.println(line);
+                songs += line+"&";
+                line = reader.readLine();
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return songs;
     }
 
     private void cerrarConexion() {
@@ -104,49 +128,30 @@ public class FtpServerextends JFrame {
                 // 4. Recibir datos o mensaje del cliente
                 transaccion = recibirDatos();
 
-                if (transaccion.equals("consultarNocta")) {
-                    String ncta = recibirDatos(); // recibir datos
-                    respuesta = bancoad.consultarCuenta(ncta);
-                    enviarDatos(respuesta);
-                } else if (transaccion.equals("consultarClientesR")) {
-                    respuesta = bancoad.consultarClientesR();
-                    enviarDatos(respuesta);
-                } else if (transaccion.equals("depositar")) {
-                    String ncta = recibirDatos();
-                    int cantidad = Integer.parseInt(recibirDatos());
-                    respuesta = bancoad.depositar(ncta, cantidad);
-                    enviarDatos(respuesta);
-                } else if (transaccion.equals("retirar")) {
-                    String ncta = recibirDatos();
-                    int cantidad = Integer.parseInt(recibirDatos());
-                    respuesta = bancoad.retirar(ncta, cantidad);
-                    enviarDatos(respuesta);
-                } else if (transaccion.equals("consultarDepositosR")) {
-                    String cuenta = recibirDatos();
-                    respuesta = bancoad.consultarDepositosR(cuenta);
-                    enviarDatos(respuesta);
-                } else if (transaccion.equals("consultarRetirosR")) {
-                    String cuenta = recibirDatos();
-                    respuesta = bancoad.consultarRetirosR(cuenta);
-                    enviarDatos(respuesta);
-                } else if (transaccion.equals("consultarTipoR")) {
-                    String tipo = recibirDatos();
-                    respuesta = bancoad.consultarTipoR(tipo);
-                    enviarDatos(respuesta);
-                } else if (transaccion.equals("transferencia")) {
-                    int ncta = Integer.parseInt(recibirDatos()), cantidad = Integer.parseInt(recibirDatos()),
-                            ncta2 = Integer.parseInt(recibirDatos());
-                    respuesta = bancoad.transferencia(ncta, cantidad, ncta2);
-                    enviarDatos(respuesta);
-                } else if (transaccion.equals("consultarTransferenciaR")) {
-                    String cuenta = recibirDatos();
-                    respuesta = bancoad.consultarTransferenciaR(cuenta);
-                    enviarDatos(respuesta);
-                } else if (transaccion.equals("capturar")) {
-                    String datos = recibirDatos();
-                    respuesta = bancoad.capturar(datos);
-                    enviarDatos(respuesta);
+                if (transaccion.equals("consultarDirectorio")) {
+                    enviarDatos(returnDirectory());
+                } else if(transaccion.equals("SendFile")){
+                                                            
+
+                } else if(transaccion.equals("RecieveFile")) {
+                    byte[] mybytearray = new byte[FILE_SIZE];
+                    InputStream is = sock.getInputStream();
+                    fos = new FileOutputStream(FILE_TO_RECEIVED);
+                    bos = new BufferedOutputStream(fos);
+                    bytesRead = is.read(mybytearray, 0, mybytearray.length);
+                    current = bytesRead;
+
+                    do {
+                        bytesRead = is.read(mybytearray, current, (mybytearray.length - current));
+                        if (bytesRead >= 0)
+                            current += bytesRead;
+                    } while (bytesRead > -1);
+
+                    bos.write(mybytearray, 0, current);
+                    bos.flush();
+                    System.out.println("File " + FILE_TO_RECEIVED + " downloaded (" + current + " bytes read)");
                 }
+
                 // 6. Cerrar conexion
                 cerrarConexion();
 
@@ -161,7 +166,7 @@ public class FtpServerextends JFrame {
     }
 
     public static void main(String args[]) {
-        FtpServerserverApp = new Server();
+        FtpServer serverApp = new FtpServer();
         serverApp.iniciarServer();
     }
 }

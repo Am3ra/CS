@@ -23,8 +23,6 @@ public class CancionesADjdbc {
 
     private Connection conexion;
     private Statement statement;
-    private BufferedReader archivoIn;
-    private PrintWriter archivoOut;
 
     
     public CancionesADjdbc() {
