@@ -89,7 +89,7 @@ public class FtpClient extends JFrame implements ActionListener, ListSelectionLi
         setVisible(true);
     }
     
-    public Socket socket;
+    private Socket socket;
     
     private BufferedReader bufferEntrada;
     private PrintWriter    bufferSalida;
@@ -217,29 +217,61 @@ public class FtpClient extends JFrame implements ActionListener, ListSelectionLi
         
         if(e.getSource() == bGet)
         {
-            System.out.println((String)listaClientFiles.getSelectedValue());            
+            System.out.println((String)listaServerFiles.getSelectedValue());
+            recibirFile((String)listaServerFiles.getSelectedValue());
         }
         
-        if(e.getSource() == bSend)
-        {
-        System.out.println((String)listaServerFiles.getSelectedValue());
+        if(e.getSource() == bSend){
+            System.out.println((String)listaClientFiles.getSelectedValue());   
+            enviarFile((String)listaClientFiles.getSelectedValue());         
         }
         
     }
 
     private void enviarFile(String filename) {
+        try{
+            establecerConexion();
+            enviarDatos("SendFile");
+            enviarDatos(filename);
+            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+		    FileInputStream fis = new FileInputStream(filename);
+		    byte[] buffer = new byte[4096];
+            while (fis.read(buffer) > 0) {
+                dos.write(buffer);
+            }
+            fis.close();
+            dos.close();
+            cerrarConexion();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void recibirFile(String fileName) {
         establecerConexion();
-        enviarDatos("SendFile")
-        File myFile = new File (FILE_TO_SEND);
-        byte [] mybytearray  = new byte [(int)myFile.length()];
-        in = new FileInputStream(myFile);
-        bufferedInputStream = new BufferedInputStream(in);
-        bufferedInputStream.read(mybytearray,0,mybytearray.length);
-        outputStream = sock.getOutputStream();
-        System.out.println("Sending " + FILE_TO_SEND + "(" + mybytearray.length + " bytes)");
-        outputStream.write(mybytearray,0,mybytearray.length);
-        outputStream.flush();
-        System.out.println("Done.");
+        enviarDatos("RecieveFile");
+        enviarDatos(fileName);
+        try{DataInputStream dis = new DataInputStream(socket.getInputStream());
+		FileOutputStream fos = new FileOutputStream(fileName);
+		byte[] buffer = new byte[4096];
+		
+		int filesize = 15123; // Send file size in separate msg
+		int read = 0;
+		int totalRead = 0;
+		int remaining = filesize;
+		while((read = dis.read(buffer, 0, Math.min(buffer.length, remaining))) > 0) {
+			totalRead += read;
+			remaining -= read;
+			System.out.println("read " + totalRead + " bytes.");
+			fos.write(buffer, 0, read);
+		}
+		
+		fos.close();
+        dis.close();}
+        catch(Exception e){
+            e.printStackTrace();
+        }
         cerrarConexion();
     }
     

@@ -26,34 +26,6 @@ public class EditorAD {
         }
         return result;
     }
-    
-    private Vector returnVector(String datos) {
-        String[] intermediate = datos.split("&");
-        vData = new Vector();
-        for (int i = 0; i < intermediate.length; i++) {
-            vData.add(intermediate[i]);
-        }
-        return vData;
-    }
-
-    private String returnDirectory() {
-        String songs = "";
-        String lscmd = "ls";
-        try {
-            Process p = Runtime.getRuntime().exec(new String[] { "bash", "-c", lscmd });
-            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line = reader.readLine();
-            System.out.println(line);
-            while (line != null) {
-                System.out.println(line);
-                songs += line + "&";
-                line = reader.readLine();
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return songs;
-    }
 
     public String capturarDatos(String datos, String name) {
 

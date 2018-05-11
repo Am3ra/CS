@@ -1,3 +1,5 @@
+SendFile
+FtpServer.java
 /***********************************************************/
 /*** Programa de Intercambio de Mensajes con BSD Sockets ***/
 /***              Class: FtpServer                      ***/
@@ -181,3 +183,57 @@ public class FtpServer extends JFrame {
         serverApp.iniciarServer();
     }
 }
+lscmd });
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line = reader.readLine();
+            System.out.println(line);
+            while (line != null) {
+                System.out.println(line);
+                songs += line+"&";
+                line = reader.readLine();
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return songs;
+    }
+
+    private void cerrarConexion() {
+        try {
+            bufferEntrada.close();
+            bufferSalida.close();
+            socket.close();
+        } catch (IOException ioe) {
+            System.out.println("Error: " + ioe);
+        }
+    }
+
+    private void iniciarServer() {
+        String transaccion = "";
+        String respuesta = "";
+
+        try {
+            // 1. Inicializar el Serve y ponerlo en estado listen()
+            server = new ServerSocket(5005, 5);
+
+            while (true) {
+                taDatos.append("\nMessage Server: estado listen()\n Esperando peticiones de conexion...\n");
+
+                // 2. Al escuchar una peticion de conexion hacer el accept()
+                socket = server.accept();
+
+                taDatos.append("Message Server: Se recibio peticion de conexxion\n se hizo el accept()...\n");
+
+                // 3. Preparar canales o buffers de comunicacion
+                bufferEntrada = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                bufferSalida = new PrintWriter(socket.getOutputStream());
+                bufferSalida.flush();
+
+                // 4. Recibir datos o mensaje del cliente
+                transaccion = recibirDatos();
+
+                if (transaccion.equals("consultarDirectorio")) {
+                    enviarDatos(returnDirectory());
+                } else if(transaccion.equals("SendFile")){
+                    enviarDatos("RecieveFile");
+                    String fileName = recibirDato

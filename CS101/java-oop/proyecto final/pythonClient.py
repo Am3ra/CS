@@ -14,7 +14,6 @@ def recibirDatos():
     while chunck != b'':
         chunks.append(chunck)
         chunck= s.recv(4096)
-    print(b''.join(chunks).decode())
     return b''.join(chunks).decode()
 
 def enviarDatos(datos):
@@ -28,4 +27,5 @@ def cerrarConexion():
     '''Cerrar Conexion'''
     global s
     s.close()
+    
 
