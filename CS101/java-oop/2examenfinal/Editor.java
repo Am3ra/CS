@@ -82,6 +82,8 @@ public class Editor extends JFrame implements ActionListener, ListSelectionListe
         add(panel);
         setSize(500,400);
         setVisible(true);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);         
     }
     
     private void activaItems()
@@ -106,57 +108,89 @@ public class Editor extends JFrame implements ActionListener, ListSelectionListe
         if(e.getSource() == menuItemNew)
         {
             nombreArchivo = JOptionPane.showInputDialog(null, "Write name of file:");
+            panel.setVisible(false);
+            panel.removeAll();
+            panel.add(taEditor);
+            taEditor.setText("");
             panel.setVisible(true);
+            inactivaItems();
         }
         
         if(e.getSource() == menuItemOpen)
         {
-            JOptionPane.showMessageDialog(null,"Mostrar Archivos del Directorio...");
-            removeAll();
-            listaFiles = new JList()
+            panel.removeAll();
+            panel.add(taEditor);
+            taEditor.setText(editorAD.openFile(nombreArchivo));
+            panel.setVisible(true);
+            inactivaItems();
         }
         
         
         if(e.getSource() == menuItemAbrir)
         {
-            JOptionPane.showMessageDialog(null,"Abrir un archivo del directorio...");
+            // JOptionPane.showMessageDialog(null,"Abrir un archivo del directorio...");
+            panel.removeAll();
+            listaFiles = new JList(editorAD.returnVector(editorAD.archivosDisponibles()));
+            listaFiles.addListSelectionListener(this);
+            panel.add(listaFiles);
+            panel.setVisible(true);
+            activaItems();
         }
         
         if(e.getSource() == menuItemGuardar)
         {
             JOptionPane.showMessageDialog(null, "Guardar un Archivo...");
             if (nombreArchivo.isEmpty()) {
-                nombreArchivo = JOptionPane.showInputDialog("Write name of file");
-                editorAD.capturarDatos(taEditor.getText(), nombreArchivo);
+                JOptionPane.showMessageDialog(null,"Archivo no abierto");
             } else {
                 editorAD.capturarDatos(taEditor.getText(), nombreArchivo);
+                JOptionPane.showMessageDialog(null, "Guardado con exito");
             }
-            JOptionPane.showMessageDialog(null, "Guardado con exito");
             taEditor.setText("");
             panel.setVisible(false);
-            nombreArchivo = "";        }
+            nombreArchivo = "";        
+        }
         
         if(e.getSource() == menuItemGuardarAs)
         {
-            nombreArchivo = JOptionPane.showInputDialog("Write name of file");
-            editorAD.capturarDatos(taEditor.getText(), nombreArchivo);
+             JOptionPane.showMessageDialog(null, "Guardar un Archivo...");
+            if (nombreArchivo.isEmpty()) {
+                JOptionPane.showMessageDialog(null,"Archivo no abierto");
+            } else {
+                nombreArchivo = JOptionPane.showInputDialog("Write name of file");
+                editorAD.capturarDatos(taEditor.getText(), nombreArchivo);
+                JOptionPane.showMessageDialog(null, "Guardado con exito");
+            }
             panel.setVisible(false);
             nombreArchivo = "";
-            taEditor.setText("");        }
+            taEditor.setText("");    
+
+        }
         
         if(e.getSource() == menuItemDelete)
         {
             JOptionPane.showMessageDialog(null,"Borrar un archivo del directorio...");
+            editorAD.deleteArchivo(nombreArchivo);
+            inactivaItems();
+            panel.setVisible(false);
+            nombreArchivo = "";
         }
         
         if(e.getSource() == menuItemCopy)
         {
-            JOptionPane.showMessageDialog(null,"Copiar un archivo...");
+            editorAD.capturarDatos(editorAD.openFile(nombreArchivo), nombreArchivo+" copia");
+            panel.setVisible(false);
+            nombreArchivo = "";
+            taEditor.setText(""); 
+            inactivaItems();
         }
         
         if(e.getSource() == menuItemClose)
         {
-            JOptionPane.showMessageDialog(null,"Cerrar todo...");
+            taEditor.setText("");
+            panel.setVisible(false);
+            nombreArchivo = "";   
+            inactivaItems();
         }
         
         if(e.getSource() == menuItemSalir)
