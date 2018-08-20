@@ -56,6 +56,7 @@
 #define NUMPARAMS 2
 #define NUMVAL    4
 
+
 /***********************************************************************
  *                          Main entry point                           *
  **********************************************************************/
@@ -63,10 +64,11 @@ int main (int argc, const char * argv[]) {
     
     FILE   *fp;                                /* Pointer to the file */
     int    quantum = 0;              /* Quantum value for round robin */
-    GList  *processList_p = NULL;      /* Pointer to the process list */
+    // GList  *processList_p = NULL;      /* Pointer to the process list */
     int    parameters[NUMVAL];      /* Process parameters in the line */
     int    i;                  /* Number of parameters in the process */
-    
+    struct process *head = NULL;
+
     /* Check if the number of parameters is correct */
     if (argc < NUMPARAMS){  
         printf("Need a file with the process information\n");
@@ -80,7 +82,7 @@ int main (int argc, const char * argv[]) {
         } else {
             /* The first number in the file is the quantum */
             quantum = GetInt(fp);
-            
+            printf("Quantum: %d \n",quantum);
             if (quantum == EXIT_FAILURE) {
                 ErrorMsg("main","Quantum not found");
             } else {
@@ -90,50 +92,46 @@ int main (int argc, const char * argv[]) {
                  */
                 while (!feof(fp)){
                     /* For every four parameters create a new process */
+                    printf("New process:\n");
                     for (i = 0; ((i < NUMVAL) && (!feof(fp))); i++) {
                         parameters[i] = GetInt(fp);
+                        printf("parameter %d, %d\n", i,parameters[i]);
                     }
                     
                     /* Do we have four parameters? */
                     if (i == NUMVAL) {
-                        processList_p = CreateProcess(processList_p,
-                                                       parameters[0],
-                                                       parameters[1],
-                                                       parameters[2],
-                                                       parameters[3],
-                                                       NULL);
+                        // processList_p = CreateProcess(processList_p,
+                        //                                parameters[0],
+                        //                                parameters[1],
+                        //                                parameters[2],
+                        //                                parameters[3],
+                        //                                NULL);
                     }
                 }
             }
         }
         
         /* Start by sorting the processes by arrival time */
-        processList_p = SortProcessList(processList_p, ARRIVALTIME);
+        // processList_p = SortProcessList(processList_p, ARRIVALTIME);
         
-#ifdef DEBUG
-        /* Now print each element in the list */
-        PrintProcessList(processList_p);
-#endif
         
         /*
          * Apply all the scheduling algorithms and print the results
          */
-        FirstCome (processList_p);
+        // FirstCome (head);
         
-        NonPreemptive(processList_p, PRIORITY);
+        // NonPreemptive(head, "PRIORITY");
         
-        NonPreemptive(processList_p, CPUBURST);
+        // NonPreemptive(head, "CPUBURST");
         
-        Preemptive(processList_p, PRIORITY);
+        // Preemptive(head, "PRIORITY");
         
-        Preemptive(processList_p, CPUBURST);
+        // Preemptive(head, "CPUBURST");
         
-        RoundRobin(processList_p, quantum);
+        // RoundRobin(head, quantum);
 
-        /* Deallocate the memory assigned to the list */
-        DestroyList(processList_p);
         
-        printf("Program terminated correclty\n");
+        printf("Program terminated correctly\n");
         return (EXIT_SUCCESS);
     }
 }

@@ -18,19 +18,18 @@ public class Arreglo7
     }
     private void buscar(String args[]) {
         String i=JOptionPane.showInputDialog(null, "Ingrese el elemento a buscar");
-        System.out.println(i);
         String message = "El elemento "+i+" se encontro ";
-        String addon = "";
         int COUNTER = 0;
+        String addon = "";
         for (int j = 0; j < args.length; j++) {
             if (args[j].equals(i)){
                     addon += "\nEn la posicion "+j;
+                    COUNTER ++;
                 }
-                COUNTER ++;
             }
-        }
-        JOptionPane.showMessageDialog(null, message+COUNTER+"vezes" + addon);
+            JOptionPane.showMessageDialog(null, message+COUNTER+" vezes " + addon);
     }
+    
     
     private void principal(String args[])
     {
