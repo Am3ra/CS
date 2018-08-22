@@ -22,10 +22,10 @@ public class ClienteGUI extends JFrame implements ActionListener
     private JButton    bDatosArchivoArreglo, bConsultarArreglo, bDatosArregloArchivo;
     private JPanel     panel1, panel2;
     private JTextArea  taDatos;
-    private JComboBox comboCuentas;
-    private String opcionesCuenta[] = {"INVERSION","CREDITO","AHORRO","HIPOTECA"};
+    private JComboBox  comboCuentas;
+    private String     opcionesCuenta[] = {"INVERSION","CREDITO","AHORRO","HIPOTECA"};
     
-    //private BancoAD bancoad = new BancoAD();
+    private BancoAD bancoad = new BancoAD();
     
     public ClienteGUI()
     {
@@ -80,7 +80,6 @@ public class ClienteGUI extends JFrame implements ActionListener
         panel1.add(new JLabel("NOMBRE: "));
         panel1.add(tfNombre);
         panel1.add(new JLabel("TIPO DE CUENTA"));
-        //panel1.add(tfTipo);
         panel1.add(comboCuentas);
         panel1.add(new JLabel("SALDO"));
         panel1.add(tfSaldo);
@@ -102,6 +101,7 @@ public class ClienteGUI extends JFrame implements ActionListener
         add(panel2);
         setSize(500,500);
         setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
     
     private void inactivarBotones()
@@ -168,8 +168,8 @@ public class ClienteGUI extends JFrame implements ActionListener
                 if(datos.equals("NO_NUMERICO"))
                     respuesta = "Saldo debe ser numerico...";
                 else
-                    //respuesta = bancoad.capturar(datos);
-                    respuesta = datos;
+                    respuesta = bancoad.capturar(datos);
+                    //respuesta = datos;
             
             // 3. Desplegar esultado de transaccion
             taDatos.setText(respuesta);
@@ -177,12 +177,11 @@ public class ClienteGUI extends JFrame implements ActionListener
         
         if(e.getSource() == bConsultar)
         {
-            // 1. Realizar consulta de clientes
-            //datos = bancoad.consultarClientes();
+            //1. Realizar consulta de clientes
+            datos = bancoad.consultarClientes();
             
             // 2. Desplegar datos
-            //taDatos.setText(datos);
-            taDatos.setText("Consultar Clientes ...");
+            taDatos.setText(datos);
         }
         
         if(e.getSource() == bConsultarNocta)
@@ -191,29 +190,39 @@ public class ClienteGUI extends JFrame implements ActionListener
             String ncta = tfNocta.getText();
             
             // 2. Realizar transaccion de consultar no. de cuenta
-            //respuesta = bancoad.consultar(ncta);
-            //if(respuesta.equals("NO_LOCALIZADO"))
-              //  respuesta = "No. de Cuenta no localizado: "+ncta;
-            //else
+            respuesta = bancoad.consultar(ncta);
+            if(respuesta.equals("NO_LOCALIZADO"))
+              respuesta = "No. de Cuenta no localizado: "+ncta;
+            else if (respuesta.equals("Arreglo no inicializado / null"))
+              respuesta = "Arreglo no inicializado";
+            else
                 inactivarBotones();
             
             // 3. Desplegar resultado de la transaccion
-            //taDatos.setText(respuesta);
+            taDatos.setText(respuesta);
         }
         
         if(e.getSource() == bRetiro)
         {
             // 1. Obtener el No. de Cuenta de donde se hará el retiro
             String ncta = tfNocta.getText();
-            
-            // 2. Obtener la cantidad a retirar
-            //int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Cantidad a retirar ="));
-            
-            // 3. Realizar transaccion deposito
-            //respuesta = bancoad.retirar(ncta,cantidad);
-            
-            // 4. Desplegar resultado de la transaccion
-            //taDatos.setText(respuesta);
+            //Verificar existencia:
+            respuesta = bancoad.consultar(ncta);
+            if(respuesta.equals("NO_LOCALIZADO"))
+              respuesta = "No. de Cuenta no localizado: "+ncta;
+            else if (respuesta.equals("Arreglo no inicializado / null"))
+              respuesta = "Arreglo no inicializado";
+            else{
+                
+                // 2. Obtener la cantidad a retirar
+                int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Cantidad a retirar ="));
+                
+                // 3. Realizar transaccion deposito
+                //respuesta = bancoad.retirar(ncta,cantidad);
+                
+                // 4. Desplegar resultado de la transaccion
+                //taDatos.setText(respuesta);
+            }
 
             
             activarBotones();
@@ -238,22 +247,26 @@ public class ClienteGUI extends JFrame implements ActionListener
         
         if(e.getSource() == bCancelar)
         {
+            taDatos.setText("");
             activarBotones();
         }
 
         if(e.getSource() == bDatosArchivoArreglo)
         {
-            taDatos.setText("Pasar Datos del Archivo al Arreglo ...");
+            datos = bancoad.datosArchivoArreglo();
+            taDatos.setText(datos);
         }
         
         if(e.getSource() == bConsultarArreglo)
-        {
-            taDatos.setText("Consultar el Arreglo ...");
+        {   
+            datos = bancoad.displayStringArray();
+            taDatos.setText(datos);
         }
         
         if(e.getSource() == bDatosArregloArchivo)
         {
-            taDatos.setText("Pasar Datos del Arreglo al Archivo ...");
+            datos = bancoad.datosArregloArchivo();
+            taDatos.setText(datos);
         }
         
         if(e.getSource() == bSalir)
@@ -267,6 +280,3 @@ public class ClienteGUI extends JFrame implements ActionListener
         new ClienteGUI();
     }
 }
-
-
-

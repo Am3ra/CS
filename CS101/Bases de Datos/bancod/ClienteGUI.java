@@ -234,8 +234,8 @@ public class ClienteGUI extends JFrame implements ActionListener{
             taDatos.setText(printData(respuesta));
         }
         if (event.getSource() == bCancelar){
-            apagar();
             taDatos.setText("");
+            apagar();
         }
         if(event.getSource()==bConTipo){
             cliente.establecerConexion();

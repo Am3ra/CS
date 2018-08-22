@@ -1,180 +1,148 @@
 import java.io.*;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class BancoAD
-{
+public class BancoAD{
     private PrintWriter archivoOut;
     private BufferedReader archivoIn;
-    private String arregloClientes[];
-    
-    private int numeroRegistros;
-    private int posicion;
-    
-    /*public BancoAD()
-    {
-        consultarClientes();
-        arregloClientes = new String[numeroRegistros];
-        
-    }*/
-    
-    public String capturar(String datos)
-    {
-        String resultado="";
-        
-        try
-        {
-            // 1. Abrir el archivo
-            archivoOut = new PrintWriter(new FileWriter("Clientes.txt",true));
-            
-            // 2. Almacenar o guardar los datos en el archivo
-            archivoOut.println(datos);
-            
-            // 3. Cerrar el archivo
-            archivoOut.close();
-            
-            // 4. Entregar resultadod e la transaccion
-            resultado = "Captura de datos exitosa...";
-            
-            numeroRegistros++;
-        }
-        catch(IOException ioe)
-        {
-            System.out.println("Error: "+ioe);
-            resultado = "Error en captura de datos: \n"+ioe;
-        }
-        
-        return resultado;
-    }
-    
-    public String consultarClientes()
-    {
-        String datos="";
-        
-        numeroRegistros=0;
-        
-        try
-        {
-            // 1. Abrir el archivo
-            archivoIn = new BufferedReader(new FileReader("Clientes.txt"));
-            
-            // 2. Obtener lod datos del archivo
-            while(archivoIn.ready())
-            {
-                datos = datos + archivoIn.readLine() + "\n";
-                numeroRegistros++;
+    private String arrayClientes[],arrayTemp[];
+    private int lnNumber,posicion;
+
+    public String datosArregloArchivo(){
+        if (arrayClientes == null) {
+            return "Array is null";
+        } else {
+            try {
+                // 1. Abrir archivo.
+                archivoOut = new PrintWriter(new FileWriter("Clientes.txt", false));
+                // 2. Almacenar o guardar los datos en el archivo.
+                for (String i : arrayClientes) {
+                    archivoOut.println(i);
+                }
+                // 3. Cerrar el archivo
+                archivoOut.close();
+                // 4. Entregar el resultado de la transacción.
+                return "Captura de datos exitosa";
+            } catch (Exception ioe) {
+                System.out.println("Error: " + ioe);
+                return "Error en captura de datos: \n";
             }
-            
-            // 3. Cerrar el archivo
-            archivoIn.close();
         }
-        catch(IOException ioe)
-        {
-            System.out.println("Error: "+ioe);
-            datos = "Error en consultar datos: \n"+ioe;
-        }
+    }
+
+    public String capturar (String datos){
+        String resultado;
+        System.out.println(Arrays.toString(datos.split("_")));
         
-        // 4. Entregar los datos
+        if (consultar(datos.split("_")[0]).equals("NO_LOCALIZADO")) {
+    
+            try {
+            //1. Abrir archivo.
+            archivoOut = new PrintWriter(new FileWriter("Clientes.txt",true));
+            //2. Almacenar o guardar los datos en el archivo.
+            archivoOut.println(datos);
+            //3. Cerrar el archivo
+            archivoOut.close();
+            //4. Entregar el resultado de la transacción.
+            resultado = "Captura de datos exitosa";
+            } catch (Exception ioe) {
+                System.out.println("Error: "+ ioe);
+                resultado = "Error en captura de datos: \n";
+            }
+            return resultado;
+        } else return "Cuenta existente";
+    }
+    public String consultarClientes() {
+        String datos="";
+        lnNumber = 0;
+        try {
+            //1.Abrir el archivo
+            archivoIn = new BufferedReader(new FileReader("Clientes.txt"));
+            //2. Obtener los datos del archivo
+            while (archivoIn.ready()) {
+                datos+=archivoIn.readLine()+"\n";  
+            }
+            //3. Cerrar el archivo
+            archivoIn.close();
+        } catch (Exception ioe) {
+            System.out.println("Error:"+ioe);
+        }
+        //4.Entregar los datos.
         return datos;
     }
-    
-    public String datosArchivoArreglo()
-    {
+    public void setStringLength(){
+        System.out.println("HIT");
+        lnNumber=0;
+        try {
+            //1.Abrir el archivo
+            archivoIn = new BufferedReader(new FileReader("Clientes.txt"));
+            //2. Obtener los datos del archivo
+            while (archivoIn.ready()) {
+                archivoIn.readLine();
+                System.out.println("HIT");
+                lnNumber++;
+            }
+            //3. Cerrar el archivo
+            archivoIn.close();
+        } catch (Exception ioe) {
+            System.out.println("Error"+ioe);
+        }
+        System.out.println("HIT OUT");
+    }
+    public String datosArchivoArreglo(){
         String str="";
         String resultado="";
-        
-        int i=0;
-        
-        consultarClientes();
-        arregloClientes = new String[numeroRegistros];
-        
-        try
-        {
-            // 1. Abrir el archivo
+        int i= 0;
+        setStringLength();
+        arrayClientes = new String[lnNumber];
+
+        try {
             archivoIn = new BufferedReader(new FileReader("Clientes.txt"));
-            
-            // 2. Obtener lod datos del archivo
-            while(archivoIn.ready())
-            {
-                str = archivoIn.readLine();
-                arregloClientes[i] = str;
-                
+            while(archivoIn.ready()){
+                str=archivoIn.readLine();
+                arrayClientes[i]=str;
                 i++;
             }
-            
-            // 3. Cerrar el archivo
             archivoIn.close();
-            
-            resultado = "Datos en el arregloClientes: "+i;
+        } catch (Exception ioe) {
+            System.out.println("Error:"+ioe);
         }
-        catch(IOException ioe)
-        {
-            System.out.println("Error: "+ioe);
-            resultado = "Error en pasar datos al arrgloClientes: \n"+ioe;
-        }
-        
-        // 4. Entregar los datos
+        resultado = "Datos en arrayClientes"+i;
         return resultado;
     }
-    
-    public String consultarArreglo()
-    {
-        String datos="";
-        int i=0;
-        
-        while(i<arregloClientes.length)
-        {
-            datos = datos + arregloClientes[i] + "\n";
-            i++;
-        }
-        
+    public String displayStringArray(){
+       String datos="";
+       for (int i = 0; i < arrayClientes.length; i++) {
+           datos+=arrayClientes[i]+"\n";
+       }
         return datos;
     }
-    
-    public String consultar(String ncta)
-    {
-        String str="",datos="";
-        int i=0;
-        StringTokenizer st=null;
+    public String consultar(String ncta){
+        String str="";
+        String datos="";
         String nocta="";
-        boolean encontrado=false;
+        boolean encontrado = false;
+        StringTokenizer st;
+        int i=0;
         
-        while(i<arregloClientes.length && !encontrado)
-        {
-            str = arregloClientes[i];
-            
+        if (arrayClientes == null){
+            return "Arreglo no inicializado / null";
+        }
+
+        while (i<arrayClientes.length && !encontrado) {
+            str= arrayClientes[i];
             st = new StringTokenizer(str,"_");
             nocta = st.nextToken();
-            
-            if(ncta.equals(nocta))
-            {
+            if (ncta.equals(nocta)) {
                 posicion = i;
                 encontrado = true;
             }
-            
             i++;
-            
             datos = str;
         }
-        
-        if(!encontrado)
-            datos = "NO_LOCALIZADO";
-        
+        if (!encontrado) {
+            return "NO_LOCALIZADO";
+        }
         return datos;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
