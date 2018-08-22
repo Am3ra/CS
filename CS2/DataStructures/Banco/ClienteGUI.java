@@ -156,8 +156,7 @@ public class ClienteGUI extends JFrame implements ActionListener
     {
         String datos, respuesta;
         
-        if(e.getSource() == bCapturar)
-        {
+        if(e.getSource() == bCapturar){
             // 1. Obtener datos
             datos = obtenerDatos();
             
@@ -173,10 +172,8 @@ public class ClienteGUI extends JFrame implements ActionListener
             
             // 3. Desplegar esultado de transaccion
             taDatos.setText(respuesta);
-        }
-        
-        if(e.getSource() == bConsultar)
-        {
+        }     
+        else if(e.getSource() == bConsultar){
             //1. Realizar consulta de clientes
             datos = bancoad.consultarClientes();
             
@@ -184,8 +181,7 @@ public class ClienteGUI extends JFrame implements ActionListener
             taDatos.setText(datos);
         }
         
-        if(e.getSource() == bConsultarNocta)
-        {
+        if(e.getSource() == bConsultarNocta){
             // 1. Obtener le No de Cuenta de tfNocta
             String ncta = tfNocta.getText();
             
@@ -202,7 +198,30 @@ public class ClienteGUI extends JFrame implements ActionListener
             taDatos.setText(respuesta);
         }
         
-        if(e.getSource() == bRetiro)
+        if(e.getSource() == bRetiro){
+            // 1. Obtener el No. de Cuenta de donde se hará el retiro
+            String ncta = tfNocta.getText();
+            //Verificar existencia:
+            respuesta = bancoad.consultar(ncta);
+            if(respuesta.equals("NO_LOCALIZADO"))
+              respuesta = "No. de Cuenta no localizado: "+ncta;
+            else if (respuesta.equals("Arreglo no inicializado / null"))
+              respuesta = "Arreglo no inicializado";
+            else{
+                
+                // 2. Obtener la cantidad a retirar
+                int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Cantidad a retirar ="));
+                
+                // 3. Realizar transaccion deposito
+                respuesta = bancoad.retirar(ncta,cantidad);
+                
+                // 4. Desplegar resultado de la transaccion
+                taDatos.setText(respuesta);
+                activarBotones();
+            }
+        }
+        
+        if(e.getSource() == bDeposito)
         {
             // 1. Obtener el No. de Cuenta de donde se hará el retiro
             String ncta = tfNocta.getText();
@@ -218,31 +237,12 @@ public class ClienteGUI extends JFrame implements ActionListener
                 int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Cantidad a retirar ="));
                 
                 // 3. Realizar transaccion deposito
-                //respuesta = bancoad.retirar(ncta,cantidad);
+                respuesta = bancoad.depositar(ncta,cantidad);
                 
                 // 4. Desplegar resultado de la transaccion
-                //taDatos.setText(respuesta);
+                taDatos.setText(respuesta);
+                activarBotones();
             }
-
-            
-            activarBotones();
-        }
-        
-        if(e.getSource() == bDeposito)
-        {
-            // 1. Obtener el No. de Cuenta a donde se hará el deposito
-            String ncta = tfNocta.getText();
-            
-            // 2. Obtener la cantidad a depositar
-            //int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Cantidad a depositar ="));
-            
-            // 3. Realizar transaccion deposito
-            //respuesta = bancoad.depositar(ncta,cantidad);
-            
-            // 4. Desplegar resultado de la transaccion
-            //taDatos.setText(respuesta);
-            
-            activarBotones();
         }
         
         if(e.getSource() == bCancelar)

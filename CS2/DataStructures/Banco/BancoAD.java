@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
+
 public class BancoAD{
     private PrintWriter archivoOut;
     private BufferedReader archivoIn;
@@ -71,7 +72,6 @@ public class BancoAD{
         return datos;
     }
     public void setStringLength(){
-        System.out.println("HIT");
         lnNumber=0;
         try {
             //1.Abrir el archivo
@@ -79,7 +79,6 @@ public class BancoAD{
             //2. Obtener los datos del archivo
             while (archivoIn.ready()) {
                 archivoIn.readLine();
-                System.out.println("HIT");
                 lnNumber++;
             }
             //3. Cerrar el archivo
@@ -87,7 +86,6 @@ public class BancoAD{
         } catch (Exception ioe) {
             System.out.println("Error"+ioe);
         }
-        System.out.println("HIT OUT");
     }
     public String datosArchivoArreglo(){
         String str="";
@@ -135,6 +133,7 @@ public class BancoAD{
             nocta = st.nextToken();
             if (ncta.equals(nocta)) {
                 posicion = i;
+                System.err.println("posicion : "+posicion);
                 encontrado = true;
             }
             i++;
@@ -144,5 +143,62 @@ public class BancoAD{
             return "NO_LOCALIZADO";
         }
         return datos;
+    }
+
+    public String retirar (String ncta, int cantidad){
+        System.out.println(consultar(ncta).split("_")[2]);
+        String tipo = consultar(ncta).split("_")[2];
+        String cliente[] =arrayClientes[posicion].split("_");
+        System.out.println(Arrays.toString(arrayClientes));
+
+        if (tipo.equals("HIPOTECA")) {
+            return "NO se puede hacer retiro de hipoteca";
+        } else if (tipo.equals("INVERSION")) {
+            cliente[3] = Integer.toString(Integer.parseInt(cliente[3]) - cantidad);
+            arrayClientes[posicion] = String.join("_", cliente);
+            return "INVERSION retirada";
+            
+        } else if (tipo.equals("CREDITO")) {
+            //Cuenta ++
+            cliente[3] = Integer.toString(Integer.parseInt(cliente[3]) + cantidad);
+            arrayClientes[posicion] = String.join("_", cliente);
+            return "CREDITO incrementado";
+            
+        } else if (tipo.equals("AHORRO")) {
+            cliente[3] = Integer.toString(Integer.parseInt(cliente[3]) - cantidad);
+            arrayClientes[posicion] = String.join("_", cliente);
+            return "AHORRO retirado";
+        }
+        return "Cool";
+
+    }
+    
+    public String depositar(String ncta, int cantidad) {
+        System.out.println(consultar(ncta).split("_")[2]);
+        String tipo = consultar(ncta).split("_")[2];
+        String cliente[] = arrayClientes[posicion].split("_");
+        System.out.println(Arrays.toString(arrayClientes));
+        System.out.println(cliente[3]);
+        if (tipo.equals("HIPOTECA")) {
+            cliente[3] = Integer.toString(Integer.parseInt(cliente[3]) - cantidad);
+            arrayClientes[posicion] = String.join("_", cliente);
+            return "Hipoteca pagada";
+        } else if (tipo.equals("INVERSION")) {
+            cliente[3] = Integer.toString(Integer.parseInt(cliente[3]) + cantidad);
+            arrayClientes[posicion] = String.join("_", cliente);
+            return "INVERSION incrementada";
+
+        } else if (tipo.equals("CREDITO")) {
+            // Cuenta ++
+            cliente[3] = Integer.toString(Integer.parseInt(cliente[3]) - cantidad);
+            arrayClientes[posicion] = String.join("_", cliente);
+            return "CREDITO pagado";
+
+        } else if (tipo.equals("AHORRO")) {
+            cliente[3] = Integer.toString(Integer.parseInt(cliente[3]) + cantidad);
+            arrayClientes[posicion] = String.join("_", cliente);
+            return "AHORRO incrementado";
+        }
+        return "DEPOSITO HECHO";
     }
 }
