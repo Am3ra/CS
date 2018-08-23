@@ -155,24 +155,26 @@ public class BancoAD{
             return "NO se puede hacer retiro de hipoteca";
         } else if (tipo.equals("INVERSION")) {
             cliente[3] = Integer.toString(Integer.parseInt(cliente[3]) - cantidad);
-            arrayClientes[posicion] = String.join("_", cliente);
+            arrayClientes[posicion] = String.join("_", cliente + "_" + cantidad);
+            registrar("Retiros.txt",consultar(ncta));
             return "INVERSION retirada";
             
         } else if (tipo.equals("CREDITO")) {
             //Cuenta ++
             cliente[3] = Integer.toString(Integer.parseInt(cliente[3]) + cantidad);
-            arrayClientes[posicion] = String.join("_", cliente);
+            arrayClientes[posicion] = String.join("_", cliente + "_" + cantidad);
+            registrar("Retiros.txt", consultar(ncta));
             return "CREDITO incrementado";
             
         } else if (tipo.equals("AHORRO")) {
             cliente[3] = Integer.toString(Integer.parseInt(cliente[3]) - cantidad);
             arrayClientes[posicion] = String.join("_", cliente);
+            registrar("Retiros.txt", consultar(ncta) + "_" + cantidad);
             return "AHORRO retirado";
         }
         return "Cool";
 
     }
-    
     public String depositar(String ncta, int cantidad) {
         System.out.println(consultar(ncta).split("_")[2]);
         String tipo = consultar(ncta).split("_")[2];
@@ -182,23 +184,44 @@ public class BancoAD{
         if (tipo.equals("HIPOTECA")) {
             cliente[3] = Integer.toString(Integer.parseInt(cliente[3]) - cantidad);
             arrayClientes[posicion] = String.join("_", cliente);
+            registrar("Depositos.txt", consultar(ncta)+"_"+cantidad);
             return "Hipoteca pagada";
         } else if (tipo.equals("INVERSION")) {
             cliente[3] = Integer.toString(Integer.parseInt(cliente[3]) + cantidad);
             arrayClientes[posicion] = String.join("_", cliente);
+            registrar("Depositos.txt", consultar(ncta) + "_" + cantidad);
             return "INVERSION incrementada";
 
         } else if (tipo.equals("CREDITO")) {
             // Cuenta ++
             cliente[3] = Integer.toString(Integer.parseInt(cliente[3]) - cantidad);
             arrayClientes[posicion] = String.join("_", cliente);
+            registrar("Depositos.txt", consultar(ncta) + "_" + cantidad);
             return "CREDITO pagado";
 
         } else if (tipo.equals("AHORRO")) {
             cliente[3] = Integer.toString(Integer.parseInt(cliente[3]) + cantidad);
             arrayClientes[posicion] = String.join("_", cliente);
+            registrar("Depositos.txt", consultar(ncta) + "_" + cantidad);
             return "AHORRO incrementado";
         }
         return "DEPOSITO HECHO";
+    }
+
+    private void registrar(String fileName, String datos){
+        String resultado;
+        try{
+        //1. Abrir archivo.
+        archivoOut = new PrintWriter(new FileWriter(fileName,true));
+        //2. Almacenar o guardar los datos en el archivo.
+        archivoOut.println(datos);
+        //3. Cerrar el archivo
+        archivoOut.close();
+        //4. Entregar el resultado de la transacción. 
+        resultado = "Captura de datos exitosa";
+        } catch (Exception ioe) {
+            System.out.println("Error: "+ ioe);
+            resultado = "Error en captura de datos: \n";
+        }
     }
 }
