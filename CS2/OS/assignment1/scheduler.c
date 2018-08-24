@@ -67,7 +67,8 @@ int main (int argc, const char * argv[]) {
     // GList  *processList_p = NULL;      /* Pointer to the process list */
     int    parameters[NUMVAL];      /* Process parameters in the line */
     int    i;                  /* Number of parameters in the process */
-    struct process *head = NULL;
+    Process *head = NULL;              //Start of Process List
+    int element_num = 0;                //Counter of processes
 
     /* Check if the number of parameters is correct */
     if (argc < NUMPARAMS){  
@@ -92,20 +93,20 @@ int main (int argc, const char * argv[]) {
                  */
                 while (!feof(fp)){
                     /* For every four parameters create a new process */
-                    printf("New process:\n");
+                    // printf("New process:\n");
                     for (i = 0; ((i < NUMVAL) && (!feof(fp))); i++) {
                         parameters[i] = GetInt(fp);
-                        printf("parameter %d, %d\n", i,parameters[i]);
+                        // printf("parameter %d, %d\n", i,parameters[i]);
                     }
                     
                     /* Do we have four parameters? */
                     if (i == NUMVAL) {
-                        // processList_p = CreateProcess(processList_p,
-                        //                                parameters[0],
-                        //                                parameters[1],
-                        //                                parameters[2],
-                        //                                parameters[3],
-                        //                                NULL);
+                        if (element_num==0){ //IF FIRST ELEMENT, INITIALIZE HEAD
+                            head = first_Node(head,parameters);
+                        }
+                        else 
+                            appendProcess(head,parameters); //ELSE APPEND TO END OF LIST
+                        element_num++;
                     }
                 }
             }
@@ -129,8 +130,10 @@ int main (int argc, const char * argv[]) {
         // Preemptive(head, "CPUBURST");
         
         // RoundRobin(head, quantum);
+        printf("TRYING TO TRAVERSE\n");
+        traverse(head, 0);
+        traverse(head, 1);
 
-        
         printf("Program terminated correctly\n");
         return (EXIT_SUCCESS);
     }
