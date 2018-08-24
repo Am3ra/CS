@@ -6,6 +6,6 @@ int main(int argc, char const *argv[])
     Process *head; // EQUIVALENT to APPEND(1,2,3,4,NULL);
     head = first_Node(head,a);
     appendProcess(head, b);
-    traverse(head, 1);
+    traverse(head);
     return (0);
 }

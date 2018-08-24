@@ -93,10 +93,8 @@ int main (int argc, const char * argv[]) {
                  */
                 while (!feof(fp)){
                     /* For every four parameters create a new process */
-                    // printf("New process:\n");
                     for (i = 0; ((i < NUMVAL) && (!feof(fp))); i++) {
                         parameters[i] = GetInt(fp);
-                        // printf("parameter %d, %d\n", i,parameters[i]);
                     }
                     
                     /* Do we have four parameters? */
@@ -119,21 +117,21 @@ int main (int argc, const char * argv[]) {
         /*
          * Apply all the scheduling algorithms and print the results
          */
-        // FirstCome (head);
+        FirstCome (head);
         
-        // NonPreemptive(head, "PRIORITY");
+        NonPreemptive(head, PRIORITY);
         
-        // NonPreemptive(head, "CPUBURST");
+        NonPreemptive(head, CPU_BURST);
         
-        // Preemptive(head, "PRIORITY");
+        Preemptive(head, PRIORITY);
         
-        // Preemptive(head, "CPUBURST");
+        Preemptive(head, CPU_BURST);
         
-        // RoundRobin(head, quantum);
+        RoundRobin(head, quantum);
+        
         printf("TRYING TO TRAVERSE\n");
-        traverse(head, 0);
-        traverse(head, 1);
-
+        int count = traverse(head);
+        printf("%d\n",count);
         printf("Program terminated correctly\n");
         return (EXIT_SUCCESS);
     }
