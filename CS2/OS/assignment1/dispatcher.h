@@ -39,7 +39,8 @@ enum attributes
     OUTPUT:
         pointer to created node.
 */
-Process *create(int data[4], Process *next){
+Process *create(int data[4], Process *next)
+{
     Process *new_process = (Process *)malloc(sizeof(Process));
     if (new_process == NULL)
     {
@@ -68,19 +69,22 @@ Process *create(int data[4], Process *next){
     NOTES:  for debugging purposes, it is possible to call
             the function without assigning the returned
             value to anything.
+
+    WARNING:
+            WILL RETURN SEGFAULT IF HEAD NOT INITIALIZED
 */
-int traverse(Process *head){
+int traverse(Process *head)
+{
     printf("TRAVERSE INITIATED\n");
     Process *cursor = head;
     int c = 0;
-    while (cursor != NULL)
-    {
-        printf("index %d: (PID,%d), (ARRIVAL_TIME,%d), (CPU_BURST,%d),(PRIORITY,%d)\n", 
-                        c, 
-                        cursor->data[PID], 
-                        cursor->data[ARRIVAL_TIME], 
-                        cursor->data[CPU_BURST], 
-                        cursor->data[PRIORITY]);
+    while (cursor != NULL){
+        printf("index %d: (PID,%d), (ARRIVAL_TIME,%d), (CPU_BURST,%d),(PRIORITY,%d)\n",
+               c,
+               cursor->data[PID],
+               cursor->data[ARRIVAL_TIME],
+               cursor->data[CPU_BURST],
+               cursor->data[PRIORITY]);
         cursor = cursor->next;
         c++;
     }
@@ -91,7 +95,8 @@ int traverse(Process *head){
     Function to insert node at beginning of List.
     Functionally similar to the create function.
 */
-Process *first_Node(Process *head, int data[4]){
+Process *first_Node(Process *head, int data[4])
+{
     head = create(data, head);
     return head;
 }
@@ -104,7 +109,8 @@ Process *first_Node(Process *head, int data[4]){
         pointer to head.
         data array of size 4.
 */
-void appendProcess(Process *head, int data[4]){
+void appendProcess(Process *head, int data[4])
+{
     Process *cursor = head;
     while (cursor->next != NULL)
         cursor = cursor->next;
@@ -119,8 +125,10 @@ void appendProcess(Process *head, int data[4]){
         data of node to be created.
 
 */
-void insertProcessAfter(Process *node, int data[4]){
-
+void insertNodeAfter(Process *node, int data[4])
+{
+    Process *next = node ->next;
+    node ->next = create(data,next);
 }
 
 /*
@@ -132,23 +140,32 @@ void insertProcessAfter(Process *node, int data[4]){
     Output:
         Copied Linked list head.
 */
-Process* CopyList(Process *head){
+Process *CopyList(Process *head)
+{
     Process *copy_head = NULL;
     Process *cursor = head;
     int count = 0;
-    while(cursor!= NULL){
-        int data[4] = {cursor -> data};
-        cursor = cursor ->next;
-        if (head == NULL) {
+    while (cursor != NULL)
+    {
+        int data[4];
+        data[PID] = cursor->data[PID];
+        data[ARRIVAL_TIME] = cursor->data[ARRIVAL_TIME];
+        data[CPU_BURST] = cursor->data[CPU_BURST];
+        data[PRIORITY] = cursor->data[PRIORITY];
+        cursor = cursor->next;
+        if (head == NULL)
+        {
             return NULL;
         }
-        else if(count == 0){
-            count ++; // Make sure never enters this if again.
-            copy_head = first_Node(copy_head,data);
-        } 
-        else{
-            appendProcess(copy_head,data);
-        }   
+        else if (count == 0)
+        {
+            count++; // Make sure never enters this if again.
+            copy_head = first_Node(copy_head, data);
+        }
+        else
+        {
+            appendProcess(copy_head, data);
+        }
     }
     return copy_head;
 }
@@ -160,7 +177,8 @@ Process* CopyList(Process *head){
         head pointer of list
         function pointer, in order to psas arbitrary parameters.
 */
-void SortList(Process *head, void (*sort)()){
+void SortList(Process *head, void (*sort)())
+{
     printf("SORT LINKED LIST\n");
 }
 
@@ -174,7 +192,8 @@ void SortList(Process *head, void (*sort)()){
         Make copy of linked list in order to be able to modify it 
         without risk of affecting other processes.
 */
-void FirstCome(Process *head){
+void FirstCome(Process *head)
+{
     printf("(FCFS)SORT BY ARRIVAL_TIME, THEN PROCESS\n");
 }
 
@@ -189,7 +208,8 @@ void FirstCome(Process *head){
         Make copy of linked list in order to be able to modify it 
         without risk of affecting other processes.
 */
-void NonPreemptive(Process *head, int TYPE){
+void NonPreemptive(Process *head, int TYPE)
+{
     printf("(NP)SORT BY TYPE THEN PROCESS\n");
 }
 
@@ -205,9 +225,11 @@ void NonPreemptive(Process *head, int TYPE){
         Make copy of linked list in order to be able to modify it 
         without risk of affecting other processes.
 */
-void Preemptive(Process *head, int TYPE){
+void Preemptive(Process *head, int TYPE)
+{
     printf("(P)SORT BY TYPE THEN PROCESS, sorting constantly\n");
 }
+
 /*
     Function to simulate Round Robin scheduling policy.
 
@@ -220,7 +242,25 @@ void Preemptive(Process *head, int TYPE){
         Make copy of linked list in order to be able to modify it 
         without risk of affecting other processes.
 */
-
-void RoundRobin(Process *head, int quantum){
+void RoundRobin(Process *head, int quantum)
+{
     printf("ROUND ROBIN PROCESS\n");
 }
+
+/* 
+    Function to dispose of linked list memory
+
+    INPUT: 
+        head of linked list.
+*/
+
+// void disposeList(Process *head){
+
+//     Process *cursor = head,*temp;
+
+//     while (cursor!= NULL){
+//         temp = cursor ->next;
+//         free(cursor);
+//         cursor = temp;
+//     }
+// }
