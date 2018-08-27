@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 /*
     CREATE STRUCT OF PROCESS TYPE. CHANGED STRUCT TYPE SO THAT 
     DATA IS SIMPLE ARRAY FOR SAKE OF PASSING ARGUMENTS FOR
@@ -171,15 +172,60 @@ Process *CopyList(Process *head)
 }
 
 /*
-    Function to sort given linked list.
+    Function to Return the head of a copy of linked list, but sorted.
+    Weird implementation of insertion sort.
 
     INPUT:
-        head pointer of list
-        function pointer, in order to psas arbitrary parameters.
+        Head pointer of linked list
+        criteria for the sorting of the list
+
+    Output:
+        Copied Linked list head.
 */
-void SortList(Process *head, void (*sort)())
+Process *CopySortedList(Process *head,int TYPE)
 {
-    printf("SORT LINKED LIST\n");
+    Process *head_copy=NULL,
+            *cursor = head,
+            *cursor_copy;
+   //Check if list is empty
+    if (head == NULL) {
+        return NULL;
+    } else{
+        //repeat while there are elements in original list
+        while(cursor != NULL){
+            //Since list is not empty, check if copied element is first
+            if(head_copy == NULL){
+                first_Node(head_copy, cursor -> data);
+            }else{ // not first element of new list, have to check position.
+                cursor_copy = head_copy; // Initialize cursor of copy to head of copied list
+                while(cursor_copy != NULL){ // ITERATE OVER COPY LOOP
+                    
+                    if (cursor_copy == head_copy) {//check if smaller than first element
+                        if(cursor->data[TYPE] < cursor_copy->data[TYPE]){
+                            first_Node(head_copy,cursor->data);
+                        } 
+                    }
+                    else {
+                        if (cursor_copy->next == NULL) {
+                            appendProcess(head_copy,cursor->data);
+                        }
+                        else if(cursor->data[TYPE] < cursor_copy->next->data[TYPE])
+                        {
+                            
+                        }
+                        
+                        
+                    }
+                    
+                    
+                    cursor_copy = cursor_copy ->next; //go to next elements
+                }
+            }
+            cursor = cursor ->next; // Iterate over list
+        }
+        
+    }
+    
 }
 
 /*
@@ -245,6 +291,7 @@ void Preemptive(Process *head, int TYPE)
 void RoundRobin(Process *head, int quantum)
 {
     printf("ROUND ROBIN PROCESS\n");
+    Process *head_copy = CopyList(head);
 }
 
 /* 
@@ -254,13 +301,13 @@ void RoundRobin(Process *head, int quantum)
         head of linked list.
 */
 
-// void disposeList(Process *head){
+/* void disposeList(Process *head){
 
-//     Process *cursor = head,*temp;
+    Process *cursor = head,*temp;
 
-//     while (cursor!= NULL){
-//         temp = cursor ->next;
-//         free(cursor);
-//         cursor = temp;
-//     }
-// }
+    while (cursor!= NULL){
+        temp = cursor ->next;
+        free(cursor);
+        cursor = temp;
+    }
+} */
