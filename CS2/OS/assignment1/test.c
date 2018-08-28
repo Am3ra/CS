@@ -25,6 +25,7 @@ int main(int argc, char const *argv[])
     head_copy = CopySortedList(head_copy,2);
     printf("FINAL\n\n\n");
     traverse(head_copy);
+    printf("%d\n",head_copy->response);
 
     return (0);
 }

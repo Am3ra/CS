@@ -1,7 +1,6 @@
-#include <stdio.h>
+#include <stdio.h> //printf
 #include <stdlib.h>
-
-
+#include <stdbool.h> //Used for boolean values
 /*
     CREATE STRUCT OF PROCESS TYPE. CHANGED STRUCT TYPE SO THAT 
     DATA IS SIMPLE ARRAY FOR SAKE OF PASSING ARGUMENTS FOR
@@ -180,7 +179,7 @@ Process *CopyList(Process *head){
 
 /*
     Function to Return the head of a copy of linked list, but sorted.
-    Weird implementation of insertion sort.
+    kinda Weird implementation of insertion sort.
 
     INPUT:
         Head pointer of linked list
@@ -190,7 +189,11 @@ Process *CopyList(Process *head){
         Copied Linked list head.
 
     usage:
-        head = copy(head, sorting_criteria)
+        head = copy(head, sorting_criteria);
+
+    TODO:
+        Account for when they are eaqual (tiebreaker/PID);
+        Delete original list in order to reduce memory usage
 */
 Process *CopySortedList(Process *head,int TYPE)
 {
@@ -247,9 +250,32 @@ Process *CopySortedList(Process *head,int TYPE)
         Make copy of linked list in order to be able to modify it 
         without risk of affecting other processes.
 */
-void FirstCome(Process *head)
+void FirstCome(Process *head_original)
 {
-    printf("(FCFS)SORT BY ARRIVAL_TIME, THEN PROCESS\n");
+    printf("(FCFS):\n");
+    Process *head = CopySortedList(head_original,ARRIVAL_TIME); // sort by ARRIVAL TIME
+    int cycle_counter;          //Count cycles to find response time
+    bool complete = false;      //Check if all processes are complete
+    bool processed = false;     //Check if a process has been... processed that cycle.
+
+    
+    while(!complete){
+        complete = true;        //Assume that all are complete until proven otherwise
+        Process *cursor = head;
+        
+        while(cursor != NULL){  //Iterate over all processes to add waiting time if necessary, or reduce CPU Burst
+            if (cursor->data[CPU_BURST]>0)
+            {
+                complete = false;   //prove that at least one process is incomplete
+                if (processed == false)
+                {
+                    processed = true;
+                }
+            }
+        }
+        
+    }
+    
 }
 
 /*
@@ -300,7 +326,6 @@ void Preemptive(Process *head, int TYPE)
 void RoundRobin(Process *head, int quantum)
 {
     printf("ROUND ROBIN PROCESS\n");
-    Process *head_copy = CopyList(head);
 }
 
 /* 
