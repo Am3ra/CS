@@ -101,6 +101,10 @@ int traverse(Process *head)
 /*
     Function to insert node at beginning of List.
     Functionally similar to the create function.
+
+    usage:
+
+    head = first_Node(head,data);
 */
 Process *first_Node(Process *head, int data[4]){
     return create(data, head);
@@ -145,8 +149,7 @@ void insertNodeAfter(Process *node, int data[4])
     Output:
         Copied Linked list head.
 */
-Process *CopyList(Process *head)
-{
+Process *CopyList(Process *head){
     Process *copy_head = NULL;
     Process *cursor = head;
     int count = 0;
@@ -185,6 +188,9 @@ Process *CopyList(Process *head)
 
     Output:
         Copied Linked list head.
+
+    usage:
+        head = copy(head, sorting_criteria)
 */
 Process *CopySortedList(Process *head,int TYPE)
 {
@@ -192,7 +198,6 @@ Process *CopySortedList(Process *head,int TYPE)
             *cursor = head,
             *cursor_copy;
     printf("ORIGINAL:\n");
-    traverse(head); 
     //Check if list is empty
     if (head == NULL) {
         printf("NULL ORIGINAL HEAD\n");
@@ -205,35 +210,26 @@ Process *CopySortedList(Process *head,int TYPE)
             data[ARRIVAL_TIME] = cursor->data[ARRIVAL_TIME];
             data[CPU_BURST] = cursor->data[CPU_BURST];
             data[PRIORITY] = cursor->data[PRIORITY];
-            printf("%d,%d,%d,%d\n", data[PID], data[ARRIVAL_TIME], data[CPU_BURST], data[PRIORITY]);
             //Since list is not empty, check if copied element is first
+            cursor_copy = head_copy;
             if(head_copy == NULL){
-                printf("NULL COPY HEAD\n");
                 head_copy = first_Node(head_copy, data);
-                // traverse(head_copy);
             }
             else{ // not first element of new list, have to check position.
-                printf("NEW LIST PARTIAL\n");
-                traverse(head_copy);
-                // cursor_copy = head_copy; // Initialize cursor of copy to head of copied list
-                // while(cursor_copy != NULL){ // ITERATE OVER COPY LOOP
-                //     if (cursor_copy == head_copy) {//check if smaller than first element
-                //         if(cursor->data[TYPE] < cursor_copy->data[TYPE]){
-                //             first_Node(head_copy,data);
-                //         } 
-                //     }
-                //     else {
-                //         if (cursor_copy->next == NULL) {
-                //             appendProcess(head_copy,data);
-                //             break;
-                //         }
-                //         else if(cursor->data[TYPE] < cursor_copy->next->data[TYPE])
-                //         {
-                //             insertNodeAfter(cursor_copy,data);
-                //         }
-                //     }
-                //     cursor_copy = cursor_copy ->next; //go to next elements
-                // }
+                while(cursor_copy!=NULL){
+                    if (head_copy == cursor_copy && cursor ->data[TYPE] <cursor_copy->data[TYPE]) {
+                        head_copy = first_Node(head_copy,data);
+                        break;
+                    } else if(cursor_copy ->next == NULL){
+                        appendProcess(head_copy,data);
+                        break;
+                    }
+                    else if (cursor->data[TYPE] < cursor_copy->next->data[TYPE]){
+                        insertNodeAfter(cursor_copy,data);
+                        break;
+                    }
+                    cursor_copy = cursor_copy ->next;
+                }
             }
             cursor = cursor ->next; // Iterate over list
         }

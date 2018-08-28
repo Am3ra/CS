@@ -2,7 +2,7 @@
 
 int main(int argc, char const *argv[])
 {
-    int a[4] = {1,2,3,4},b[4]={5,6,7,8},c[4]={9,10,11,12};
+    int a[4] = {10,22,4},b[4]={5,11,7,8},c[4]={9,12,11,12};
     Process *head = NULL;
     head = first_Node(head,a);
     appendProcess(head,b);
@@ -12,7 +12,7 @@ int main(int argc, char const *argv[])
     
     while(cursor != NULL){
         
-        if (cursor->data[PID]==1) {
+        if (cursor->data[PID]==10) {
             insertNodeAfter(cursor,c);
             break;
         }
@@ -22,7 +22,9 @@ int main(int argc, char const *argv[])
     
     traverse(head_copy);
 
-    head_copy = CopySortedList(head_copy,1);
+    head_copy = CopySortedList(head_copy,2);
+    printf("FINAL\n\n\n");
+    traverse(head_copy);
 
     return (0);
 }
