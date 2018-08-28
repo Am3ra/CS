@@ -79,6 +79,12 @@ int traverse(Process *head)
     printf("TRAVERSE INITIATED\n");
     Process *cursor = head;
     int c = 0;
+    
+    if (head == NULL) {
+        printf("NULL HEAD\n");
+        return 0;
+    }
+    
     while (cursor != NULL){
         printf("index %d: (PID,%d), (ARRIVAL_TIME,%d), (CPU_BURST,%d),(PRIORITY,%d)\n",
                c,
@@ -187,45 +193,52 @@ Process *CopySortedList(Process *head,int TYPE)
     Process *head_copy=NULL,
             *cursor = head,
             *cursor_copy;
-   //Check if list is empty
+    printf("ORIGINAL:\n");
+    traverse(head); 
+    //Check if list is empty
     if (head == NULL) {
+        printf("NULL ORIGINAL HEAD\n");
         return NULL;
     } else{
         //repeat while there are elements in original list
         while(cursor != NULL){
+            int data[4];
+            data[PID] = cursor->data[PID];
+            data[ARRIVAL_TIME] = cursor->data[ARRIVAL_TIME];
+            data[CPU_BURST] = cursor->data[CPU_BURST];
+            data[PRIORITY] = cursor->data[PRIORITY];
+            cursor = cursor->next;
             //Since list is not empty, check if copied element is first
             if(head_copy == NULL){
-                first_Node(head_copy, cursor -> data);
+                printf("NULL COPY HEAD\n");
+                first_Node(head_copy, data);
             }else{ // not first element of new list, have to check position.
+                printf("NEW LIST PARTIAL\n");
+                traverse(head_copy);
                 cursor_copy = head_copy; // Initialize cursor of copy to head of copied list
                 while(cursor_copy != NULL){ // ITERATE OVER COPY LOOP
-                    
                     if (cursor_copy == head_copy) {//check if smaller than first element
                         if(cursor->data[TYPE] < cursor_copy->data[TYPE]){
-                            first_Node(head_copy,cursor->data);
+                            first_Node(head_copy,data);
                         } 
                     }
                     else {
                         if (cursor_copy->next == NULL) {
-                            appendProcess(head_copy,cursor->data);
+                            appendProcess(head_copy,data);
+                            break;
                         }
                         else if(cursor->data[TYPE] < cursor_copy->next->data[TYPE])
                         {
-                            
+                            insertNodeAfter(cursor_copy,data);
                         }
-                        
-                        
                     }
-                    
-                    
                     cursor_copy = cursor_copy ->next; //go to next elements
                 }
             }
             cursor = cursor ->next; // Iterate over list
         }
-        
     }
-    
+    return head_copy;
 }
 
 /*
