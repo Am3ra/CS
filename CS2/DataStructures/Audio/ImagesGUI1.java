@@ -85,6 +85,7 @@ public class ImagesGUI1 extends JFrame implements ActionListener
         // 4. Adicionar el panelPrincipal al JFrame
         add(panelPrincipal);
         setSize(800,400);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
     }
     

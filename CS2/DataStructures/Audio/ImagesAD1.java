@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 import javax.swing.ImageIcon;
@@ -9,85 +10,40 @@ import javax.swing.ImageIcon;
 public class ImagesAD1
 {
     private BufferedReader archivoIn;
-    
-    private ImageIcon imagenesAlbums[];
-    private String albums;
-    private String albumsImages[];
+    private ImageIcon imageAlbums[];
+    private String results[];
 
-    public void consultarClientes() {
-        String datos = "";
-        lnNumber = 0;
+    
+    
+    
+    public ImageIcon[] obtenerImagenesAlbums(String artista) {
+        String temp="",datos="";
         try {
             // 1.Abrir el archivo
-            archivoIn = new BufferedReader(new FileReader("Clientes.txt"));
+            archivoIn = new BufferedReader(new FileReader("Albums.txt"));
             // 2. Obtener los datos del archivo
             while (archivoIn.ready()) {
-                datos += archivoIn.readLine() + "\n";
+                temp = archivoIn.readLine();
+                if(temp.split("_")[0].equals(artista)){
+                    datos+=temp.split("_")[1]+"\n";
+                    System.out.println(datos);
+                }
             }
             // 3. Cerrar el archivo
             archivoIn.close();
         } catch (Exception ioe) {
             System.out.println("Error:" + ioe);
         }
-        // 4.Entregar los datos.
-        albums = datos; 
-    }
-    
-    // public String consultar(String grupo) {
-    //     String str = "";
-    //     String datos = "";
-    //     String nocta = "";
-    //     boolean encontrado = false;
-    //     StringTokenizer st;
-    //     int i = 0;
+        results = datos.split("\n");
+        System.out.println(Arrays.toString(results));
+        //Abrir archivo
+        imageAlbums = new ImageIcon[results.length];
 
-    //     if (arrayClientes == null) {
-    //         return "Arreglo no inicializado / null";
-    //     }
-
-    //     while (i < arrayClientes.length && !encontrado) {
-    //         str = arrayClientes[i];
-    //         st = new StringTokenizer(str, "_");
-    //         nocta = st.nextToken();
-    //         if (ncta.equals(nocta)) {
-    //             posicion = i;
-    //             System.err.println("posicion : " + posicion);
-    //             encontrado = true;
-    //         }
-    //         i++;
-    //         datos = str;
-    //     }
-    //     if (!encontrado) {
-    //         return "NO_LOCALIZADO";
-    //     }
-    //     return datos;
-    // }
-    public ImageIcon[] obtenerImagenesAlbums(String artista)
-    {
-        String albumFinal[],temp="";
-        StringTokenizer st;
-        int numeroAlbums=0;
-        int i=0;
-        
-        String albumsArray[] = albums.split("\n");
-        
-        for (String j : albumsArray) {
-            if(j.split("_")[0].equals(artista)){
-                temp += j.split("_")[1]+"_";
-            }
+        for (int i = 0; i < imageAlbums.length; i++) {
+            // System.out.println(vAlbums.get(i).toString()+"1");
+            imageAlbums[i] = new ImageIcon(getClass().getResource("images/" + results[i] + ".jpg"));
         }
-        ImageIcon imagenesAlbums = new ImageIcon[temp.split("_").length-1];
-
-        for (i = 0 ; i<temp.split("_").length-1;i++) {
-            try {
-                imagenesAlbums[i] = new ImageIcon("images/"+temp.split("_")[i]);
-            } catch (Exception e) {
-                System.out.println(e.toString);
-            }
-        }
-        
-
-        return imagenesAlbums;
+        return imageAlbums;
     }
     
 }
