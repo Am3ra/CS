@@ -6,7 +6,7 @@ int main(int argc, char const *argv[])
     Process *head = NULL;
     head = first_Node(head,a);
     appendProcess(head,b);
-    // traverse(head);
+    traverse(head);
     Process *head_copy = CopyList(head);
     Process *cursor = head_copy;
     
