@@ -1,52 +1,100 @@
-public class ClienteDP {
-    private String nocta, nombre,tipo;
-    private int saldo;
-    private ClienteDP next;
+import java.util.StringTokenizer;
 
-    public ClienteDP(){
+public class ClienteDP
+{
+    // Atributos
+    private String nocta, nombre, tipo;
+    private int saldo;
+    
+    private ClienteDP next;
+    
+    // Constructores
+    public ClienteDP()
+    {
         this.nocta  = "";
         this.nombre = "";
         this.tipo   = "";
         this.saldo  = 0;
-        this.next   = null;
-    }
-
-    public CLineteDP(String datos){
-        String[] st = datos.split("_");
-        this.nocta  = st[0];
-        this.nombre = st[1];
-        this.tipo   = st[2];
-        this.saldo  = Integer.parseInt(st[3]);
+        
+        this.next  = null;
     }
     
-    public String getNocta() {
+    public ClienteDP(String datos)
+    {
+        StringTokenizer st = new StringTokenizer(datos,"_");
+        
+        this.nocta  = st.nextToken();
+        this.nombre = st.nextToken();
+        this.tipo   = st.nextToken();
+        this.saldo  = Integer.parseInt(st.nextToken());
+    }
+    
+    // Metodos: Accesors (geters) y Mutators (seters)
+    public String getNocta()
+    {
         return this.nocta;
     }
-    public String getNombre() {
+    
+    public String getNombre()
+    {
         return this.nombre;
     }
-    public String getTipo() {
+    
+    public String getTipo()
+    {
         return this.tipo;
     }
-    public int getSaldo() {
+    
+    public int getSaldo()
+    {
         return this.saldo;
     }
-    public ClienteDP getNext() {
+    
+    public ClienteDP getNext()
+    {
         return this.next;
     }
-    public void setNocta(String nocta) {
-        this.nocta = nocta;
+    
+    // Mutators
+    public void setNocta(String cta)
+    {
+        this.nocta = cta;
     }
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    
+    public void setNombre(String name)
+    {
+        this.nombre = name;
     }
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    
+    public void setTipo(String tcta)
+    {
+        this.tipo = tcta;
     }
-    public void setSaldo(int saldo) {
-        this.saldo = saldo;
+    
+    public void setSaldo(int cantidad)
+    {
+        this.saldo = cantidad;
     }
-    public void setNext(ClienteDP next) {
-        this.next = next;
+    
+    public void setNext(ClienteDP nodo)
+    {
+        this.next = nodo;
+    }
+    
+    public String toString()
+    {
+        return this.nocta+"_"+this.nombre+"_"+this.tipo+"_"+this.saldo;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+

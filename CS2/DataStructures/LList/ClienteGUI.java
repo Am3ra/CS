@@ -14,19 +14,19 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ClienteGUI1 extends JFrame implements ActionListener
+public class ClienteGUI extends JFrame implements ActionListener
 {
     private JTextField tfNocta, tfNombre, tfTipo, tfSaldo;
-    private JButton    bCapturar, bConsultar, bSalir;
+    private JButton    bCapturar, bConsultar, bSalir, bConsultarNocta;
     
     private JPanel     panel1, panel2;
     private JTextArea  taDatos;
     private JComboBox comboCuentas;
     private String opcionesCuenta[] = {"INVERSION","CREDITO","AHORRO","HIPOTECA"};
     
-    //private BancoAD bancoad = new BancoAD();
+    private BancoAD bancoad = new BancoAD();
     
-    public ClienteGUI1()
+    public ClienteGUI()
     {
         super("BANCO VB CITY LL");
         
@@ -37,6 +37,7 @@ public class ClienteGUI1 extends JFrame implements ActionListener
         tfSaldo  = new JTextField();
         bCapturar = new JButton("Capturar datos (LList)");
         bConsultar = new JButton("Consultar Clientes (LList)");
+        bConsultarNocta = new JButton("Consultar Nocta (LList)");
         bSalir = new JButton("Exit");
         panel1 = new JPanel();
         panel2 = new JPanel();
@@ -46,6 +47,7 @@ public class ClienteGUI1 extends JFrame implements ActionListener
         // Adicionar addActionListener a lo JButtons
         bCapturar.addActionListener(this);
         bConsultar.addActionListener(this);
+        bConsultarNocta.addActionListener(this);
         bSalir.addActionListener(this);
         
         // 2. Definir los Layouts de los JPanels
@@ -65,6 +67,7 @@ public class ClienteGUI1 extends JFrame implements ActionListener
         panel1.add(bCapturar);
         panel1.add(bConsultar);
         panel1.add(bSalir);
+        panel1.add(bConsultarNocta);
         
         panel2.add(panel1);
         panel2.add(new JScrollPane(taDatos));
@@ -119,32 +122,41 @@ public class ClienteGUI1 extends JFrame implements ActionListener
                 if(datos.equals("NO_NUMERICO"))
                     respuesta = "Saldo debe ser numerico...";
                 else
-                    //respuesta = bancoad.capturar(datos);
-                    respuesta = datos;
+                    respuesta = bancoad.capturar(datos);
+                    //respuesta = datos;
             
             // 3. Desplegar esultado de transaccion
             taDatos.setText(respuesta);
         }
         
-        if(e.getSource() == bConsultar)
+        else if(e.getSource() == bConsultar)
         {
             // 1. Realizar consulta de clientes
-            //datos = bancoad.consultarClientes();
+            datos = bancoad.consultarClientes();
             
             // 2. Desplegar datos
-            //taDatos.setText(datos);
-            taDatos.setText("Consultar Clientes ...");
+            taDatos.setText(datos);
+            //taDatos.setText("Consultar Clientes ...");
         }
-        
-        if(e.getSource() == bSalir)
+        else if(e.getSource() == bConsultarNocta)
         {
+            // 1. Realizar consulta de clientes
+            datos = bancoad.consultarNocta(tfNocta.getText());
+            
+            // 2. Desplegar datos
+            taDatos.setText(datos);
+            //taDatos.setText("Consultar Clientes ...");
+        }
+        else if(e.getSource() == bSalir)
+        {
+            bancoad.datosListaArchivo();
             System.exit(0);
         }
     }
     
     public static void main(String args[])
     {
-        new ClienteGUI1();
+        new ClienteGUI();
     }
 }
 
