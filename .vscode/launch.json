@@ -13,13 +13,13 @@
             "MIMode": "lldb"
         },
         {
-            "name": "(lldb) Launch",
+            "name": "(lldb) Launch a.out",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/Users/macbookpro/Documents/CS/CS101/C++/a.out",
-            "args": [],
+            "program": "/Users/macbookpro/Documents/ITESM/Assignment1/a.out",
+            "args": ["process4.txt"],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "/Users/macbookpro/Documents/ITESM/Assignment1/",
             "environment": [],
             "externalConsole": true,
             "MIMode": "lldb"
