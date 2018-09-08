@@ -56,7 +56,6 @@
 #define NUMPARAMS 2
 #define NUMVAL    4
 
-
 /***********************************************************************
  *                          Main entry point                           *
  **********************************************************************/
@@ -100,10 +99,10 @@ int main (int argc, const char * argv[]) {
                     /* Do we have four parameters? */
                     if (i == NUMVAL) {
                         if (element_num==0){ //IF FIRST ELEMENT, INITIALIZE HEAD
-                            head = first_Node(head,parameters);
+                            head = FirstNode(head,parameters);
                         }
                         else 
-                            appendProcess(head,parameters); //ELSE APPEND TO END OF LIST
+                            AppendProcess(head,parameters); //ELSE APPEND TO END OF LIST
                         element_num++;
                     }
                 }
@@ -128,10 +127,11 @@ int main (int argc, const char * argv[]) {
         Preemptive(head, CPU_BURST);
         
         RoundRobin(head, quantum);
+
         
-        printf("TRYING TO TRAVERSE\n");
-        int count = traverse(head);
-        printf("%d\n",count);
+        // int count = Traverse(head);
+        DestroyList(head);
+        // printf("%d\n",count);
         printf("Program terminated correctly\n");
         return (EXIT_SUCCESS);
     }
