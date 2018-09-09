@@ -140,7 +140,7 @@ void PrintResults(char message[], Process *head)
             // printf("cursor: wait:%2d, response:%d\n",cursor->wait,cursor->response-1);
             cursor = cursor->next;
         }
-        printf("wait: %d, count:%d,response:%d\n",wait,count,response);
+        printf("wait: %d, count:%d,response:%d\n", wait, count, response);
         printf("AVG. WAIT   :%2.2f\n", ((float)wait / (float)(count)));
         printf("AVG RESPONSE:%2.2f\n\n\n", (float)response / (float)(count));
     }
@@ -434,6 +434,7 @@ void NonPreemptive(Process *head, int TYPE)
         {
             complete = true; //Assume complete until proven otherwise.
             processed = false;
+            copy_head = SortList(copy_head,TYPE);
             cursor = copy_head;
             // printf("NEW LOOP\n\n\n");
             while (cursor != NULL)
@@ -467,21 +468,21 @@ void NonPreemptive(Process *head, int TYPE)
 
     switch (TYPE)
     {
-    case ARRIVAL_TIME:
-        PrintResults("NON-PREEMPTIVE SORTED ARRIVAL TIME RESULTS:", copy_head);
-        break;
-    case CPU_BURST:
-        PrintResults("NON-PREEMPTIVE SHORTEST JOB FIRST RESULTS:", copy_head);
-        break;
-    case PRIORITY:
-        PrintResults("NON-PREEMPTIVE PRIORITY SORTED RESULTS:", copy_head);
-        break;
-    case PID:
-        PrintResults("NON-PREEMPTIVE PID SORT RESULTS:", copy_head);
-        break;
+        case ARRIVAL_TIME:
+            PrintResults("NON-PREEMPTIVE SORTED ARRIVAL TIME RESULTS:", copy_head);
+            break;
+        case CPU_BURST:
+            PrintResults("NON-PREEMPTIVE SHORTEST JOB FIRST RESULTS:", copy_head);
+            break;
+        case PRIORITY:
+            PrintResults("NON-PREEMPTIVE PRIORITY SORTED RESULTS:", copy_head);
+            break;
+        case PID:
+            PrintResults("NON-PREEMPTIVE PID SORT RESULTS:", copy_head);
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 
     DestroyList(copy_head);
@@ -497,6 +498,10 @@ void NonPreemptive(Process *head, int TYPE)
 void Preemptive(Process *head, int TYPE)
 {
     Process *copy_head = SortList(CopyList(head), TYPE);
+    Process *cursor;
+    int cycle = 0;
+    bool complete = false,
+        processed = false;
 
     if (head == NULL)
     {
@@ -504,24 +509,59 @@ void Preemptive(Process *head, int TYPE)
     }
     else
     {
-
+        
+        while(!complete){
+            complete = true; //assume complete until told otherwise
+            processed= false;
+            copy_head = SortList(copy_head,TYPE);
+            cursor = copy_head;
+            // printf("CYCLE: %2d\n",cycle);
+            while(cursor!= NULL){
+                // PrintNode(cursor);
+                if (cursor->data[CPU_BURST]>0) { //note that >0 is probably not needed. hmm.
+                    complete = false;
+                    if (cursor->data[ARRIVAL_TIME] <= cycle)
+                    {
+                        if (!processed)
+                        {
+                            processed = true;
+                            if (!cursor->response)
+                                cursor->response = cycle + 1;
+                            cycle ++;
+                            cursor->data[CPU_BURST]--;
+                        }else if(cursor->data[ARRIVAL_TIME] < cycle){
+                            cursor->wait ++;
+                        }
+                    }
+                }
+                
+                cursor = cursor->next;
+            }
+            
+            if (!complete && !processed) {
+                cycle++;
+            }
+            
+            
+        }
+        
         switch (TYPE)
         {
-        case ARRIVAL_TIME:
-            PrintResults("PREEMPTIVE SORTED BY  ARRIVAL TIME RESULTS:", copy_head);
-            break;
-        case CPU_BURST:
-            PrintResults("PREEMPTIVE SHORTEST JOB FIRST RESULTS:", copy_head);
-            break;
-        case PRIORITY:
-            PrintResults("PREEMPTIVE PRIORITY SORTED RESULTS:", copy_head);
-            break;
-        case PID:
-            PrintResults("PREEMPTIVE PID SORT RESULTS:", copy_head); //should not be necessary, but there in case.
-            break;
+            case ARRIVAL_TIME:
+                PrintResults("PREEMPTIVE SORTED BY  ARRIVAL TIME RESULTS:", copy_head);
+                break;
+            case CPU_BURST:
+                PrintResults("PREEMPTIVE SHORTEST JOB FIRST RESULTS:", copy_head);
+                break;
+            case PRIORITY:
+                PrintResults("PREEMPTIVE PRIORITY SORTED RESULTS:", copy_head);
+                break;
+            case PID:
+                PrintResults("PREEMPTIVE PID SORT RESULTS:", copy_head); //should not be necessary, but there in case.
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
     }
 
@@ -539,7 +579,22 @@ void RoundRobin(Process *head, int quantum)
 {
     // printf("ROUND ROBIN PROCESS\n");
     Process *copy_head = SortList(CopyList(head), ARRIVAL_TIME);
+    Process *cursor;
+    bool complete = false,
+        processed = false;
 
-    PrintResults("ROUND ROBIN RESULTS:", head);
+    
+    if (copy_head == NULL) {
+        printf("NULL HEAD ROUND ROBIN\n");
+    } else{
+        while(!complete){
+            complete = true;
+
+        }
+        
+        PrintResults("ROUND ROBIN RESULTS:", head);
+    }
+    
+
     DestroyList(copy_head);
 }
