@@ -42,7 +42,7 @@ enum attributes
 */
 Process *Create(int data[4], Process *next)
 {
-    Process *new_process = (Process *)calloc(1, sizeof(Process));
+    Process *new_process = (Process *)calloc(1, sizeof(Process)); //changed from malloc. Proud of finding this error!
     if (new_process == NULL)
     {
         printf("ERROR NEW PROCESS");
@@ -69,9 +69,6 @@ Process *Create(int data[4], Process *next)
     NOTES:  for debugging purposes, it is possible to call
             the function without assigning the returned
             value to anything.
-
-    WARNING:
-            WILL RETURN SEGFAULT IF HEAD NOT INITIALIZED
 */
 int Traverse(Process *head)
 {
@@ -87,24 +84,27 @@ int Traverse(Process *head)
         printf("NULL HEAD\n");
         return 0;
     }
-
-    while (cursor != NULL)
+    else
     {
+
+        while (cursor != NULL)
+        {
 #ifdef DEBUG
 
-        printf("index %d: (PID,%d), (ARRIVAL_TIME,%d), (CPU_BURST,%d),(PRIORITY,%d),(WAIT,%d),(RESPONSE,%d)\n",
-               c,
-               cursor->data[PID],
-               cursor->data[ARRIVAL_TIME],
-               cursor->data[CPU_BURST],
-               cursor->data[PRIORITY],
-               cursor->wait,
-               cursor->response);
+            printf("index %d: (PID,%d), (ARRIVAL_TIME,%d), (CPU_BURST,%d),(PRIORITY,%d),(WAIT,%d),(RESPONSE,%d)\n",
+                   c,
+                   cursor->data[PID],
+                   cursor->data[ARRIVAL_TIME],
+                   cursor->data[CPU_BURST],
+                   cursor->data[PRIORITY],
+                   cursor->wait,
+                   cursor->response);
 #endif //DEBUG
-        cursor = cursor->next;
-        c++;
+            cursor = cursor->next;
+            c++;
+        }
+        return c;
     }
-    return c;
 }
 
 /*
@@ -133,14 +133,12 @@ void PrintResults(char message[], Process *head)
     {
         while (cursor != NULL)
         {
-            // printf("now: %d, Cursor: %d\n",response,cursor->response);
             wait += cursor->wait;
             response += cursor->response - 1;
             count++;
-            // printf("cursor: wait:%2d, response:%d\n",cursor->wait,cursor->response-1);
             cursor = cursor->next;
         }
-        printf("wait: %d, count:%d,response:%d\n", wait, count, response);
+        printf("FOR: %2d PROCESSES\n", count);
         printf("AVG. WAIT   :%2.2f\n", ((float)wait / (float)(count)));
         printf("AVG RESPONSE:%2.2f\n\n\n", (float)response / (float)(count));
     }
@@ -170,7 +168,7 @@ void DestroyList(Process *head)
     Function to insert node at beginning of List.
     Functionally similar to the Create function.
 
-    usage:
+    usage example:
 
     head = FirstNode(head,data);
 */
@@ -245,20 +243,6 @@ void PrintNode(Process *node)
            node->response);
 }
 
-/*
-    Function to sort list in place without copying it.
-    Since already did a strange implementation of insertion sort,
-    it was time to do a strange implementarion of bubble sort.
-
-    INPUT:
-        Linked List head.
-    
-    NOTE: 
-        Since it sorts in place, it doesn't have an output, and as such
-        it does not need to be assigned to anything, unlike the 
-        CopySortedList function, or FirstNode.
-*/
-
 /**
  * Function to sort Linked List in place.
  * Since already did a strange implementation of insertion sort,
@@ -266,9 +250,6 @@ void PrintNode(Process *node)
  * @param  *head: head of Linked List.
  * @retval None
  * @see CopySortedList()
- * 
- * TODO: ACCOUNT FOR SAME NUMBER CASES (data1[type]==data2[type])
- * 
  */
 Process *SortList(Process *head, int TYPE)
 {
@@ -285,12 +266,11 @@ Process *SortList(Process *head, int TYPE)
         cursor = head;
         a = cursor->next;
         b = cursor->next->next;
-        sorted = true;
-        // printf("%d, TESTING %d, %d,%d\n", cursor->data[TYPE], cursor->next->data[TYPE], cursor == head, cursor->data[TYPE] > cursor->next->data[TYPE]);
+        sorted = true; //Assume sorted until proved otherwise.
         if (cursor == head)
         {
             if ((cursor->data[TYPE] > cursor->next->data[TYPE]))
-            {
+            { //Compare elements, and swap if first larger than second
                 sorted = false;
                 head = SwapNodes(head);
                 cursor = head;
@@ -298,7 +278,7 @@ Process *SortList(Process *head, int TYPE)
                 b = cursor->next->next;
             }
             else if (cursor->data[TYPE] == cursor->next->data[TYPE])
-            {
+            { //if equal, check PID then swap if necessary.
                 if (cursor->data[PID] > cursor->next->data[PID])
                 {
                     sorted = false;
@@ -391,15 +371,14 @@ void FirstCome(Process *head_original)
     {
         while (cursor != NULL)
         {
-            while (cycle_counter < cursor->data[ARRIVAL_TIME])
+            while (cycle_counter < cursor->data[ARRIVAL_TIME]) //This is useful in event of gaps
             {
                 cycle_counter++;
             }
 
             cursor->wait = cycle_counter - cursor->data[ARRIVAL_TIME];
             cursor->response = cycle_counter + 1;
-            cycle_counter += cursor->data[CPU_BURST];
-            // PrintNode(cursor);
+            cycle_counter += cursor->data[CPU_BURST]; //assumes that the process finishes.
             cursor = cursor->next;
         }
 
@@ -417,7 +396,6 @@ void FirstCome(Process *head_original)
 */
 void NonPreemptive(Process *head, int TYPE)
 {
-    // printf("(NP)SORT BY TYPE THEN PROCESS\n");
     Process *copy_head = SortList(CopyList(head), TYPE);
     Process *cursor;
     int cycle = 0;
@@ -426,32 +404,29 @@ void NonPreemptive(Process *head, int TYPE)
 
     if (head == NULL)
     {
-        printf("NULL HEAD NON PREEMPTIVE FUNCTION\n");
+        printf("NULL HEAD: NON PREEMPTIVE FUNCTION\n");
     }
     else
     {
         while (!complete)
         {
-            complete = true; //Assume complete until proven otherwise.
-            processed = false;
-            copy_head = SortList(copy_head,TYPE);
+            complete = true;   //Assume complete until proven otherwise.
+            processed = false; //Assume none processed.
+            copy_head = SortList(copy_head, TYPE);
             cursor = copy_head;
-            // printf("NEW LOOP\n\n\n");
             while (cursor != NULL)
             {
-                // printf("%d, CYCLE\n",cycle);
-                // PrintNode(cursor);
-                if (cursor->data[CPU_BURST] > 0)
+                if (cursor->data[CPU_BURST]) //Check if not complete
                 {
                     complete = false;
-                    if (cursor->data[ARRIVAL_TIME] <= cycle)
+                    if (cursor->data[ARRIVAL_TIME] <= cycle) //check if already arrived
                     {
-                        if (!processed)
+                        if (!processed) //check if no other process processed.
                         {
                             processed = true;
-                            cursor->response = cycle + 1;
+                            cursor->response = cycle + 1; //+1 is there to make sure none is 0
                             cursor->wait = cycle - cursor->data[ARRIVAL_TIME];
-                            cycle += cursor->data[CPU_BURST];
+                            cycle += cursor->data[CPU_BURST]; //Assume process is completed
                             cursor->data[CPU_BURST] = 0;
                         }
                     }
@@ -459,7 +434,7 @@ void NonPreemptive(Process *head, int TYPE)
 
                 cursor = cursor->next;
             }
-            if (!complete && !processed)
+            if (!complete && !processed) //check for gaps.
             {
                 cycle++;
             }
@@ -468,21 +443,21 @@ void NonPreemptive(Process *head, int TYPE)
 
     switch (TYPE)
     {
-        case ARRIVAL_TIME:
-            PrintResults("NON-PREEMPTIVE SORTED ARRIVAL TIME RESULTS:", copy_head);
-            break;
-        case CPU_BURST:
-            PrintResults("NON-PREEMPTIVE SHORTEST JOB FIRST RESULTS:", copy_head);
-            break;
-        case PRIORITY:
-            PrintResults("NON-PREEMPTIVE PRIORITY SORTED RESULTS:", copy_head);
-            break;
-        case PID:
-            PrintResults("NON-PREEMPTIVE PID SORT RESULTS:", copy_head);
-            break;
+    case ARRIVAL_TIME:
+        PrintResults("NON-PREEMPTIVE SORTED ARRIVAL TIME RESULTS:", copy_head);
+        break;
+    case CPU_BURST:
+        PrintResults("NON-PREEMPTIVE SHORTEST JOB FIRST RESULTS:", copy_head);
+        break;
+    case PRIORITY:
+        PrintResults("NON-PREEMPTIVE PRIORITY SORTED RESULTS:", copy_head);
+        break;
+    case PID:
+        PrintResults("NON-PREEMPTIVE PID SORT RESULTS:", copy_head);
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     DestroyList(copy_head);
@@ -501,7 +476,7 @@ void Preemptive(Process *head, int TYPE)
     Process *cursor;
     int cycle = 0;
     bool complete = false,
-        processed = false;
+         processed = false;
 
     if (head == NULL)
     {
@@ -509,59 +484,63 @@ void Preemptive(Process *head, int TYPE)
     }
     else
     {
-        
-        while(!complete){
+
+        while (!complete)
+        {
             complete = true; //assume complete until told otherwise
-            processed= false;
-            copy_head = SortList(copy_head,TYPE);
+            processed = false;
+            copy_head = SortList(copy_head, TYPE);
             cursor = copy_head;
             // printf("CYCLE: %2d\n",cycle);
-            while(cursor!= NULL){
+            while (cursor != NULL)
+            {
                 // PrintNode(cursor);
-                if (cursor->data[CPU_BURST]>0) { //note that >0 is probably not needed. hmm.
+                if (cursor->data[CPU_BURST])
+                { //check if not complete
                     complete = false;
-                    if (cursor->data[ARRIVAL_TIME] <= cycle)
+                    if (cursor->data[ARRIVAL_TIME] <= cycle) //check if arrived
                     {
                         if (!processed)
                         {
                             processed = true;
                             if (!cursor->response)
                                 cursor->response = cycle + 1;
-                            cycle ++;
-                            cursor->data[CPU_BURST]--;
-                        }else if(cursor->data[ARRIVAL_TIME] < cycle){
-                            cursor->wait ++;
+                            cycle++;
+                            cursor->data[CPU_BURST]--; // only removes 1 cycle.
+                        }
+                        else if (cursor->data[ARRIVAL_TIME] < cycle)
+                        {
+                            cursor->wait++; //add wait time to waiting processes.
                         }
                     }
                 }
-                
+
                 cursor = cursor->next;
             }
-            
-            if (!complete && !processed) {
+
+            if (!complete && !processed)
+            {
                 cycle++;
             }
-            
-            
         }
-        
+
         switch (TYPE)
         {
-            case ARRIVAL_TIME:
-                PrintResults("PREEMPTIVE SORTED BY  ARRIVAL TIME RESULTS:", copy_head);
-                break;
-            case CPU_BURST:
-                PrintResults("PREEMPTIVE SHORTEST JOB FIRST RESULTS:", copy_head);
-                break;
-            case PRIORITY:
-                PrintResults("PREEMPTIVE PRIORITY SORTED RESULTS:", copy_head);
-                break;
-            case PID:
-                PrintResults("PREEMPTIVE PID SORT RESULTS:", copy_head); //should not be necessary, but there in case.
-                break;
+        case ARRIVAL_TIME:
+            PrintResults("PREEMPTIVE SORTED BY  ARRIVAL TIME RESULTS:", copy_head);
+            break;
+        case CPU_BURST:
+            PrintResults("PREEMPTIVE SHORTEST JOB FIRST RESULTS:", copy_head);
+            break;
+        case PRIORITY:
+            PrintResults("PREEMPTIVE PRIORITY SORTED RESULTS:", copy_head);
+            break;
+        case PID:
+            PrintResults("PREEMPTIVE PID SORT RESULTS:", copy_head); //should not be necessary, but there in case.
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
     }
 
@@ -577,24 +556,76 @@ void Preemptive(Process *head, int TYPE)
 */
 void RoundRobin(Process *head, int quantum)
 {
-    // printf("ROUND ROBIN PROCESS\n");
     Process *copy_head = SortList(CopyList(head), ARRIVAL_TIME);
     Process *cursor;
+    int cycle = 0,
+        temp_counter = 0;
     bool complete = false,
-        processed = false;
+         processed = false;
 
-    
-    if (copy_head == NULL) {
+    if (copy_head == NULL)
+    {
         printf("NULL HEAD ROUND ROBIN\n");
-    } else{
-        while(!complete){
-            complete = true;
-
-        }
-        
-        PrintResults("ROUND ROBIN RESULTS:", head);
     }
-    
+    else
+    {
+        while (!complete)
+        {
 
+            complete = true;
+            processed = false;
+            copy_head = SortList(copy_head, ARRIVAL_TIME);
+            cursor = copy_head;
+            while (cursor != NULL)
+            {
+                if (cursor->data[CPU_BURST])
+                { //check if completed.
+                    complete = false;
+                    if (cursor->data[ARRIVAL_TIME] <= cycle)
+                    {
+                        if (!processed)
+                        {
+                            processed = true;
+                            if (!cursor->response) //check if already processed.
+                                cursor->response = cycle + 1;
+                            if (cursor->data[CPU_BURST] <= quantum)
+                            { //check if process is completed during quantum or not.
+                                temp_counter = cursor->data[CPU_BURST];
+                                cursor->data[CPU_BURST] = 0;
+                            }
+                            else
+                            {
+                                cursor->data[CPU_BURST] -= quantum;
+                                temp_counter = quantum;
+                            }
+                            cycle += temp_counter;
+                            cursor->data[ARRIVAL_TIME] = cycle + 1; //change arrival time for sorting purposes.
+                        }
+                        else
+                        {
+                            if (!cursor->response) //check if already processed.
+                                cursor->wait = (cycle - cursor->wait) - cursor->data[ARRIVAL_TIME];
+                            else
+                                cursor->wait += temp_counter; //if processed add necessary time
+                        }
+                    }
+                    else if (cursor->response)
+                    //Because arrival time can't be trusted, check response time,
+                    //since if processed will be different to 0.
+                    {
+                        cursor->wait += temp_counter;
+                    }
+                }
+                cursor = cursor->next;
+            }
+
+            if (!complete && !processed)
+            { //check for gaps.
+                cycle++;
+            }
+        }
+
+        PrintResults("ROUND ROBIN RESULTS:", copy_head);
+    }
     DestroyList(copy_head);
 }

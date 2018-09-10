@@ -129,9 +129,7 @@ int main (int argc, const char * argv[]) {
         RoundRobin(head, quantum);
 
         
-        // int count = Traverse(head);
         DestroyList(head);
-        // printf("%d\n",count);
         printf("Program terminated correctly\n");
         return (EXIT_SUCCESS);
     }

@@ -71,4 +71,4 @@ def compute_root(poly, x_0, epsilon):
         x = int(x)
     return (x, sumtotal)
 
-print(compute_deriv((17.2, -10.1, 1.1)))
+print(compute_root((-13.39, 0.0, 17.5, 3.0, 1.0)),0.01,0.001)
