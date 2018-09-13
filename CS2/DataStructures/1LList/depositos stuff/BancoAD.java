@@ -60,6 +60,27 @@ public class BancoAD {
         return "DATO YA EN LISTA";
     }
 
+    public String deleteNode(String nocta){
+        ClienteDP cursor = primero;
+        String attempt = consultarNocta(nocta);
+        if (attempt.equals("NO SE ENCONTRO")){
+            return "Cuenta no existente";
+        }else{
+            while (cursor!= null) {
+                if (cursor==primero && cursor.getNocta().equals(nocta)) {
+                    primero=primero.getNext();
+                    return "Cuenta borrada exitosamente";
+                } else if (cursor.getNext().getNocta().equals(nocta)){
+                    registrar("bajas.txt", cursor.getNext().toString());
+                    cursor.setNext(cursor.getNext().getNext());
+                    return "cuenta borrada exitosamente";
+                }
+                cursor = cursor.getNext();
+            }
+        }
+        return "Algun error en el proceso ocurrio";
+    }
+
     public String consultar(String archivo){
         String datos = "";
         try {

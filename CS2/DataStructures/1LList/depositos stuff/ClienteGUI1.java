@@ -248,6 +248,15 @@ public class ClienteGUI1 extends JFrame implements ActionListener
             // 3. Desplegar esultado de transaccion
             taDatos.setText(respuesta);
         }
+
+        if (e.getSource() == bDeleteAccount) {
+            // 1. Obtener datos
+            String nocta = tfNocta.getText();
+            respuesta = bancoad.deleteNode(nocta);
+            
+            taDatos.setText(respuesta);
+            activarBotones();
+        }
         
         if(e.getSource() == bConsultarNocta)
         {
