@@ -1,11 +1,10 @@
 import java.io.*;
 import java.util.Date;
+import java.util.LinkedList;
 
 public class BancoAD {
     // Atributos
-    private ClienteDP primero, ultimo, actual;
-    private DepositoDP depositoHead = null;
-    private RetiroDP retiroHead = null;
+    private LinkedList cLinkedList,rLinkedList,dLinkedList;
     private PrintWriter archivoOut;
     private BufferedReader archivoIn;
 
@@ -29,59 +28,30 @@ public class BancoAD {
         System.out.println(datos2[0]);
         System.out.println(consultarNocta(datos2[0]));
         if (consultarNocta(datos2[0]).equals("NO SE ENCONTRO")) {
-
-            if (primero == null) {
-                primero = new ClienteDP(datos);
-                ultimo = primero;
-                ultimo.setNext(null);
-            } else {
-                actual = new ClienteDP(datos);
-                ultimo.setNext(actual);
-                ultimo = actual;
-                ultimo.setNext(null);
-
-            }
+            cLinkedList.addLast(new ClienteDP(datos));
             return "Datos: " + datos;
         }
         return "DATO YA EN LISTA";
     }
 
-    public String addFirst(String datos) {
-        String datos2[] = datos.split("_");
-        ClienteDP temporary;
-        System.out.println(datos2[0]);
-        System.out.println(consultarNocta(datos2[0]));
-        if (consultarNocta(datos2[0]).equals("NO SE ENCONTRO")) {
-            temporary = new ClienteDP(datos);
-            temporary.setNext(primero);
-            primero = temporary;
-            return "Datos: " + datos;
-        }
-        return "DATO YA EN LISTA";
-    }
-
-    public String deleteNode(String nocta){
+    public String deleteNode(String nocta) {
         ClienteDP cursor = primero;
         String attempt = consultarNocta(nocta);
-        if (attempt.equals("NO SE ENCONTRO")){
+        if (attempt.equals("NO SE ENCONTRO")) {
             return "Cuenta no existente";
-        }else{
-            while (cursor!= null) {
-                if (cursor==primero && cursor.getNocta().equals(nocta)) {
-                    primero=primero.getNext();
+        } else {
+            for (int i = 0; i < cLinkedList.size(); i++){
+                if (cLinkedList.get(i).getNocta().equals(nocta)) {
+                    cLinkedList.remove(i);
                     return "Cuenta borrada exitosamente";
-                } else if (cursor.getNext().getNocta().equals(nocta)){
-                    registrar("bajas.txt", cursor.getNext().toString());
-                    cursor.setNext(cursor.getNext().getNext());
-                    return "cuenta borrada exitosamente";
-                }
-                cursor = cursor.getNext();
+                } 
+                return "cuenta borrada exitosamente";
             }
         }
         return "Algun error en el proceso ocurrio";
     }
 
-    public String consultar(String archivo){
+    public String consultar(String archivo) {
         String datos = "";
         try {
             // 1.Abrir el archivo
@@ -102,54 +72,27 @@ public class BancoAD {
     public String consultarNocta(String nocta) {
         actual = primero;
         String datos = "NO SE ENCONTRO";
-        while (actual != null) {
-            if (actual.getNocta().equals(nocta)) {
-                datos = actual.toString();
-                break;
+        for (int i = 0; i < cLinkedList.size(); i++) {
+            if(cLinkedList.get(i).getNocta().equals(nocta)){
+                return cLinkedList.get(i).toString();
             }
-            actual = actual.getNext();
         }
         return datos;
     }
 
-    private void appendRetiro(RetiroDP node){
-        RetiroDP cursor = retiroHead;
-        if (cursor == null) {
-            node.setNext(retiroHead);
-            retiroHead = node;
-        }else{
-            while (cursor.getNext() != null) {
-                cursor = cursor.getNext();
-            }
-            cursor.setNext(node);
-            cursor.getNext().setNext(null);
-        }
+    private void appendRetiro(RetiroDP node) {
+        rLinkedList.add(node);
     }
 
-    private void appendDeposito(DepositoDP node){
-        DepositoDP cursor = depositoHead;
-        System.out.println("APPENDING DEPOSITO NODE node:" + node.toString());
-        if (depositoHead==null) {
-            node.setNext(depositoHead);
-            depositoHead = node;
-        }else{
-            while (cursor.getNext() != null) {
-                cursor = cursor.getNext();
-            }
-            cursor.setNext(node);
-            cursor.getNext().setNext(null);
-
-        }
-        // printListDepositos();
-    }    
+    private void appendDeposito(DepositoDP node) {
+        dLinkedList.add(node);
+    }
 
     private ClienteDP searchNocta(String nocta) {
-        actual = primero;
-        while (actual != null) {
-            if (actual.getNocta().equals(nocta)) {
-                return actual;
+        for (int i = 0; i < cLinkedList.size(); i++) {
+            if(cLinkedList.get(i).getNocta().equals(nocta)){
+               return cLinkedList.get(i).toString();
             }
-            actual = actual.getNext();
         }
         return null;
     }
@@ -157,15 +100,15 @@ public class BancoAD {
     public String consultarClientes() {
         String datos = "";
 
-        if (primero == null)
+        if (cLinkedList.isEmpty())
             datos = "Lista vacia...";
         else {
             actual = primero;
-            while (actual != null) {
+            for (int i = 0; i < cLinkedList.size()  ; i++)  {
                 // datos = datos +
                 // actual.getNocta()+"_"+actual.getNombre()+"_"+actual.getTipo()+"_"+actual.getSaldo()+"\n";
-
-                datos = datos + actual.toString() + "\n";
+                
+                datos = datos + cLinkedList.get(i).toString() + "\n";
 
                 actual = actual.getNext();
             }
@@ -219,48 +162,45 @@ public class BancoAD {
 
     }
 
-    public void datosLLRetirosArchRetiros(){
+    public void datosLLRetirosArchRetiros() {
         RetiroDP cursor = retiroHead;
         if (retiroHead == null) {
             System.out.println("LISTA VACIA");
-        }else{
-            while (cursor!=null) {
+        } else {
+            while (cursor != null) {
                 registrar("retiros.txt", cursor.toString());
                 cursor = cursor.getNext();
             }
         }
     }
 
-    public void datosLLDepositosArchDepositos(){
-        DepositoDP cursor = depositoHead;
-        if (depositoHead == null) {
+    public void datosLLDepositosArchDepositos() {
+        if (cLinkedList.isEmpty()) {
             System.out.println("LISTA VACIA");
-        }else{
-            while (cursor!=null) {
-                registrar("depositos.txt", cursor.toString());
-                cursor = cursor.getNext();
+        } else {
+            for (int i = 0; i < cLinkedList.size(); i++) {
+                registrar("depositos.txt", cLinkedList.get(i).toString());
             }
         }
     }
 
     public String retiro(String nocta, int cantidad) {
         ClienteDP cuenta = searchNocta(nocta);
-
         if (cuenta == null) {
             return "Cuenta no existente";
         } else {
             if (cuenta.getTipo().equals("HIPOTECA")) {
                 return "No se puede retirar de hipoteca";
             } else if (cuenta.getTipo().equals("INVERSION")) {
-                appendRetiro(new RetiroDP(nocta+"_"+cuenta.getSaldo()+"_"+(cuenta.getSaldo() - cantidad)));
+                appendRetiro(new RetiroDP(nocta + "_" + cuenta.getSaldo() + "_" + (cuenta.getSaldo() - cantidad)));
                 cuenta.setSaldo(cuenta.getSaldo() - cantidad);
             } else if (cuenta.getTipo().equals("CREDITO")) {
-                appendRetiro(new RetiroDP(nocta+"_"+cuenta.getSaldo()+"_"+(cuenta.getSaldo() + cantidad)));
+                appendRetiro(new RetiroDP(nocta + "_" + cuenta.getSaldo() + "_" + (cuenta.getSaldo() + cantidad)));
                 cuenta.setSaldo(cuenta.getSaldo() + cantidad);
             } else if (cuenta.getTipo().equals("AHORRO")) {
-                appendRetiro(new RetiroDP(nocta+"_"+cuenta.getSaldo()+"_"+(cuenta.getSaldo() - cantidad)));
+                appendRetiro(new RetiroDP(nocta + "_" + cuenta.getSaldo() + "_" + (cuenta.getSaldo() - cantidad)));
                 cuenta.setSaldo(cuenta.getSaldo() - cantidad);
-            } else{
+            } else {
                 return "ERROR EN TIPO DE CUENTA";
             }
         }
@@ -275,16 +215,16 @@ public class BancoAD {
             return "Cuenta no existente";
         } else {
             if (cuenta.getTipo().equals("HIPOTECA")) {
-                appendDeposito(new DepositoDP(nocta+"_"+cuenta.getSaldo()+"_"+(cuenta.getSaldo() - cantidad)));
+                appendDeposito(new DepositoDP(nocta + "_" + cuenta.getSaldo() + "_" + (cuenta.getSaldo() - cantidad)));
                 cuenta.setSaldo(cuenta.getSaldo() - cantidad);
             } else if (cuenta.getTipo().equals("INVERSION")) {
-                appendDeposito(new DepositoDP(nocta+"_"+cuenta.getSaldo()+"_"+(cuenta.getSaldo() + cantidad)));
+                appendDeposito(new DepositoDP(nocta + "_" + cuenta.getSaldo() + "_" + (cuenta.getSaldo() + cantidad)));
                 cuenta.setSaldo(cuenta.getSaldo() + cantidad);
             } else if (cuenta.getTipo().equals("CREDITO")) {
-                appendDeposito(new DepositoDP(nocta+"_"+cuenta.getSaldo()+"_"+(cuenta.getSaldo() - cantidad)));
+                appendDeposito(new DepositoDP(nocta + "_" + cuenta.getSaldo() + "_" + (cuenta.getSaldo() - cantidad)));
                 cuenta.setSaldo(cuenta.getSaldo() - cantidad);
             } else if (cuenta.getTipo().equals("AHORRO")) {
-                appendDeposito(new DepositoDP(nocta+"_"+cuenta.getSaldo()+"_"+(cuenta.getSaldo() + cantidad)));
+                appendDeposito(new DepositoDP(nocta + "_" + cuenta.getSaldo() + "_" + (cuenta.getSaldo() + cantidad)));
                 cuenta.setSaldo(cuenta.getSaldo() + cantidad);
             } else {
                 return "ERROR EN TIPO DE CUENTA";
@@ -292,24 +232,23 @@ public class BancoAD {
         }
         return "Deposito hecho exitosamente";
     }
-    
-    public String consultarRetiros(){
+
+    public String consultarRetiros() {
         RetiroDP cursor = retiroHead;
         String datos = "";
         System.out.println("CONSULTANDO RETIROS");
-        while (cursor != null) {
-            datos+= cursor.toString()+"\n";
-            cursor = cursor.getNext();
+        for (int i = 0; i < rLinkedList.size(); i++) {
+            datos += rLinkedList.get(i).toString() + "\n";
         }
         return datos;
     }
-    public String consultarDepositos(){
+
+    public String consultarDepositos() {
         DepositoDP cursor = depositoHead;
         String datos = "";
         System.out.println("CONSULTANDO DEPOSITOS");
-        while (cursor != null) {
-            datos+= cursor.toString()+"\n";
-            cursor = cursor.getNext();
+        for (int i = 0; i < dLinkedList.size(); i++) {
+            datos += dLinkedList.get(i).toString() + "\n";
         }
         return datos;
     }

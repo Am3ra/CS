@@ -1,15 +1,30 @@
 
-#include <stdio.h> /* Used to handle the FILE type */
+#include <stdio.h> 
 
 int main(int argc, char const *argv[])
 {
-    int x = 1,y=2,*ip;
-    ip = &x;
-    printf("%d,%d\n",ip,*ip);
-    y= *ip;
-    printf("%d\n",y);
-    *ip = 3;
-    printf("%d\n",x);
+    char a[] = "racecar";
+    int length = sizeof(a) / sizeof(a[0]) -1;
+
+    int flag = 0;
+
+    printf("%lu\n",sizeof(a)/sizeof(a[0]));
+    printf("Length: %d\n",length);
+    for (int i = 0; i < length; i++)
+    {
+     printf("%c , %c \n",a[i],a[length-i-1]);  
+     
+        if (a[i] != a[length-i-1]) {
+            flag = 1;
+            break;
+        }
+      
+    }
+
+    if (flag)
+    {
+       printf("NOT PALINDROME\n"); 
+    }
 
     return 0;
 }

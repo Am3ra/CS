@@ -10,20 +10,9 @@ import java.awt.event.ActionEvent;
 public class Minitest extends JFrame implements ActionListener{
     private JPanel panelPrincipal, panelFlechitas,panelFotos;
     private JButton bBefore, bNext;
-    int counter = 0;
-    private ImageIcon imagenesAlbums[];
-    
+    private MinitestAD minitestAD = new MinitestAD();
 
     public Minitest() {
-
-        File folder = new File("images");
-        File[] listOfFiles = folder.listFiles();
-        imagenesAlbums = new ImageIcon[listOfFiles.length];
-
-        for (int i = 0; i < listOfFiles.length; i++) {
-            imagenesAlbums[i] = new ImageIcon("images/"+listOfFiles[i].getName());
-            System.out.println(listOfFiles[i].getName());
-        }
 
         bBefore = new JButton("<");
         bNext = new JButton(">");
@@ -44,7 +33,8 @@ public class Minitest extends JFrame implements ActionListener{
         panelFlechitas.add(bBefore);
         panelFlechitas.add(bNext);
 
-        panelFotos.add(new JLabel(imagenesAlbums[0]));
+        panelFotos.add(new JLabel(minitestAD.firstDP.getImage()));
+        minitestAD.currentDP = minitestAD.firstDP;
 
         panelPrincipal.add(panelFlechitas);
         panelPrincipal.add(panelFotos);
@@ -58,23 +48,23 @@ public class Minitest extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == bNext) {
             bBefore.setEnabled(true);
-            counter ++;
+            minitestAD.currentDP=minitestAD.currentDP.getNext();
             panelFotos.setVisible(false);
             panelFotos.removeAll();
-            panelFotos.add(new JLabel(imagenesAlbums[counter]));
+            panelFotos.add(new JLabel(minitestAD.currentDP.getImage()));
             panelFotos.setVisible(true);
-            if (counter == imagenesAlbums.length -1) {
+            if (minitestAD.currentDP.getNext() == null) {
                 bNext.setEnabled(false);
             }
             
         } else if (e.getSource() == bBefore) {
             bNext.setEnabled(true);
-            counter--;
             panelFotos.setVisible(false);
+            minitestAD.currentDP = minitestAD.currentDP.getPrevious();
             panelFotos.removeAll();
-            panelFotos.add(new JLabel(imagenesAlbums[counter]));
+            panelFotos.add(new JLabel(minitestAD.currentDP.getImage()));
             panelFotos.setVisible(true);
-            if (counter == 0) {
+            if (minitestAD.currentDP.getPrevious() == null) {
                 bBefore.setEnabled(false);
             }
         }
