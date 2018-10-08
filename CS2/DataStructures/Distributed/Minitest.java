@@ -10,10 +10,9 @@ import java.awt.event.ActionEvent;
 public class Minitest extends JFrame implements ActionListener{
     private JPanel panelPrincipal, panelFlechitas,panelFotos;
     private JButton bBefore, bNext;
-    private MinitestAD minitestAD = new MinitestAD();
-
+    private MinitestADLL minitestAD = new MinitestADLL();
+    private int i = 0;
     public Minitest() {
-
         bBefore = new JButton("<");
         bNext = new JButton(">");
         panelPrincipal = new JPanel();
@@ -33,8 +32,7 @@ public class Minitest extends JFrame implements ActionListener{
         panelFlechitas.add(bBefore);
         panelFlechitas.add(bNext);
 
-        panelFotos.add(new JLabel(minitestAD.firstDP.getImage()));
-        minitestAD.currentDP = minitestAD.firstDP;
+        panelFotos.add(new JLabel(((ImagesDP)minitestAD.listaCool.get(i)).getImage()));
 
         panelPrincipal.add(panelFlechitas);
         panelPrincipal.add(panelFotos);
@@ -48,23 +46,23 @@ public class Minitest extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == bNext) {
             bBefore.setEnabled(true);
-            minitestAD.currentDP=minitestAD.currentDP.getNext();
+            i++;
             panelFotos.setVisible(false);
             panelFotos.removeAll();
-            panelFotos.add(new JLabel(minitestAD.currentDP.getImage()));
+            panelFotos.add(new JLabel(((ImagesDP)minitestAD.listaCool.get(i)).getImage()));
             panelFotos.setVisible(true);
-            if (minitestAD.currentDP.getNext() == null) {
+            if (i == minitestAD.listaCool.size()) {
                 bNext.setEnabled(false);
             }
             
         } else if (e.getSource() == bBefore) {
             bNext.setEnabled(true);
+            i--;
             panelFotos.setVisible(false);
-            minitestAD.currentDP = minitestAD.currentDP.getPrevious();
             panelFotos.removeAll();
-            panelFotos.add(new JLabel(minitestAD.currentDP.getImage()));
+            panelFotos.add(new JLabel(((ImagesDP) minitestAD.listaCool.get(i)).getImage()));
             panelFotos.setVisible(true);
-            if (minitestAD.currentDP.getPrevious() == null) {
+            if (i==0) {
                 bBefore.setEnabled(false);
             }
         }
