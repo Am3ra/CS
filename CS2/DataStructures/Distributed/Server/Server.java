@@ -107,14 +107,15 @@ public class Server {
 
                 // 4. Recibir datos o mensaje del cliente
                 transaccion = recibirDatos();
+                System.out.println("TRANSACCION: "+transaccion);
 
                 if (transaccion.equals("consultarMax")) {
-                    enviarDatos(""+minitest.listOfFiles.length);
+                    enviarDatos(""+minitest.listaCool.size  ());
                 }  else if(transaccion.equals("RecieveFileImagen")) {
                     String filename = recibirDatos();
                     try {
                         DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-                        FileInputStream fis = new FileInputStream(minitest.listOfFiles[Integer.parseInt(filename)]);
+                        FileInputStream fis = new FileInputStream(((File)minitest.listaCool.get(Integer.parseInt(filename))));
                         byte[] buffer = new byte[409600];
                         while (fis.read(buffer) > 0) {
                             dos.write(buffer);
@@ -123,6 +124,27 @@ public class Server {
                         dos.close();
                     } catch (Exception e) {
                         e.printStackTrace();
+                    }
+                    
+                } else if (transaccion.equals("busquedaArtista")) {
+                    String artista = recibirDatos();
+                    minitest.busquedaArtista(artista);
+                } else if (transaccion.equals("reset")){
+                    minitest.reset();
+                } else if (transaccion.equals("recibirListaSongs")){
+                    String filename = recibirDatos();
+                    String data = minitest.busquedaAlbum(minitest.listaCool.get(Integer.parseInt(filename)).toString());
+                    System.out.println("SENT DATA:"+ data);
+                    enviarDatos(data);
+                } else if (transaccion.equals("streamAudio")){
+                    String cancion = recibirDatos();
+                    File soundFile = new File(cancion);
+                    FileInputStream in = new FileInputStream(soundFile);
+                    OutputStream out = socket.getOutputStream();
+                    byte buffer[] = new byte[2048];
+                    int count;
+                    while ((count = in.read(buffer)) != -1){
+                        out.write(buffer, 0, count);
                     }
                 }
 

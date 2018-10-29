@@ -2,6 +2,7 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
@@ -46,12 +47,21 @@ public class ImagenGUI2 extends JFrame implements ActionListener
 	private JButton bArtista, bPlay, bStop;
     private JTextField tfArtista;
     private Cliente cliente = new Cliente();
+
+    private int i =0,max;
+    private JList listaSongs;
     
     // Constructor y Metodos o servicios
     public ImagenGUI2()
     {
         super("Albums Images LList");
         
+        cliente.establecerConexion();
+        cliente.enviarDatos("consultarMax");
+        max = Integer.parseInt(cliente.recibirDatos());
+        System.out.println("MAX: " + max);
+        cliente.cerrarConexion();
+
         // 1. Crear objetos de las variables de instancia o de clase
         bPrev  = new JButton("<");
         bNext  = new JButton(">");
@@ -93,8 +103,13 @@ public class ImagenGUI2 extends JFrame implements ActionListener
         
         panelPrevNext.add(bPrev);
         panelPrevNext.add(bNext);
-        panelAlbums.add(new JLabel("   Imagen Albums"));
-        panelSongs.add(new JLabel("Songs List"));
+
+        panelAlbums.add(new JLabel(new ImageIcon(cliente.recibirFileImagen("0"))));
+
+        listaSongs = new JList(cliente.RecibirlistaSongs("0").split("&"));
+        panelSongs.add(listaSongs);
+
+        // panelSongs.add(new JList(cliente.recibirDatos().split("&")));
         
         panelPlayStop.add(new JLabel("Now Playing: NO SONG"));
         panelPlayStop.add(bPlay);
@@ -112,12 +127,96 @@ public class ImagenGUI2 extends JFrame implements ActionListener
         setVisible( true );
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        if (i == max - 1) {
+            bNext.setEnabled(false);
+        }
     }
     
     
     public void actionPerformed(ActionEvent e)
     {
-        
+        if (e.getSource() == bNext) {
+            bPrev.setEnabled(true);
+            i++;
+            panelAlbums.setVisible(false);
+            panelAlbums.removeAll();
+
+            panelAlbums.add(new JLabel(new ImageIcon(cliente.recibirFileImagen("" + i))));
+            panelAlbums.setVisible(true);
+
+
+            panelSongs.setVisible(false);
+            panelSongs.removeAll();
+
+            listaSongs = new JList(cliente.RecibirlistaSongs(""+i).split("&"));
+            panelSongs.add(listaSongs);
+            panelSongs.setVisible(true);
+
+
+            if (i == max - 1) {
+                bNext.setEnabled(false);
+            }
+
+        } else if (e.getSource() == bPrev) {
+            bNext.setEnabled(true);
+            i--;
+            panelAlbums.setVisible(false);
+            panelAlbums.removeAll();
+            panelAlbums.add(new JLabel(new ImageIcon(cliente.recibirFileImagen("" + i))));
+            panelAlbums.setVisible(true);
+
+            panelSongs.setVisible(false);
+            panelSongs.removeAll();
+
+            listaSongs = new JList(cliente.RecibirlistaSongs("" + i).split("&"));
+            panelSongs.add(listaSongs);
+            panelSongs.setVisible(true);
+            if (i == 0) {
+                bPrev.setEnabled(false);
+            }
+        } else if (e.getSource() == bArtista){
+            System.out.println(tfArtista.getText());
+            if(tfArtista.getText().equals("")){
+                System.out.println("RESET");
+                cliente.reset();
+            }else{
+                String artista = tfArtista.getText();
+                cliente.busquedaArtista(artista);
+            }
+            
+            cliente.establecerConexion();
+            cliente.enviarDatos("consultarMax");
+            max = Integer.parseInt(cliente.recibirDatos());
+            System.out.println("MAX: " + max);
+            cliente.cerrarConexion();
+            i=0;
+
+            panelAlbums.setVisible(false);
+            panelAlbums.removeAll();
+
+            panelAlbums.add(new JLabel(new ImageIcon(cliente.recibirFileImagen("0"))));
+            panelAlbums.setVisible(true);
+
+            panelSongs.setVisible(false);
+            panelSongs.removeAll();
+
+            listaSongs = new JList(cliente.RecibirlistaSongs("" + i).split("&"));
+            panelSongs.add(listaSongs);
+            panelSongs.setVisible(true);
+            bPrev.setEnabled(false);
+            if (i == max - 1) {
+                bNext.setEnabled(false);
+            } else {
+                bNext.setEnabled(true);
+            }
+
+        }
+        else if (e.getSource() == bPlay) {
+            cliente.playSong( listaSongs.getSelectedValue().toString());
+        }
+        else if (e.getSource() == bStop) {
+            cliente.stop();
+        }
     }
 
 	

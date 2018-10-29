@@ -1,10 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
 
 import java.util.Vector;
 
@@ -15,14 +10,9 @@ import javax.sound.sampled.Clip;
 import javax.swing.*;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.io.BufferedInputStream;
 import java.io.*;
-import java.awt.event.ActionEvent;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.net.Socket;
 
 
@@ -44,11 +34,13 @@ public class Cliente
     
 
     
-    private Socket socket;
+    public Socket socket;
     
     private BufferedReader bufferEntrada;
     private PrintWriter    bufferSalida;
     
+    private AudioOS audioOS = new AudioOS();
+
     
     // Constructor
     
@@ -69,10 +61,28 @@ public class Cliente
         }
         catch(IOException ioe)
         {
-            System.out.println("Error: "+ioe);
+            System.out.println("Error: "+ioe +"line 62");
         }
         
         return datos;
+    }
+
+    public void playSong(String name) {
+        establecerConexion();
+        enviarDatos("streamAudio");
+        enviarDatos( name+ ".wav");
+        try {
+            InputStream in = new BufferedInputStream(socket.getInputStream());
+            audioOS.play(in);
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public void stop() {
+        audioOS.stop();
+        cerrarConexion();
     }
     
     public void cerrarConexion(){
@@ -203,22 +213,68 @@ public class Cliente
         }
     }
 
-    public byte[] recibirFileImagen(String fileName) {
-        establecerConexion();
-        enviarDatos("RecieveFileImagen");
-        enviarDatos(fileName);
-        File temp_file;
-        byte[] buffer = new byte[40960];
+    public String RecibirlistaSongs(String filename) {
+        String datos ="";
         try{
-            DataInputStream dis = new DataInputStream(socket.getInputStream());
-            dis.read(buffer);
-            dis.close();
+            establecerConexion();
+            enviarDatos("recibirListaSongs");
+            enviarDatos(filename);
+            datos = recibirDatos();
+            cerrarConexion();
         }
         catch(Exception e){
             e.printStackTrace();
         }
+        return datos;
+    }
+
+    public byte[] recibirFileImagen(String fileName) {
+        try{
+        establecerConexion();
+        enviarDatos("RecieveFileImagen");
+        enviarDatos(fileName);
+        File temp_file;
+        ByteArrayOutputStream buffer;
+        // byte[] buffer = new byte[40960];
+        
+            InputStream is = socket.getInputStream();
+            
+            buffer= new ByteArrayOutputStream();
+
+            int nRead;
+            byte[] data = new byte[16384];
+
+            while ((nRead = is.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, nRead);
+            }
         cerrarConexion();
-        return buffer;
+        return buffer.toByteArray();
+        }catch(Exception e){
+            System.out.println(e + "Line233");
+        }
+        return null;
+    }
+
+    public void busquedaArtista(String artista) {
+        establecerConexion();
+        enviarDatos("busquedaArtista");
+        enviarDatos(artista);
+        cerrarConexion();
+    }
+
+    public String busquedaAlbum(String album) {
+        establecerConexion();
+        enviarDatos("busquedaAlbum");
+        enviarDatos(album);
+        String result = recibirDatos();
+        cerrarConexion();
+        return result;
+    }
+
+    public void reset() {
+        establecerConexion();
+        enviarDatos("reset");
+        cerrarConexion();
     }
     
     public static void main(String args[])
