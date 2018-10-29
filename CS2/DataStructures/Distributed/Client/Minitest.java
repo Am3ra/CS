@@ -10,9 +10,15 @@ import java.awt.event.ActionEvent;
 public class Minitest extends JFrame implements ActionListener{
     private JPanel panelPrincipal, panelFlechitas,panelFotos;
     private JButton bBefore, bNext;
-    private MinitestADLL minitestAD = new MinitestADLL();
-    private int i = 0;
+    private Cliente cliente = new Cliente();
+    private int i = 0, max;
     public Minitest() {
+        cliente.establecerConexion();
+        cliente.enviarDatos("consultarMax");
+        max = Integer.parseInt(cliente.recibirDatos());
+        System.out.println("MAX: " + max);
+        cliente.cerrarConexion();
+
         bBefore = new JButton("<");
         bNext = new JButton(">");
         panelPrincipal = new JPanel();
@@ -32,7 +38,7 @@ public class Minitest extends JFrame implements ActionListener{
         panelFlechitas.add(bBefore);
         panelFlechitas.add(bNext);
 
-        panelFotos.add(new JLabel(((ImagesDP)minitestAD.listaCool.get(i)).getImage()));
+        panelFotos.add(new JLabel(new ImageIcon(cliente.recibirFileImagen("0"))));
 
         panelPrincipal.add(panelFlechitas);
         panelPrincipal.add(panelFotos);
@@ -41,6 +47,7 @@ public class Minitest extends JFrame implements ActionListener{
         setSize(800, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
+        
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -49,9 +56,14 @@ public class Minitest extends JFrame implements ActionListener{
             i++;
             panelFotos.setVisible(false);
             panelFotos.removeAll();
-            panelFotos.add(new JLabel(((ImagesDP)minitestAD.listaCool.get(i)).getImage()));
+
+            cliente.establecerConexion();
+            cliente.enviarDatos("datos");
+            cliente.cerrarConexion();
+
+            panelFotos.add(new JLabel(new ImageIcon(cliente.recibirFileImagen(""+i))));
             panelFotos.setVisible(true);
-            if (i == minitestAD.listaCool.size()) {
+            if (i == max-1) {
                 bNext.setEnabled(false);
             }
             
@@ -60,7 +72,7 @@ public class Minitest extends JFrame implements ActionListener{
             i--;
             panelFotos.setVisible(false);
             panelFotos.removeAll();
-            panelFotos.add(new JLabel(((ImagesDP) minitestAD.listaCool.get(i)).getImage()));
+            panelFotos.add(new JLabel(new ImageIcon(cliente.recibirFileImagen("" + i))));
             panelFotos.setVisible(true);
             if (i==0) {
                 bBefore.setEnabled(false);

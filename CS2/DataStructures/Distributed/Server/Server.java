@@ -1,109 +1,145 @@
-import javax.swing.*;
-import java.awt.*;
+/***********************************************************/
+/*** Programa de Intercambio de Mensajes con BSD Sockets ***/
+/***              Class: FtpServer                      ***/
+/***********************************************************/
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+import java.awt.GridLayout;
+import java.io.IOException;
+
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.io.*;
 
-public class Server extends JFrame {
-	private JTextArea taDatos;
-	private JPanel panel;
+public class Server {
+    private JTextArea taDatos;
+    private JPanel panel;
 
-	private ServerSocket server;
-	private Socket socket;
+    private ServerSocket server;
+    private Socket socket;
 
-	private BufferedReader bufferEntrada;
-	private PrintWriter bufferSalida;
+    private BufferedReader bufferEntrada;
+    private PrintWriter bufferSalida;
 
-	public Server() {
-		super("Server");
+    private MinitestADLL minitest = new MinitestADLL();
 
-		taDatos = new JTextArea(15, 20);
-		panel = new JPanel();
 
-		panel.setLayout(new GridLayout(1, 1));
-		panel.add(new JScrollPane(taDatos));
+    private String recibirDatos() {
+        String datos = "";
 
-		setLayout(new GridLayout(1, 1));
-		add(panel);
-		setSize(300, 300);
-		setVisible(true);
-	}
+        try {
+            datos = bufferEntrada.readLine();
+        } catch (IOException ioe) {
+            System.out.println("Error: " + ioe);
+        }
 
-	private void iniciarBuffers() {
-		try {
-			bufferEntrada = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			bufferSalida = new PrintWriter(socket.getOutputStream(), true);
-			bufferSalida.flush();
-		} catch (IOException ioe) {
-			System.out.println("Error: " + ioe);
-		}
-	}
+        return datos;
+    }
 
-	private void cerrarConexion() {
-		try {
-			bufferEntrada.close();
-			bufferSalida.close();
-			socket.close();
-		} catch (IOException ioe) {
-			System.out.println("Error: " + ioe);
-		}
-	}
+    private void enviarDatos(String datos) {
+        bufferSalida.println(datos);
+        bufferSalida.flush();
+    }
 
-	private String recibirDatos() {
-		String datos = "";
+    private String returnDirectory(){
+        String songs = "";
+        String lscmd = "ls";
+        try {
+            Process p = Runtime.getRuntime().exec(new String[] { "bash", "-c", lscmd });
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line = reader.readLine();
+            System.out.println(line);
+            while (line != null) {
+                System.out.println(line);
+                songs += line+"&";
+                line = reader.readLine();
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return songs;
+    }
 
-		try {
-			datos = bufferEntrada.readLine();
-		} catch (IOException ioe) {
-			System.out.println("Error: " + ioe);
-			datos = "Error: " + ioe;
-		}
+    private void cerrarConexion() {
+        try {
+            bufferEntrada.close();
+            bufferSalida.close();
+            socket.close();
+        } catch (IOException ioe) {
+            System.out.println("Error: " + ioe);
+        }
+    }
 
-		return datos;
-	}
+    private void iniciarServer() {
+        String transaccion = "";
+        String respuesta = "";
 
-	private void enviarDatos(String mensaje) {
-		bufferSalida.println(mensaje);
-	}
+        try {
+            // 1. Inicializar el Serve y ponerlo en estado listen()
+            server = new ServerSocket(8008, 5);
 
-	private void inicializarServer() {
-		String mensajeCliente = "";
-		String mensajeServer = "Hola Cliente...buenas tardes...";
+            while (true) {
+                System.out.println("\nMessage Server: estado listen()\n Esperando peticiones de conexion...\n");
 
-		try {
-			// 1. Iniciar Server
-			server = new ServerSocket(7000, 5);
+                // 2. Al escuchar una peticion de conexion hacer el accept()
+                socket = server.accept();
 
-			while (true) {
-				taDatos.append("\nEsperando peticion de conexion de un cliente...\n");
+                System.out.println("Message Server: Se recibio peticion de conexxion\n se hizo el accept()...\n");
 
-				// 2. Aceptar peticion de conexion por parte de un Cliente
-				socket = server.accept();
+                // 3. Preparar canales o buffers de comunicacion
+                bufferEntrada = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                bufferSalida = new PrintWriter(socket.getOutputStream());
+                bufferSalida.flush();
 
-				// Preparar buffers de entrada y salida para el socket
-				iniciarBuffers();
+                // 4. Recibir datos o mensaje del cliente
+                transaccion = recibirDatos();
 
-				// Dialogo entre el server y el cliente
-				// 3. Recibir mensaje del cliente
-				mensajeCliente = recibirDatos();
+                if (transaccion.equals("consultarMax")) {
+                    enviarDatos(""+minitest.listOfFiles.length);
+                }  else if(transaccion.equals("RecieveFileImagen")) {
+                    String filename = recibirDatos();
+                    try {
+                        DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+                        FileInputStream fis = new FileInputStream(minitest.listOfFiles[Integer.parseInt(filename)]);
+                        byte[] buffer = new byte[409600];
+                        while (fis.read(buffer) > 0) {
+                            dos.write(buffer);
+                        }
+                        fis.close();
+                        dos.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
 
-				// 4. Enviar mensaje al cliente
-				enviarDatos(mensajeServer);
+                // 6. Cerrar conexion
+                cerrarConexion();
 
-				// 5. Cerrar conexion
-				cerrarConexion();
+                // 7 desplegar transaccion
+                System.out.println("Transaccion realizada: " + transaccion);
+            }
 
-				// Desplegar Mensajes
-				taDatos.append("\nMensaje Cliente: " + mensajeCliente);
-				taDatos.append("\nMensaje Enviado: " + mensajeServer);
-			}
-		} catch (IOException ioe) {
-			System.out.println("Error: " + ioe);
-		}
-	}
+        } catch (IOException ioe) {
+            System.out.println("Error: " + ioe);
+        }
+    }
 
-	public static void main(String args[]) {
-		Server serverApp = new Server();
-		serverApp.inicializarServer();
-	}
+    public static void main(String args[]) {
+        Server serverApp = new Server();
+        serverApp.iniciarServer();
+    }
 }
