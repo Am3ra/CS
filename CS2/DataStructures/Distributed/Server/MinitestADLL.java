@@ -9,11 +9,24 @@ public class MinitestADLL {
     public File[] listOfFiles;
     public LinkedList listaCool;
     private ArrayList tempList;
+    public ImagesDP head = null,cursor;
 
     public MinitestADLL() {
         folder = new File("images");
         listOfFiles = folder.listFiles();
-        listaCool = new LinkedList(Arrays.asList(listOfFiles));
+
+        for (File i : listOfFiles) {
+            if (head==null){
+                head = new ImagesDP(i);
+            }else{
+                cursor = head;
+                while (cursor.getNext()!=null) {
+                    cursor = cursor.getNext();
+                }
+                cursor.setNext(new ImagesDP(i));
+            }
+        }
+
 
         try {
             BufferedReader brAlbums = new BufferedReader(new FileReader(new File("Albums.txt")));
@@ -27,22 +40,55 @@ public class MinitestADLL {
         }
     }
 
+    private void appendList(File i) {
+        if (head == null) {
+            head = new ImagesDP(i);
+        } else {
+            cursor = head;
+            while (cursor.getNext() != null) {
+                cursor = cursor.getNext();
+            }
+            cursor.setNext(new ImagesDP(i));
+        }
+    }
+
     public void busquedaArtista(String artista) {
         try {
             BufferedReader brAlbums = new BufferedReader(new FileReader(new File("Albums.txt")));
             String st;
             tempList = new ArrayList();
             System.out.println("NEW ALNBUMS\n\n");
+            head = null;
             while ((st = brAlbums.readLine()) != null) {
                 if (st.split("_")[0].equals(artista)) {
                     System.out.println(st.split("_")[1] + ".jpg");
-                    tempList.add(new File("images/" + st.split("_")[1] + ".jpg"));
+                    appendList(new File("images/" + st.split("_")[1] + ".jpg"));
                 }
             }
         } catch (Exception e) {
             System.out.println(e);
         }
         listaCool = new LinkedList(tempList);
+    }
+
+    public File get( int i) {
+        int j = 0;
+        cursor = head;
+        while (j!= i) {
+            cursor = cursor.getNext();
+            j++;
+        }
+        return cursor.getImage();
+    }
+
+    public int getSize() {
+        int i = 0;
+        cursor = head;
+        while(cursor.getNext()!= null){
+            cursor = cursor.getNext();
+            i++;
+        }
+        return i+1;
     }
 
     public String busquedaAlbum(String album) {

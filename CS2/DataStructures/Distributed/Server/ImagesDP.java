@@ -1,3 +1,5 @@
+import java.io.File;
+
 import javax.swing.ImageIcon;
 
 /**
@@ -6,10 +8,10 @@ import javax.swing.ImageIcon;
 public class ImagesDP {
 
     private ImagesDP previous, next;
-    private ImageIcon image;
+    private File imageName;
 
-    public ImagesDP(ImageIcon imageIcon) {
-        this.image = imageIcon;
+    public ImagesDP(File imageName) {
+        this.imageName = imageName;
     }
 
     public void setNext(ImagesDP imagesDP) {
@@ -28,7 +30,7 @@ public class ImagesDP {
         return this.previous;
     }
 
-    public ImageIcon getImage(){
-        return this.image;
+    public File getImage(){
+        return this.imageName;
     }
 }

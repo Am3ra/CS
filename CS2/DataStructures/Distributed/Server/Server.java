@@ -110,12 +110,12 @@ public class Server {
                 System.out.println("TRANSACCION: "+transaccion);
 
                 if (transaccion.equals("consultarMax")) {
-                    enviarDatos(""+minitest.listaCool.size  ());
+                    enviarDatos(""+minitest.getSize());
                 }  else if(transaccion.equals("RecieveFileImagen")) {
                     String filename = recibirDatos();
                     try {
                         DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-                        FileInputStream fis = new FileInputStream(((File)minitest.listaCool.get(Integer.parseInt(filename))));
+                        FileInputStream fis = new FileInputStream(((File)minitest.get(Integer.parseInt(filename))));
                         byte[] buffer = new byte[409600];
                         while (fis.read(buffer) > 0) {
                             dos.write(buffer);
@@ -133,7 +133,7 @@ public class Server {
                     minitest.reset();
                 } else if (transaccion.equals("recibirListaSongs")){
                     String filename = recibirDatos();
-                    String data = minitest.busquedaAlbum(minitest.listaCool.get(Integer.parseInt(filename)).toString());
+                    String data = minitest.busquedaAlbum(minitest.get(Integer.parseInt(filename)).toString());
                     System.out.println("SENT DATA:"+ data);
                     enviarDatos(data);
                 } else if (transaccion.equals("streamAudio")){

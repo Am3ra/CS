@@ -12,13 +12,13 @@ public class AudioOS {
             clip = AudioSystem.getClip();
             clip.open(ais);
             clip.start();
-            Thread.sleep(100);
-            clip.drain();
+            // Thread.sleep(100);
+            // clip.drain();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void stop() {
-        clip.stop();
+        clip.close();
     }
 }
