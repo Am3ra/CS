@@ -9,17 +9,19 @@ enum resultados
     FOUND
 };
 
-enum tipo{
+enum tipo
+{
     RETIRO,
     DEPOSITO
 };
 
-struct transaccion{
+struct transaccion
+{
     int nocta;
     enum tipo result;
     int cantidad;
     struct transaccion *next;
-}*FirstRetiro, *FirstDeposito;
+} * FirstRetiro, *FirstDeposito;
 
 struct cuenta
 {
@@ -33,9 +35,9 @@ struct cuenta
 void opciones(void), append(struct cuenta *actual), prepend(struct cuenta *actual);
 struct cuenta *busquedaCuenta(int nocta), *findLast(void), *capturar(void);
 void menuCuenta(struct cuenta *Actual), consultarTxt(char *filename), consultar();
-void transaccionCuenta(struct cuenta *Actual, enum tipo tipoTransaccion);
+void transaccionCuenta(struct cuenta *Actual, enum tipo tipoTransaccion), initializeLL();
 void appendTransaccion(struct transaccion actual), consultarTransaccion(enum tipo tipoActual);
-void eliminar(struct cuenta *actual), saveResults();
+void eliminar(int nocta), saveResults(), cuentaToString(struct cuenta *actual);
 
 int main(int argc, char *argv[])
 {
@@ -45,7 +47,8 @@ int main(int argc, char *argv[])
         printf("FAILURE OPENING TXT\n");
         exit(EXIT_FAILURE);
     }
-
+    fclose(fp);
+    initializeLL();
     opciones();
     return EXIT_SUCCESS;
 }
@@ -68,7 +71,6 @@ void opciones(void)
         printf("8)consultar TXT depositos\n");
         printf("9)Consultar TXT REtiros\n");
         printf("0)Exit\n");
-        getchar();
         scanf("%d", &option);
 
         // printf("OPTION read: %d\n", option);
@@ -114,6 +116,7 @@ void opciones(void)
     }
 }
 
+
 struct cuenta *busquedaCuenta(int nocta)
 {
     struct cuenta *cursor = First;
@@ -126,6 +129,24 @@ struct cuenta *busquedaCuenta(int nocta)
     }
 
     return NULL;
+}
+
+void cuentaToString(struct cuenta *actual)
+{
+    printf("\n\n Numero de cuenta: %d, Nombre: %s, Tipo: %s, Saldo: %d\n",
+           actual->nocta,
+           actual->nombre,
+           actual->tipo,
+           actual->saldo);
+}
+
+void transaccionToString(struct transaccion *cursor)
+{
+    printf("Cuenta :%8d Tipo: %s Cantidad: %10d\n",
+           cursor->nocta,
+           (cursor->result == RETIRO) ? "RETIRO" : "DEPOSITO",
+           cursor->cantidad);
+    cursor = cursor->next;
 }
 
 void append(struct cuenta *actual)
@@ -142,8 +163,10 @@ void append(struct cuenta *actual)
 
 void prepend(struct cuenta *actual)
 {
-    if (!actual)
+    if (!actual){
+        printf("ERROR ADDING AT BEGINNING OF LIST\n");
         return;
+    }
     actual->next = First;
     First = actual;
 }
@@ -153,33 +176,34 @@ void menuCuenta(struct cuenta *Actual)
     int option;
     if (Actual)
     {
-        do{
+        cuentaToString(Actual);
+        do
+        {
             printf("1)retiro\n");
             printf("2)Deposito\n");
             printf("3)Eliminar\n");
             printf("4)Cancelar\n");
             scanf("%d", &option);
 
-
             switch (option)
             {
-                case 1:
-                    transaccionCuenta(Actual,RETIRO);
-                    break;
-                case 2:
-                    transaccionCuenta(Actual,DEPOSITO);
-                    break;
-                case 3:
-                    eliminar(Actual);
-                    break;
-                case 4:
-                    printf("CANCELLED\n");
-                    break;
-                default:
-                    printf("OPTION NOT RECOGNIZED\n");
-                    break;
+            case 1:
+                transaccionCuenta(Actual, RETIRO);
+                break;
+            case 2:
+                transaccionCuenta(Actual, DEPOSITO);
+                break;
+            case 3:
+                eliminar(Actual->nocta);
+                break;
+            case 4:
+                printf("CANCELLED\n");
+                break;
+            default:
+                printf("OPTION NOT RECOGNIZED\n");
+                break;
             }
-        }while(option!=4);
+        } while (option != 4);
     }
     else
     {
@@ -187,16 +211,16 @@ void menuCuenta(struct cuenta *Actual)
     }
 }
 
-
-void transaccionCuenta(struct cuenta *Actual, enum tipo tipoTransaccion){
+void transaccionCuenta(struct cuenta *Actual, enum tipo tipoTransaccion)
+{
     struct transaccion *cursor, *temp;
 
-    temp = (struct transaccion *) calloc(1,sizeof(struct transaccion));
+    temp = (struct transaccion *)calloc(1, sizeof(struct transaccion));
     temp->nocta = Actual->nocta;
     temp->result = tipoTransaccion;
     temp->next = NULL;
 
-    if(tipoTransaccion == RETIRO)
+    if (tipoTransaccion == RETIRO)
         cursor = FirstRetiro;
     else
         cursor = FirstDeposito;
@@ -211,7 +235,8 @@ void transaccionCuenta(struct cuenta *Actual, enum tipo tipoTransaccion){
 
     if (tipoTransaccion == RETIRO)
     {
-        if(!strcmp(Actual->tipo,"HIPOTECA")){
+        if (!strcmp(Actual->tipo, "HIPOTECA"))
+        {
             printf("NO SE PUEDE RETIRAR DE HIPOTECA\n");
             free(temp);
         }
@@ -234,10 +259,9 @@ void transaccionCuenta(struct cuenta *Actual, enum tipo tipoTransaccion){
             Actual->saldo += temp->cantidad;
         else
             printf("ERROR EN CAPTURA\n");
-            free(temp);
-            return;
+        free(temp);
+        return;
     }
-
 }
 
 struct cuenta *capturar(void)
@@ -287,24 +311,71 @@ void consultar(void)
 
     while (cursor != NULL)
     {
-        printf("Cuenta :%8d Nombre: %s Tipo: %s Saldo: %10d\n",
-               cursor->nocta,
-               cursor->nombre,
-               cursor->tipo,
-               cursor->saldo);
-        cursor = cursor->next;
+        cuentaToString(cursor);
+        cursor=cursor->next;
     }
 }
 
-void eliminar(struct cuenta *Actual){
-
+void eliminar(int nocta)
+{
+    struct cuenta *cursor = First,*temp;
+    if(cursor->nocta==nocta){
+        free(First);
+        First = NULL;
+    }else{
+        while (cursor->next)
+        {
+            if (cursor->next->nocta == nocta){
+                temp = cursor->next->next;
+                free(cursor->next);
+                cursor->next = temp;
+                return;
+            }
+            cursor = cursor->next;
+        }   
+    }
+    
+    printf("ERROR ELIMINATING ACCOUNT\n");
+    
 }
 
-void saveResults(){
+void saveResults()
+{
+    struct cuenta * cursor = First;
+    FILE *fp = fopen("clientes.txt","w");
+    while(cursor){
+        fprintf(fp,"%d %s %s %d\n",cursor->nocta,cursor->nombre,cursor->tipo,cursor->saldo);
+        cursor = cursor->next;
+    }
+    fclose(fp);
 
+    struct transaccion *cursor1 = FirstDeposito;
+    fp = fopen("depositos.txt", "w");
+    while (cursor)
+    {
+        fprintf(fp,"%d %d %d\n",
+               cursor1->nocta,
+               cursor1->result,
+               cursor1->cantidad);
+        cursor1 = cursor1->next;
+    }
+    fclose(fp);
+
+    struct transaccion *cursor1 = FirstRetiro;
+    fp = fopen("retiros.txt", "w");
+    while (cursor)
+    {
+        fprintf(fp, "%d %d %d\n",
+                cursor1->nocta,
+                cursor1->result,
+                cursor1->cantidad);
+        cursor1 = cursor1->next;
+    }
+    fclose(fp);
 }
 
-void consultarTransaccion(enum tipo tipoActual){
+void consultarTransaccion(enum tipo tipoActual)
+{
     struct transaccion *cursor;
     if (tipoActual == RETIRO)
         cursor = FirstRetiro;
@@ -313,11 +384,7 @@ void consultarTransaccion(enum tipo tipoActual){
 
     while (cursor != NULL)
     {
-        printf("Cuenta :%8d Tipo: %s Cantidad: %10d\n",
-               cursor->nocta,
-               (cursor->result==RETIRO)?"RETIRO":"DEPOSITO",
-               cursor->cantidad);
-        cursor = cursor->next;
+        transaccionToString(cursor);
     }
 }
 
@@ -326,9 +393,30 @@ void consultarTxt(char *filename)
     FILE *fp = fopen(filename, "r");
     char buffer[255];
 
-    while (fgets(buffer, 255, (FILE *)fp))
+    while (fgets(buffer, sizeof(buffer), fp))
     {
         printf("%s\n", buffer);
     }
+    fclose(fp);
+}
+
+void initializeLL()
+{
+    FILE *fp = fopen("clientes.txt", "r");
+    struct cuenta *Actual = First, *temp;
+    temp = (struct cuenta *)calloc(1, sizeof(struct cuenta));
+    temp->next = NULL;
+    int i=0;
+    
+
+    while (EOF != fscanf(fp, "%d %s %s %d\n", &temp->nocta, temp->nombre, temp->tipo, &temp->saldo))
+    {
+        i++;
+        append(temp);
+        temp = (struct cuenta *)calloc(1, sizeof(struct cuenta));
+        temp->next = NULL;
+    }
+    printf("%d\n",i);
+    free(temp);
     fclose(fp);
 }
