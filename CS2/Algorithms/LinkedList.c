@@ -69,6 +69,7 @@ void deleteList(Node *head){
     } 
 }
 
+//Allocate Int of given value, return pointer
 int *MakeInt(int value)
 {
     int * ptr = malloc(sizeof(int));
@@ -76,6 +77,13 @@ int *MakeInt(int value)
     return ptr;
 }
 
+
+/**
+ * @brief  Create node with given Value, append to end of list
+ * @param  *root: Root node
+ * @param  value: value to be inserted(void pointer)
+ * @retval 
+ */
 Node *appendNode(Node *root, void * value){
     if(root == NULL){
         root = CreateNode(value);

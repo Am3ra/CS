@@ -208,40 +208,55 @@ void calculateBalanceFactor(treeNode *root)
 
 treeNode *rotateRight(treeNode *root)
 {
+    if (root->left)
+    {
 
     root->left->father = root->father;
     root->father = root->left;
 
     root->left = root->left->right;
+    if (root->left)
+        root->left->father = root;
     root->father->right = root;
 
-    if (root->father->father->value > root->father->value)
-        root->father->father->left = root->father;
-    else
-        root->father->father->right = root->father;
+    if(root->father->father){
+        if (root->father->father->value > root->father->value)
+            root->father->father->left = root->father;
+        else
+            root->father->father->right = root->father;
+    }
 
     updateBalanceFactorUp(root);
 
     return root->father;
+    }
+    return root;
 }
 
-treeNode *rotateLeft(treeNode *root)
+treeNode *rotateLeft(treeNode *root) //BUGGED
 {
+    if(root->right){
 
     root->right->father = root->father; //check
-    root->father = root->right;
+    root->father = root->right;         //check
 
     root->right = root->right->left;
+    if (root->right)
+        root->right->father = root;
     root->father->left = root;
 
-    if (root->father->father->value > root->father->value)
-        root->father->father->left = root->father;
-    else
-        root->father->father->right = root->father;
-
+    if (root->father->father)
+    {
+        if (root->father->father->value > root->father->value)
+            root->father->father->left = root->father;
+        else
+            root->father->father->right = root->father;
+    }
     updateBalanceFactorUp(root);
 
     return root->father;
+    }
+    return root;
 }
 
 int currentDepthHelper(treeNode *node, int depth)
@@ -276,6 +291,8 @@ void PrintTreeHelper(treeNode *node, int space)
 }
 void PrintTree(treeNode *root)
 {
+    if (!root)
+        return;
     printf("Current Tree:\n");
     PrintTreeHelper(root, 0);
 }
@@ -292,23 +309,23 @@ void PreorderTraversal(treeNode *root, void (*func)())
 }
 
 //root at the end
-void PostorderTraversal(treeNode *root, void (*func)())
+void PostorderTraversal(treeNode *root, treeNode *(*func)())
 {
     if (root)
     {
         PostorderTraversal(root->left, func);
         PostorderTraversal(root->right, func);
-        func(root);
+        root = func(root);
     }
 }
 
-void PostorderTraversalReverse(treeNode *root, void (*func)())
+void PostorderTraversalReverse(treeNode *root, treeNode *(*func)())
 {
     if (root)
     {
         PostorderTraversalReverse(root->right, func);
         PostorderTraversalReverse(root->left, func);
-        func(root);
+        root = func(root);
     }
 }
 
@@ -347,9 +364,15 @@ void balanceZero(treeNode *root)
     }
 }
 
+treeNode *freeNode(treeNode *node)
+{
+    free(node);
+    return NULL;
+}
+
 void deleteTree(treeNode *root)
 {
-    PostorderTraversal(root, free);
+    PostorderTraversal(root, freeNode);
 }
 
 treeNode *findRoot(treeNode *node)
@@ -365,23 +388,30 @@ treeNode *findRoot(treeNode *node)
         return NULL;
 }
 
-void balanceNode(treeNode *node)
+treeNode *balanceNode(treeNode *node)
 {
+    printf("TREE Before Balancing Node\n");
+    PrintTree(findRoot(node));
     //Assuming starting with correct balance factor
     if (node)
     {
         if (node->balanceFactor < -1)
         {
+            if (node->left && node->left->balanceFactor > 0)
+                node->left = rotateLeft(node->left);
+            printf("Tree Before Rotation\n");
+            PrintTree(findRoot(node));
             node = rotateRight(node);
-            node->balanceFactor++;
         }
         if (node->balanceFactor > 1)
         {
+            if (node->right && node->right->balanceFactor < 0)
+                node->right = rotateRight(node->right);
             node = rotateLeft(node);
-            node->balanceFactor--;
         }
         updateBalanceFactorUp(node);
     }
+    return node;
 }
 
 void updateBalanceFactorUp(treeNode *node)
@@ -398,36 +428,22 @@ void updateBalanceFactorTree(treeNode *root)
     PostorderTraversal(root, (void(*))calculateBalanceFactor);
 }
 
-void balanceTree(treeNode *root)
+treeNode *balanceTree(treeNode *root)
 {
     PostorderTraversal(root, balanceNode);
+    return findRoot(root);
 }
 
 int main(int argc, char const *argv[])
 {
-    treeNode *root = CreateTreeNode(NULL, 50);
-    insertTreeNode(root, 50);
-    insertTreeNode(root, 25);
-    insertTreeNode(root, 75);
-    insertTreeNode(root, 10);
-    insertTreeNode(root, 40);
-    insertTreeNode(root, 60);
-    insertTreeNode(root, 90);
-    insertTreeNode(root, 35);
-    insertTreeNode(root, 45);
-    insertTreeNode(root, 70);
-    insertTreeNode(root, 42);
+    treeNode *root = CreateTreeNode(NULL, 4);
+    insertTreeNode(root, 2);
+    insertTreeNode(root, 3);
 
     PrintTree(root);
-    printf("Preorder Tour:\n");
-    PreorderTraversal(root,printNode);
-
-    printf("AVL TREE\n");
-    balanceTree(root);
+    updateBalanceFactorTree(root);
+    root = balanceTree(root);
     PrintTree(root);
-    printf("Preorder Tour:\n");
-    PreorderTraversal(root,printNode);
-
     deleteTree(root);
     return 0;
 }
