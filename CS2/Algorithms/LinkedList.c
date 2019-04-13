@@ -110,4 +110,13 @@ void PrintList(Node *head, void (*func)(Node*)){
 
 // Merge Sort List 
 
-// Create List from array?
+// Create list of array of void pointers//Might need to convert pointer?
+Node *ListFromArray(void *arr[]){ //WTF, array of void pointers!
+    int n = sizeof(arr)/sizeof(arr[0]);
+    Node * root = CreateNode(arr[0]);
+    for(int i = 1; i < n; i++) // Might need to be <=
+    {
+        appendNode(root,arr[i]);
+    }
+    return root;
+}
