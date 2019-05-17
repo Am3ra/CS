@@ -120,3 +120,10 @@ Node *ListFromArray(void *arr[]){ //WTF, array of void pointers!
     }
     return root;
 }
+
+void forEach(Node * root, void (*func)(Node*)){
+    while (root){
+        func(root);
+        root = root->next;
+    }
+}

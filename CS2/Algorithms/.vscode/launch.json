@@ -9,13 +9,16 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}",
-            "args": [],
-            "stopAtEntry": false,
+            "args": ["input.txt"],
+            "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "lldb",
-            "preLaunchTask": "gcc build active file"
+            "preLaunchTask": "gcc build active file",
+            "setupCommands": [{
+                "text": "settings set target.input-path /Users/macbookpro/Documents/CS/CS2/Algorithms/ACM/input.txt"
+            }]
         }
     ]
 }
