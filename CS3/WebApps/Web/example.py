@@ -2,7 +2,7 @@ import os
 
 def application(environ, start_response):
     status = '200 OK'
-    output = b'hello'
+    output = "Hello".encode('utf-8')
 
     response_headers = [('Content-type', 'text/plain'),
                         ('Content-Length', str(len(output)))]
