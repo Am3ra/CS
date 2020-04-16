@@ -1,0 +1,1 @@
+{"rustc":13355374433309949680,"features":"[]","target":13590706417382591068,"profile":14580975319137881965,"path":1036222786711178230,"deps":[],"local":[{"CheckDepInfo":{"dep_info":"debug/.fingerprint/alan_os-6fbd87d9cf4ff544/dep-bin-alan_os-6fbd87d9cf4ff544"}}],"rustflags":["-C","link-args=-e __start -static -nostartfiles"],"metadata":6264463588882741528}
