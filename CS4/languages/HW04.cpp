@@ -59,6 +59,6 @@ int main()
 
 	// cout << fibonacci(3);
 
-	cout << toBinary(4);
+	// cout << toBinary(4);
 	
 }
