@@ -18,25 +18,47 @@ using namespace std;
 
 int sum(vector<int> v)
 {
-	cout << "Not yet implemented.";
-	return 0;
+	if(v.empty())
+		return 0;
+	else{
+		int i = v.back();
+		v.pop_back();
+		return i+sum(v);
+	}
 }
+
 
 int fibonacci(int n)
 {
-	cout << "Not yet implemented.";
-	return 0;
+	if (n<=0)
+		return 0;
+	else if (n==1){
+		return 1;
+	}
+	else
+		return fibonacci(n-2)+fibonacci(n-1);
 }
 
 int toBinary(int n)
-{
-	cout << "Not yet implemented.";
-	return 0;	
+{ 
+	if (n == 0)
+      return  0;
+   else
+      return  n % 2 + 10 * toBinary(n / 2)	;
+
 }
 
 int main()
 {
-	/*
-		Test your codes here.
-	*/	
+	// vector<int> g1; 
+  
+    // for (int i = 1; i <= 4; i++) 
+    //     g1.push_back(i); 
+	
+	// cout << sum(g1);
+
+	// cout << fibonacci(3);
+
+	cout << toBinary(4);
+	
 }
