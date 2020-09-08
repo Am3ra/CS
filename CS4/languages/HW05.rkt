@@ -13,7 +13,14 @@
 ;; === fibonacci ===
 
 (define (fibonacci n)
-	(display "Not yet implemented\n")
+	(if (<= n 0)
+		0
+		(if (= n 1)
+			1
+			(+ (fibonacci (- n 1))(fibonacci (- n 2)))
+		)
+	)
+	
 )
 
 (display "=== fibonacci ===\n")
@@ -24,7 +31,11 @@
 ;; === nestedSum ===
 
 (define (nestedSum lst)
-	(display "Not yet implemented\n") 
+	(cond
+		[(null? lst) 0]
+		[(list? (car lst))   (+ (nestedSum (cdr lst)) (nestedSum (car lst)))]
+		[(number? (car lst)) (+ (nestedSum (cdr lst)) (car lst))]
+	)
 )
 
 (display "=== nestedSum ===\n")
@@ -35,10 +46,20 @@
 ;; === evenNumbers ===
 
 (define (evenNumbers lst)
-	(display "Not yet implemented\n")
+	(if (null? lst)
+		null
+		(if (list? (car lst))
+			(cons (evenNumbers(car lst)) (evenNumbers(cdr lst)))
+			(if (even? (car lst))
+				(cons (car lst) (evenNumbers (cdr lst)))
+				(evenNumbers (cdr lst))
+			)
+		)
+	)
 )
 
 (display "=== evenNumbers ===\n")
+(evenNumbers '()) ;; '() 
 (evenNumbers '(10 3 25 32 37 9)) ;; '(10 32) 
 (evenNumbers '(15 (5 4 (3 10)) 6 (8))) ;; '((4 (10)) 6 (8))
 (evenNumbers '(((20 () ()) () 3))) ;; '(((20 () ()) ()))
@@ -46,7 +67,13 @@
 ;; === nestedReverse ===
 
 (define (nestedReverse lst)
-	(display "Not yet implemented\n")
+	(if (null? lst)
+        null
+		(if (list? (car lst))
+			(append (nestedReverse (cdr lst)) (list (nestedReverse (car lst))))
+        	(append (nestedReverse (cdr lst)) (list (car lst)))
+		)
+    )
 )
 
 (display "=== nestedReverse ===\n")
@@ -57,7 +84,13 @@
 ;; === unroll ===
 
 (define (unroll lst)
-	(display "Not yet implemented\n") 	
+	(if (null? lst)
+		null
+		(if (list? (car lst))
+			(append (unroll (car lst)) (unroll (cdr lst)))
+			(cons (car lst) (unroll (cdr lst)))
+		)
+	) 	
 )
 
 (display "=== unroll ===\n")
