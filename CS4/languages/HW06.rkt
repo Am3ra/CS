@@ -13,7 +13,7 @@
 ;; === sum ===
 
 (define (sum matrix)
-	(display "Not yet implemented\n")
+	(apply (apply +))
 )
 
 (display "=== sum ===\n")
