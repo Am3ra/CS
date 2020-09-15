@@ -64,9 +64,29 @@
 
 ;; === toUpperTriangular ===
 
-(define (toUpperTriangular matrix)
-	(display "not implemented\n")
+(define (enumerate lst)
+  (define (enumarate_x lst n)
+    (if (null? lst)
+    lst
+    (if (null? (cdr lst))
+      (list(list (car lst) n))
+      (list*  (list (car lst) n) (enumarate_x (cdr lst) (add1 n)))
+    )
+    )
+  )
+  (enumarate_x lst 0)
 )
+
+(define (toUpperTriangular matrix)
+	(map
+		(lambda (row)
+			(append (build-list (cadr row) (lambda (x) 0)) (drop (car row) (cadr row)))
+		)
+		(enumerate matrix)
+	)
+)
+
+;;; (build-list (abs n) (lambda (x) 0))
 
 (display "=== toUpperTriangular ===\n")
 (toUpperTriangular '((1 2 3 4) (5 6 7 8) (9 10 11 12) (13 14 15 16))) ;; '((1 2 3 4) (0 6 7 8) (0 0 11 12) (0 0 0 16))
